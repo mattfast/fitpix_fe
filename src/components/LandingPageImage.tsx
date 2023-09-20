@@ -8,11 +8,7 @@ import "@fontsource/rubik/500.css";
 //import "@fontsource/rubik-mono-one/500.css"; 
 //import "@fontsource/rubik-mono-one/700.css"; 
 import "@fontsource/figtree/600.css";
-import "./LandingPage.css";
-
-import LandingPageImage from "./components/LandingPageImage";
-import makeCookie from "./utils";
-import Modal from "./Modal";
+import "./LandingPageImage.css";
 
 const variants = {
 
@@ -30,7 +26,7 @@ TODO:
 - Switch from photo export to compiled photo div
 */
 
-const LandingPage = () => {
+const LandingPageImage = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [actionIndex, setActionIndex] = useState(0);
   const [sid, setSid] = useState<string>("");
@@ -41,26 +37,31 @@ const LandingPage = () => {
   const [initialTouch, setInitialTouch] = useState<number>(0);
   const [currentTouch, setCurrentTouch] = useState<number>(0);
   const navigate = useNavigate();
-  /*
-          <img src={process.env.PUBLIC_URL + "assets/leaderboard-photo.png"} className="leaderboardPhoto" />
-*/
  
   return (
-    <div className="container">
-      <div className="contentContainer">
-        <div className="textContainer">
-          <div className="titleContainer">
-            <div className="crown">👑</div>
-            <div className="name">dopple.club</div>
-          </div>
-          <div className="subtitle">
-            <div className="pink">Find</div> the 🤴 and 👸🏻 of <div className="pink">your class</div>
+    <div className="lpImageContainer">
+      <div className="rankCol">
+        <img src={process.env.PUBLIC_URL + "assets/2.png"} className="leaderboardImage" />
+        <div className="barGraphColumn">
+          <div className="height2">
+            <img src={process.env.PUBLIC_URL + "assets/🥈.png"} className="medal" />
           </div>
         </div>
-        <LandingPageImage />
-        <div className="button">
-          <div className="buttonText">
-            Sign up
+      </div>
+      <div className="rankCol">
+        <img src={process.env.PUBLIC_URL + "assets/1.png"} className="leaderboardImage" />
+        <div className="barGraphColumn">
+          <div className="height1">
+            <img src={process.env.PUBLIC_URL + "assets/🥇.png"} className="medal" />
+          </div>
+        </div>
+
+      </div>
+      <div className="rankCol">
+        <img src={process.env.PUBLIC_URL + "assets/3.png"} className="leaderboardImage" />
+        <div className="barGraphColumn">
+          <div className="height3">
+            <img src={process.env.PUBLIC_URL + "assets/🥉.png"} className="medal" />
           </div>
         </div>
       </div>
@@ -68,4 +69,4 @@ const LandingPage = () => {
   )
 };
 
-export default LandingPage;
+export default LandingPageImage;

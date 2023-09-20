@@ -1,0 +1,53 @@
+
+.lpImageContainer {
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10.219px;
+}
+
+.rankCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10.219px;
+}
+
+.leaderboardImage {
+  width: 76.641px;
+  height: 76.641px;
+  border-radius: 76.641px;
+}
+
+.barGraphColumn {
+  /*display: flex;*/
+  width: 153px;
+  /*padding: 8px 25.547px 25.547px 25.547px;*/
+  flex-direction: column;
+  align-items: center;
+  /*gap: 25.547px;*/
+  border-collapse: separate; 
+  border-radius: 200.219px;
+}
+
+.height1 {
+  height: 265px;
+  background: rgba(255, 255, 255, 0.40);
+}
+
+.height2 {
+  height: 216px;
+  background: rgba(255, 255, 255, 0.30);
+}
+
+.height3 {
+  height: 171px;
+  background: rgba(255, 255, 255, 0.20);
+}
+
+
+.medal {
+  padding-top: 8px;
+  width: 54x;
+  height: 54px;
+}
