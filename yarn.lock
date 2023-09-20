@@ -1390,10 +1390,15 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.48.0.tgz#642633964e217905436033a2bd08bf322849b7fb"
   integrity sha512-ZSjtmelB7IJfWD2Fvb7+Z+ChTIKWq6kjda95fLcQKNS5aheVHn4IkfgRQE3sIIzTcSLwLcLZUD9UBt+V7+h+Pw==
 
-"@fontsource/figtree@5.0.11":
-  version "5.0.11"
-  resolved "https://registry.yarnpkg.com/@fontsource/figtree/-/figtree-5.0.11.tgz#6db24fc790730fee77d24be034e43f9d3476e967"
-  integrity sha512-4ckJlzOVeQJxCv/If8Vl2rYWc6VYLwitBdUNflyD5/3uHgM2a5ZToYoR3mmbbxz5Ank201nYj/LYCWFttx2zTA==
+"@fontsource/figtree@^5.0.11":
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/@fontsource/figtree/-/figtree-5.0.12.tgz#44e80b25e3b2f3038b0ec7418c5700ef1c56bb25"
+  integrity sha512-b9M2xEoqQ6ryXg9QzVroXJDcAxpDa+nvLMhLKq3FE6Qf7k3ngFWDaiqjf0fANUa3rZnM4HfAKcJxDeUtwFNE9w==
+
+"@fontsource/rubik-mono-one@^5.0.12":
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/@fontsource/rubik-mono-one/-/rubik-mono-one-5.0.12.tgz#525346426139c8905c7fb1b6dd9fa18cadaeccc2"
+  integrity sha512-BktMXk43lThA4fBvHnGkJ938mNyM1MTnEzl2LVTzwIaK036zU03nTpQfJ+Pgq7JtcJMVnc/UerTOrXf+h6TZ+Q==
 
 "@fontsource/rubik@^5.0.11":
   version "5.0.11"
