@@ -1,10 +1,10 @@
 
 @keyframes bounce {
   0%, 100% {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
   }
   50% {
-    transform: translateY(2px); /* Adjust the value to control the bounce height */
+    transform: translateY(3px); /* Adjust the value to control the bounce height */
   }
 }
 
@@ -27,7 +27,7 @@
   height: 76.641px;
   border-radius: 76.641px;
   animation: bounce 2s infinite; /* Adjust the duration as needed */
-  animation-delay: 600ms;
+  animation-delay: 1100ms;
 }
 
 .leaderboardImage2 {
@@ -35,7 +35,7 @@
   height: 76.641px;
   border-radius: 76.641px;
   animation: bounce 2s infinite; /* Adjust the duration as needed */
-  animation-delay: 1000ms;
+  animation-delay: 650ms;
 }
 
 .leaderboardImage3 {
