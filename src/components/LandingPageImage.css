@@ -1,4 +1,13 @@
 
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(2px); /* Adjust the value to control the bounce height */
+  }
+}
+
 .lpImageContainer {
   display: inline-flex;
   justify-content: center;
@@ -13,10 +22,27 @@
   gap: 10.219px;
 }
 
-.leaderboardImage {
+.leaderboardImage1 {
   width: 76.641px;
   height: 76.641px;
   border-radius: 76.641px;
+  animation: bounce 2s infinite; /* Adjust the duration as needed */
+  animation-delay: 600ms;
+}
+
+.leaderboardImage2 {
+  width: 76.641px;
+  height: 76.641px;
+  border-radius: 76.641px;
+  animation: bounce 2s infinite; /* Adjust the duration as needed */
+  animation-delay: 1000ms;
+}
+
+.leaderboardImage3 {
+  width: 76.641px;
+  height: 76.641px;
+  border-radius: 76.641px;
+  animation: bounce 2s infinite; /* Adjust the duration as needed */
 }
 
 .barGraphColumn {

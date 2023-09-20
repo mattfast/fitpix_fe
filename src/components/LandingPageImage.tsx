@@ -41,7 +41,7 @@ const LandingPageImage = () => {
   return (
     <div className="lpImageContainer">
       <div className="rankCol">
-        <img src={process.env.PUBLIC_URL + "assets/2.png"} className="leaderboardImage" />
+        <img src={process.env.PUBLIC_URL + "assets/2.png"} className="leaderboardImage2" />
         <div className="barGraphColumn">
           <div className="height2">
             <img src={process.env.PUBLIC_URL + "assets/🥈.png"} className="medal" />
@@ -49,7 +49,7 @@ const LandingPageImage = () => {
         </div>
       </div>
       <div className="rankCol">
-        <img src={process.env.PUBLIC_URL + "assets/1.png"} className="leaderboardImage" />
+        <img src={process.env.PUBLIC_URL + "assets/1.png"} className="leaderboardImage1" />
         <div className="barGraphColumn">
           <div className="height1">
             <img src={process.env.PUBLIC_URL + "assets/🥇.png"} className="medal" />
@@ -58,7 +58,7 @@ const LandingPageImage = () => {
 
       </div>
       <div className="rankCol">
-        <img src={process.env.PUBLIC_URL + "assets/3.png"} className="leaderboardImage" />
+        <img src={process.env.PUBLIC_URL + "assets/3.png"} className="leaderboardImage3" />
         <div className="barGraphColumn">
           <div className="height3">
             <img src={process.env.PUBLIC_URL + "assets/🥉.png"} className="medal" />
