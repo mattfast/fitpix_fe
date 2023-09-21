@@ -23,6 +23,7 @@ const Signup = () => {
   const [placeholder, setPlaceholder] = useState<string>("(123) 456-789");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [streaming, setStreaming] = useState<boolean>(false);
   const webcamRef = useRef<Webcam | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
@@ -40,10 +41,22 @@ const Signup = () => {
     }
   };
 
+  
+  const beginStream = () => {
+    setStreaming(true);
+    const targetComponent = document.getElementById("streamingComponent");
+
+    if (webcamRef.current && targetComponent) {
+      const webcamVideo = webcamRef.current.video as HTMLVideoElement;
+      targetComponent.appendChild(webcamVideo);
+    }
+  }
+
   const capture = () => {
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
       setCapturedImage(imageSrc);
+      setStreaming(false);
     }
   };
 
@@ -81,40 +94,50 @@ const Signup = () => {
                 </div>
               </>
             )}
-            {!selectedFile && (
+            {capturedImage && (
+              <>
+                <img src={capturedImage} alt="Captured" className="photoFullCircle" />
+                <div className="retakeButton" onClick={() => setCapturedImage(null)}>
+                  <div>📸</div>
+                  <div>Retake</div>
+                </div>
+              </>
+            )}
+            {streaming && (
+              <>
+                <Webcam className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
+                <div id="streamingComponent" className="photoFullCircle" />
+                <div className="retakeButton" onClick={capture}>
+                  <div>📸</div>
+                  <div>Capture</div>
+                </div>
+              </>
+            )}
+            {(!selectedFile && !capturedImage && !streaming) && (
               <>
                 <div className="photoEmptyCircle">
                   <img src={process.env.PUBLIC_URL + "assets/user.png"} className="photoPlaceholder" />
                 </div>
                 <div className="photoButtonGroup">
                   <input type="file" ref={fileInputRef} className="fileInput" accept="image/*" onChange={handleFileChange} />
-                  <Webcam className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
-                  <div className="photoButton" onClick={capture}>
+                  <div className="photoButton" onClick={beginStream}>
                     <div className="nextButtonText">🔥 take  a selfie 🔥</div>
                   </div>
                   <div className="photoButton" onClick={handleFileButtonClick}>
                     <div className="nextButtonText">✨ upload a photo ✨</div>
                   </div>
                 </div>
-                {capturedImage && (
-                  <img
-                    src={capturedImage}
-                    alt="Captured"
-                    width="320"
-                    height="240"
-                  />
-                )}
               </>
             )}
 
           </>
         )}
       </div>
-      { (page !== 3 || selectedFile) && (
+      { (page !== 3 || selectedFile || capturedImage) && (
         <div className="nextButton" onClick={nextPage}>
             <div className="nextButtonText">
               {page < 3 && "Next"}
-              {(page > 3 || selectedFile) && "Looks good"}
+              {(page > 3 || selectedFile || capturedImage) && "Looks good"}
             </div>
           <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
         </div>

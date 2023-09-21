@@ -130,6 +130,10 @@
   gap: 8px;
   cursor: pointer;
 
+  border-radius: 1000px;
+  border: 2px solid var(--white, #FFF);
+  background: var(--white-16, rgba(255, 255, 255, 0.16));
+
   color: var(--white, #FFF);
   text-align: center;
   font-family: Rubik One;
