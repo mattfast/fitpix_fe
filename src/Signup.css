@@ -185,6 +185,15 @@
 
 }*/
 
+.themes {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 8px;
+  align-self: center;
+  flex-wrap: wrap;
+}
+
 .nextButton {
   display: flex;
   height: 64px;

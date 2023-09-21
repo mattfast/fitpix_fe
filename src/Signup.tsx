@@ -14,9 +14,40 @@ import "./Signup.css";
 import makeCookie from "./utils";
 import Modal from "./Modal";
 
-const variants = {
-
-};
+const themes = [
+  {
+    "emoji": "👑",
+    "text": "king"
+  },
+  {
+    "emoji": "🤠",
+    "text": "cowboy"
+  },
+  {
+    "emoji": "🏈",
+    "text": "jock"
+  },
+  {
+    "emoji": "🪄",
+    "text": "wizard"
+  },
+  {
+    "emoji": "🤓",
+    "text": "nerd"
+  },
+  {
+    "emoji": "🦄",
+    "text": "unicorn"
+  },
+  {
+    "emoji": "👸🏻",
+    "text": "princess"
+  },
+  {
+    "emoji": "🤑",
+    "text": "baller"
+  },
+];
 
 const Signup = () => {
   const [page, setPage] = useState<number>(0);
@@ -25,6 +56,7 @@ const Signup = () => {
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [streaming, setStreaming] = useState<boolean>(false);
   const [camOpen, setCamOpen] = useState<boolean>(false);
+  const [themeList, setThemeList] = useState<string[]>([]);
   const webcamRef = useRef<Webcam | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
@@ -56,7 +88,6 @@ const Signup = () => {
       targetComponent.style.height = "255px";
       targetComponent.style.marginTop = "0px";
 
-      console.log("MADE IT HERE");
       const webcamVideo = webcamRef.current.video as HTMLVideoElement;
       webcamVideo.style.width = "255px";
       webcamVideo.style.height = "255px";
@@ -66,8 +97,6 @@ const Signup = () => {
       webcamVideo.id = "webcamVideo";
       console.log(webcamVideo);
       targetComponent.appendChild(webcamVideo);
-    } else {
-      console.log("DIDNT MAKE IT THERE");
     }
   }
 
@@ -76,7 +105,6 @@ const Signup = () => {
     const videoComponent = document.getElementById("webcamVideo");
 
     if (webcamRef.current && targetComponent && videoComponent) {
-      console.log("MADE ITTTT");
       const imageSrc = webcamRef.current.getScreenshot();
       await new Promise(r => setTimeout(r, 200));
       setCapturedImage(imageSrc);
@@ -90,7 +118,25 @@ const Signup = () => {
     }
   };
 
-  const nextPage = () => {
+  const addToThemeList = (text: string) => {
+    const targetComponent = document.getElementById(`emoji-button-${text}`);
+    console.log("HERE");
+    console.log(targetComponent);
+    
+    if (targetComponent) {
+      if (themeList.includes(text)) {
+        setThemeList(themeList.filter(t => t != text));
+        targetComponent.style.backgroundColor = "rgba(255, 255, 255, 0.16)";
+        targetComponent.style.color = "#FFF";
+      } else if (themeList.length < 5) {
+        setThemeList([...themeList, text]);
+        targetComponent.style.backgroundColor = "rgba(255, 255, 255, 1.0)";
+        targetComponent.style.color = "#0CA0E4";
+      }
+    }
+  }
+
+  const nextPage = async () => {
     page == 0 && setPlaceholder("FIRST NAME");
     page == 1 && setPlaceholder("LAST NAME");
     setPage(page + 1);
@@ -113,12 +159,12 @@ const Signup = () => {
             placeholder={placeholder}
           />
         )}
+        { camOpen && (
+          <Webcam forceScreenshotSourceSize className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
+        )}
+        <div id="streamingComponent" className="videoFullCircle" />
         { page == 3 && (
           <>
-            { camOpen && (
-              <Webcam forceScreenshotSourceSize className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
-            )}
-            <div id="streamingComponent" className="videoFullCircle" />
             {selectedFile && (
               <>
                 <img src={URL.createObjectURL(selectedFile)} className="photoFullCircle" alt="Selected" />
@@ -162,6 +208,24 @@ const Signup = () => {
               </>
             )}
 
+          </>
+        )}
+        { page == 4 && (
+          <>
+            {selectedFile && (
+              <img src={URL.createObjectURL(selectedFile)} className="photoFullCircle" alt="Selected" />
+            )}
+            {capturedImage && (
+              <img src={capturedImage} alt="Captured" className="photoFullCircle" />
+            )}
+            <div className="themes">
+              { themes.map(t => (
+                <div id={`emoji-button-${t.text}`} className="retakeButton" onClick={() => addToThemeList(t.text)}>
+                  <div>{t.emoji}</div>
+                  <div>{t.text}</div>
+                </div>
+              ))}
+            </div>
           </>
         )}
       </div>
