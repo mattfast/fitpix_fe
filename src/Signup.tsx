@@ -24,6 +24,7 @@ const Signup = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [streaming, setStreaming] = useState<boolean>(false);
+  const [camOpen, setCamOpen] = useState<boolean>(false);
   const webcamRef = useRef<Webcam | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
@@ -44,8 +45,11 @@ const Signup = () => {
   
   const beginStream = async () => {
     setStreaming(true);
+    setCamOpen(true);
     setCapturedImage(null);
     const targetComponent = document.getElementById("streamingComponent");
+
+    await new Promise(r => setTimeout(r, 100));
 
     if (webcamRef.current && targetComponent) {
       targetComponent.style.width = "255px";
@@ -111,7 +115,9 @@ const Signup = () => {
         )}
         { page == 3 && (
           <>
-            <Webcam forceScreenshotSourceSize className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
+            { camOpen && (
+              <Webcam forceScreenshotSourceSize className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
+            )}
             <div id="streamingComponent" className="videoFullCircle" />
             {selectedFile && (
               <>
