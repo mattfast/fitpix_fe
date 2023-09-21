@@ -128,7 +128,7 @@ const Signup = () => {
         setThemeList(themeList.filter(t => t != text));
         targetComponent.style.backgroundColor = "rgba(255, 255, 255, 0.16)";
         targetComponent.style.color = "#FFF";
-      } else if (themeList.length < 5) {
+      } else if (themeList.length < 3) {
         setThemeList([...themeList, text]);
         targetComponent.style.backgroundColor = "rgba(255, 255, 255, 1.0)";
         targetComponent.style.color = "#0CA0E4";
@@ -218,6 +218,7 @@ const Signup = () => {
             {capturedImage && (
               <img src={capturedImage} alt="Captured" className="photoFullCircle" />
             )}
+            <div className="themesInstructionText">Choose up to 3 personalities:</div>
             <div className="themes">
               { themes.map(t => (
                 <div id={`emoji-button-${t.text}`} className="retakeButton" onClick={() => addToThemeList(t.text)}>
