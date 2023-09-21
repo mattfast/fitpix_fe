@@ -42,21 +42,47 @@ const Signup = () => {
   };
 
   
-  const beginStream = () => {
+  const beginStream = async () => {
     setStreaming(true);
+    setCapturedImage(null);
     const targetComponent = document.getElementById("streamingComponent");
 
     if (webcamRef.current && targetComponent) {
+      targetComponent.style.width = "255px";
+      targetComponent.style.height = "255px";
+      targetComponent.style.marginTop = "0px";
+
+      console.log("MADE IT HERE");
       const webcamVideo = webcamRef.current.video as HTMLVideoElement;
+      webcamVideo.style.width = "255px";
+      webcamVideo.style.height = "255px";
+      webcamVideo.style.borderRadius = "2550px";
+      webcamVideo.style.display = "flex";
+      webcamVideo.style.objectFit = "cover";
+      webcamVideo.id = "webcamVideo";
+      console.log(webcamVideo);
       targetComponent.appendChild(webcamVideo);
+    } else {
+      console.log("DIDNT MAKE IT THERE");
     }
   }
 
-  const capture = () => {
-    if (webcamRef.current) {
+  const capture = async () => {
+    const targetComponent = document.getElementById("streamingComponent");
+    const videoComponent = document.getElementById("webcamVideo");
+
+    if (webcamRef.current && targetComponent && videoComponent) {
+      console.log("MADE ITTTT");
       const imageSrc = webcamRef.current.getScreenshot();
+      await new Promise(r => setTimeout(r, 200));
       setCapturedImage(imageSrc);
+      console.log(imageSrc);
       setStreaming(false);
+      targetComponent.style.width = "1px";
+      targetComponent.style.height = "1px";
+      targetComponent.style.marginTop = "-41px";
+      videoComponent.style.width = "1px";
+      videoComponent.style.height = "1px";
     }
   };
 
@@ -73,8 +99,8 @@ const Signup = () => {
           { page == 0 && "Enter your phone number"}
           { page == 1 && "What's your first name?"}
           { page == 2 && "What's your last name?"}
-          { page == 3 && "Create your avatar"}
-          { page == 4 && "Customize your avatar"}
+          { page == 3 && "Create your dopple"}
+          { page == 4 && "Customize your dopple"}
         </div>
         { page < 3 && (
           <input
@@ -85,6 +111,8 @@ const Signup = () => {
         )}
         { page == 3 && (
           <>
+            <Webcam className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
+            <div id="streamingComponent" className="videoFullCircle" />
             {selectedFile && (
               <>
                 <img src={URL.createObjectURL(selectedFile)} className="photoFullCircle" alt="Selected" />
@@ -105,8 +133,6 @@ const Signup = () => {
             )}
             {streaming && (
               <>
-                <Webcam className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
-                <div id="streamingComponent" className="photoFullCircle" />
                 <div className="retakeButton" onClick={capture}>
                   <div>📸</div>
                   <div>Capture</div>
