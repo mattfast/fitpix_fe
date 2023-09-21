@@ -6,6 +6,14 @@
   font-style: normal;
 }
 
+::-webkit-file-upload-button {
+  display: none;
+}
+
+::file-selector-button {
+  display: none;
+}
+
 .signupContainer {
   display: flex;
   height: 100dvh;
@@ -14,6 +22,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  background: #0CA0E4;
 }
 
 .formContainer {
@@ -44,13 +53,83 @@
   padding: 0px 24px;
   align-items: center;
   gap: 8px;
-  align-self: stretch;
+  align-self: center;
   border-radius: 12px;
   border: 2px solid var(--white, #FFF);
   background: var(--white-16, rgba(255, 255, 255, 0.16));
+  width: min(327px, 80vw);
+
+  /* text */
+  color: var(--white, #FFF);
+  font-family: Rubik One;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%; /* 24.7px */
+  letter-spacing: -0.095px;
+  text-transform: uppercase;
 }
 
-.textInputText {
+.photoEmptyCircle {
+  display: flex;
+  width: 255px;
+  height: 255px;
+  /*padding: 0px 61.2px;*/
+  justify-content: center;
+  align-items: center;
+  gap: 20.4px;
+
+  border-radius: 2550px;
+  border: 5.1px solid var(--white, #FFF);
+  background: var(--white-16, rgba(255, 255, 255, 0.16));
+}
+
+.photoFullCircle {
+  display: flex;
+  width: 255px;
+  height: 255px;
+  /*padding: 0px 61.2px;*/
+  justify-content: center;
+  align-items: center;
+  border-radius: 2550px;
+}
+
+.photoButtonGroup {
+  display: flex;
+  width: 317px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.photoButton {
+  display: flex;
+  height: 40px;
+  padding: 0px 40px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+
+  border-radius: 1000px;
+  background: var(--white, #FFF);
+  cursor: pointer;
+}
+
+.photoButton:hover {
+  /*  Making button bigger on hover  */
+  transform: scale(1.05) perspective(1px)
+}
+
+.retakeButton {
+  display: flex;
+  height: 40px;
+  padding: 0px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+
   color: var(--white, #FFF);
   text-align: center;
   font-family: Rubik One;
@@ -62,6 +141,32 @@
   text-transform: uppercase;
 }
 
+.retakeButton:hover {
+  /*  Making button bigger on hover  */
+  transform: scale(1.05) perspective(1px)
+}
+
+/* Visually hide the file input */
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.photoPlaceholder {
+  width: 90px;
+  /*height: 133px;*/
+}
+
+/*.textInputText {
+
+}*/
+
 .nextButton {
   display: flex;
   height: 64px;
@@ -71,8 +176,31 @@
   gap: 8px;
   position: absolute;
   right: 34px;
-  bottom: 316px;
+  bottom: 26px;
   border-radius: 1000px;
   background: var(--white, #FFF);
+  cursor: pointer;
+}
+
+.nextButton:hover {
+  /*  Making button bigger on hover  */
+  transform: scale(1.05) perspective(1px)
+}
+
+.nextButtonText {
+  color: #EC11C8;
+  text-align: center;
+  font-family: Rubik One;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%; /* 24.7px */
+  letter-spacing: -0.095px;
+  text-transform: uppercase;
+}
+
+.nextButtonArrow {
+  width: 5px;
+  height: 10px;
 }
 

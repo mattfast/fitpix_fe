@@ -5,8 +5,6 @@ import { useCookies } from 'react-cookie';
 import { io } from "socket.io-client";
 
 import "@fontsource/rubik/500.css";
-//import "@fontsource/rubik-mono-one/500.css"; 
-//import "@fontsource/rubik-mono-one/700.css"; 
 import "@fontsource/figtree/600.css";
 import "./LandingPage.css";
 
@@ -28,6 +26,7 @@ TODO:
 - Fit to different screen sizes
 - Check for valid cookie + redirect to voting if present
 - add circle crop to central image
+- fix touch bug with signup button
 */
 
 const LandingPage = () => {
@@ -41,9 +40,6 @@ const LandingPage = () => {
   const [initialTouch, setInitialTouch] = useState<number>(0);
   const [currentTouch, setCurrentTouch] = useState<number>(0);
   const navigate = useNavigate();
-  /*
-          <img src={process.env.PUBLIC_URL + "assets/leaderboard-photo.png"} className="leaderboardPhoto" />
-*/
  
   return (
     <div className="container">
@@ -59,7 +55,7 @@ const LandingPage = () => {
         </div>
         <LandingPageImage />
         <div className="button">
-          <div className="buttonText">
+          <div className="buttonText" onClick={() => navigate("/signup")}>
             Sign up
           </div>
         </div>
