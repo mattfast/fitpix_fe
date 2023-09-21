@@ -111,7 +111,7 @@ const Signup = () => {
         )}
         { page == 3 && (
           <>
-            <Webcam className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
+            <Webcam forceScreenshotSourceSize className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
             <div id="streamingComponent" className="videoFullCircle" />
             {selectedFile && (
               <>

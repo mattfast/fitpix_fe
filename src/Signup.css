@@ -23,6 +23,7 @@
   justify-content: space-between;
   align-items: center;
   background: #0CA0E4;
+  overflow: hidden;
 }
 
 .formContainer {
