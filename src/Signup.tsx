@@ -17,19 +17,26 @@ const variants = {
 };
 
 const Signup = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
-  const [actionIndex, setActionIndex] = useState(0);
-  const [sid, setSid] = useState<string>("");
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [prevActionIndex, setPrevActionIndex] = useState(0);
-  const [pageUp, setPageUp] = useState<boolean>(false);
-  const [totalScroll, setTotalScroll] = useState<number>(0);
-  const [initialTouch, setInitialTouch] = useState<number>(0);
-  const [currentTouch, setCurrentTouch] = useState<number>(0);
+  const [page, setPage] = useState<number>(0);
+  const [placeholder, setPlaceholder] = useState<string>("(123) 456-789")
   const navigate = useNavigate();
  
   return (
-    <div>hi</div>
+    <div className="signupContainer">
+      <div className="formContainer">
+        <div className="formText">
+          { page == 0 && "Enter your phone number"}
+          { page == 1 && "What's your first name?"}
+          { page == 2 && "What's your last name?"}
+        </div>
+        <input
+          type="text"
+          id="formInput"
+          className="formInput"
+          placeholder={placeholder}
+        />
+      </div>
+    </div>
   )
 };
 

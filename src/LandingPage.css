@@ -22,7 +22,6 @@ body {
   display: flex;
   height: 100dvh;
   width: 100vw;
-  padding-top: 80px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -31,6 +30,7 @@ body {
 
 .contentContainer {
   display: flex;
+  padding-top: 80px;
   /*padding: 0px 24px;*/
   width: 60vw;
   flex-direction: column;

@@ -1,0 +1,78 @@
+
+@font-face {
+  font-family: 'Rubik One';
+  src: url('./fonts/RubikOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.signupContainer {
+  display: flex;
+  height: 100dvh;
+  width: 100vw;
+  padding-top: 80px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.formContainer {
+  display: flex;
+  padding: 0px 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  align-self: stretch;
+}
+
+.formText {
+  align-self: stretch;
+  color: #FFF;
+  text-align: center;
+  font-family: Rubik One;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%; /* 27.6px */
+  letter-spacing: -0.24px;
+  text-transform: uppercase;
+}
+
+.textInput {
+  display: flex;
+  height: 64px;
+  padding: 0px 24px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 12px;
+  border: 2px solid var(--white, #FFF);
+  background: var(--white-16, rgba(255, 255, 255, 0.16));
+}
+
+.textInputText {
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: Rubik One;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%; /* 24.7px */
+  letter-spacing: -0.095px;
+  text-transform: uppercase;
+}
+
+.nextButton {
+  display: flex;
+  height: 64px;
+  padding: 0px 40px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  right: 34px;
+  bottom: 316px;
+  border-radius: 1000px;
+  background: var(--white, #FFF);
+}
+

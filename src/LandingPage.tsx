@@ -27,7 +27,7 @@ TODO:
 - add fade out transition 
 - Fit to different screen sizes
 - Check for valid cookie + redirect to voting if present
-- Switch from photo export to compiled photo div
+- add circle crop to central image
 */
 
 const LandingPage = () => {
