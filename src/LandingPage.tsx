@@ -54,8 +54,8 @@ const LandingPage = () => {
           </div>
         </div>
         <LandingPageImage />
-        <div className="button">
-          <div className="buttonText" onClick={() => navigate("/signup")}>
+        <div className="button" onClick={() => window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup`)}>
+          <div className="buttonText">
             Sign up
           </div>
         </div>

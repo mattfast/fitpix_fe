@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
-import { io } from "socket.io-client";
 import Webcam from 'react-webcam';
 
 
