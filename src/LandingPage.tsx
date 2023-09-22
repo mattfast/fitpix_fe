@@ -40,6 +40,12 @@ const LandingPage = () => {
   const [initialTouch, setInitialTouch] = useState<number>(0);
   const [currentTouch, setCurrentTouch] = useState<number>(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (cookies['user-id']) {
+      navigate("/vote");
+    }
+  }, [cookies])
  
   return (
     <div className="container">

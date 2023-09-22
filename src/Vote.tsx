@@ -29,7 +29,39 @@ const Vote = () => {
   const navigate = useNavigate();
  
   return (
-    <div>hi</div>
+    <div className="voteContainer">
+      <div className="voteHeader">
+        <div className="voteHeaderItems">
+          <div className="leaderboardLink">🏆</div>
+          <div className="voteHeaderIcon">dopple.club</div>
+          <img src={process.env.PUBLIC_URL + "assets/2.png"} className="profileLink" />
+        </div>
+      </div>
+      <div className="voteContainer">
+        <div className="voteTextContainer">
+          <div className="voteLimitText">
+            1 of 12
+          </div>
+          <div className="voteQuestionText">
+            Anna or James?
+          </div>
+        </div>
+        <div className="optionsContainer">
+          <div className="optionContainer">
+            <img src={process.env.PUBLIC_URL + "assets/anna.png"} className="optionImage" />
+            <div className="optionButton">
+              Anna
+            </div>
+          </div>
+          <div className="optionContainer">
+            <img src={process.env.PUBLIC_URL + "assets/james.png"} className="optionImage" />
+            <div className="optionButton">
+              James
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 };
 

@@ -1,0 +1,174 @@
+
+@font-face {
+  font-family: 'Rubik One';
+  src: url('./fonts/RubikOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF Pro Rounded';
+  src: url('./fonts/SF-Pro-Rounded.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hobeaux';
+  src: url('./fonts/Hobeaux-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.voteContainer {
+  display: flex;
+  height: 100dvh;
+  width: 100vw;
+  /*padding-top: 80px;*/
+  /*flex-direction: column;
+  justify-content: space-between;
+  align-items: center;*/
+  background: #0CA0E4;
+  /*overflow: hidden;*/
+}
+
+.voteHeader {
+  display: flex;
+  padding: 24px 24px 16px 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  align-self: stretch;
+  border-bottom: 1px solid var(--white-16, rgba(255, 255, 255, 0.16));
+}
+
+.voteHeaderItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+}
+
+.leaderboardLink {
+  position: absolute;
+  left: 20px;
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: Rubik;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 115%; /* 32.2px */
+  letter-spacing: -0.28px;
+  cursor: pointer;
+}
+
+.voteHeaderIcon {
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: Hobeaux;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 115%; /* 27.6px */
+  text-transform: uppercase;
+}
+
+.profileLink {
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  right: 20px;
+  border-radius: 28px;
+}
+
+.voteContainer {
+  display: flex;
+  /*padding: 24px 16px;*/
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.voteTextContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  align-self: stretch;
+}
+
+.voteLimitText {
+  color: var(--white-64, rgba(255, 255, 255, 0.64));
+  text-align: center;
+  font-family: SF Pro Rounded;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%; /* 20.7px */
+}
+
+.voteQuestionText {
+  color: #FFF;
+  text-align: center;
+  font-family: Rubik One;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%; /* 27.6px */
+  letter-spacing: -0.24px;
+  text-transform: uppercase;
+  align-self: stretch;
+}
+
+.optionsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  /*align-self: stretch;*/
+}
+
+.optionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  flex: 1 0 0;
+}
+
+.optionImage {
+  height: 213px;
+  border-radius: 16px;
+}
+
+.optionButton {
+  display: flex;
+  height: 64px;
+  width: 100px;
+  padding: 0px 40px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 16px;
+  background: var(--white, #FFF);
+  cursor: pointer;
+
+  color: #EC11C8;
+  text-align: center;
+  font-family: Rubik One;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%; /* 24.7px */
+  letter-spacing: -0.095px;
+  text-transform: uppercase;
+}
+
+.optionButton:hover {
+  /*  Making button bigger on hover  */
+  transform: scale(1.05) perspective(1px)
+}

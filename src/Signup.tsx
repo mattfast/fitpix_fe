@@ -138,7 +138,12 @@ const Signup = () => {
   const nextPage = async () => {
     page == 0 && setPlaceholder("FIRST NAME");
     page == 1 && setPlaceholder("LAST NAME");
-    setPage(page + 1);
+
+    if (page == 4) {
+      navigate("/vote");
+    } else {
+      setPage(page + 1);
+    }
   }
  
   return (
