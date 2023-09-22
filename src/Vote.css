@@ -141,7 +141,10 @@
 }
 
 .optionImage {
-  height: 213px;
+  max-height: min(350px, 60vh);
+  height: auto;
+  width: auto;
+  max-width: 40vw;
   border-radius: 16px;
 }
 
