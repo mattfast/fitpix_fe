@@ -141,7 +141,7 @@
 }
 
 .optionImage {
-  max-height: min(350px, 60vh);
+  max-height: min(350px, 40vh);
   height: auto;
   width: auto;
   max-width: 40vw;

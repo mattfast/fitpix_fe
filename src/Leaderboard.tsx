@@ -16,6 +16,73 @@ const variants = {
 
 };
 
+const leaderboard = [
+  {
+    "name": "Anna",
+    "score": 59
+  },
+  {
+    "name": "James",
+    "score": 49
+  },
+  {
+    "name": "Anna",
+    "score": 59
+  },
+  {
+    "name": "James",
+    "score": 49
+  },
+  {
+    "name": "Anna",
+    "score": 59
+  },
+  {
+    "name": "James",
+    "score": 49
+  },
+  {
+    "name": "Anna",
+    "score": 59
+  },
+  {
+    "name": "James",
+    "score": 49
+  },
+  {
+    "name": "Anna",
+    "score": 59
+  },
+  {
+    "name": "James",
+    "score": 49
+  },
+  {
+    "name": "Anna",
+    "score": 59
+  },
+  {
+    "name": "James",
+    "score": 49
+  },
+  {
+    "name": "Anna",
+    "score": 59
+  },
+  {
+    "name": "James",
+    "score": 49
+  },
+  {
+    "name": "Anna",
+    "score": 59
+  },
+  {
+    "name": "James",
+    "score": 49
+  }
+];
+
 const Leaderboard = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [actionIndex, setActionIndex] = useState(0);
@@ -29,7 +96,20 @@ const Leaderboard = () => {
   const navigate = useNavigate();
  
   return (
-    <div>hi</div>
+    <div className="leaderboardContainer">
+      <div className="leaderboardHeader">
+        <div className="leaderboardTitle">
+          Leaderboard
+        </div>
+      </div>
+      <div className="leaderboard">
+        { leaderboard.map((l, i) => (
+          <div className="leaderboardText">
+            #{i + 1} {l.name} ({l.score} pts)
+          </div>
+        ))}
+      </div>
+    </div>
   )
 };
 

@@ -32,7 +32,7 @@ const Vote = () => {
     <div className="voteContainer">
       <div className="voteHeader">
         <div className="voteHeaderItems">
-          <div className="leaderboardLink">🏆</div>
+          <div className="leaderboardLink" onClick={() => navigate("/leaderboard")}>🏆</div>
           <div className="voteHeaderIcon">dopple.club</div>
           <img src={process.env.PUBLIC_URL + "assets/2.png"} className="profileLink" />
         </div>
