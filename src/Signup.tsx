@@ -51,6 +51,8 @@ const themes = [
 const Signup = () => {
   const [page, setPage] = useState<number>(0);
   const [placeholder, setPlaceholder] = useState<string>("(123) 456-789");
+  const [text, setText] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [streaming, setStreaming] = useState<boolean>(false);
@@ -59,6 +61,28 @@ const Signup = () => {
   const webcamRef = useRef<Webcam | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
+
+  const clearTextArea = () => {
+    const el = document.getElementById("textInput") as HTMLInputElement;
+    if (el) el.value = "";
+    setText("");
+  }
+
+
+  const onTextInput = async (i: string) => {
+    if (i[i.length - 1] == "\n") {
+      if (i.length == 1) {
+        clearTextArea();
+      } else if (page < 3) {
+        // TODO: force regex compliance
+
+        await nextPage();
+      }
+
+      return;
+    }
+    setText(i);
+  }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -135,15 +159,38 @@ const Signup = () => {
     }
   }
 
-  const nextPage = async () => {
-    page == 0 && setPlaceholder("FIRST NAME");
-    page == 1 && setPlaceholder("LAST NAME");
 
-    if (page == 4) {
-      navigate("/vote");
-    } else {
-      setPage(page + 1);
+  const createUser = async () => {
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/create-user`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          "number": text
+        })
+      }
+    )
+    
+    if (response.status !== 200) {
+      setErrorMessage(`A user already exists with that phone number. If that phone number is yours, please log in here: ${process.env.REACT_APP_BASE_URL}.\n\nIf not, please text us at 281-224-0743.`);
     }
+
+    return response.status === 200;
+  }
+
+  const nextPage = async () => {
+    if (page == 0) {
+      const ok = await createUser()
+      if (!ok) return;
+      setPlaceholder("FIRST NAME");
+    } else if (page == 1) {
+      setPlaceholder("LAST NAME");
+    } else if (page == 4) {
+      navigate("/vote");
+      return;
+    }
+
+    setPage(page + 1);
   }
  
   return (
@@ -159,8 +206,12 @@ const Signup = () => {
         { page < 3 && (
           <input
             type="text"
+            id="textInput"
             className="textInput"
             placeholder={placeholder}
+            onChange={(e) => {
+              onTextInput(e.currentTarget.value)
+            }}
           />
         )}
         { camOpen && (

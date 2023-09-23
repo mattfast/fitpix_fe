@@ -16,6 +16,17 @@ const variants = {
 
 };
 
+type User = {
+  name: string;
+  image_url: string;
+  user_id: string;
+}
+
+type UserResponse = {
+  user_list: User[];
+  is_final: boolean;
+}
+
 const Vote = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [actionIndex, setActionIndex] = useState(0);
@@ -26,7 +37,78 @@ const Vote = () => {
   const [totalScroll, setTotalScroll] = useState<number>(0);
   const [initialTouch, setInitialTouch] = useState<number>(0);
   const [currentTouch, setCurrentTouch] = useState<number>(0);
+  const [usersListIndex, setUsersListIndex] = useState<number>(0);
+  const [usersList, setUsersList] = useState<User[]>([]);
+  const [isFinal, setIsFinal] = useState<boolean>(false);
+  const [votingAppeared, setVotingAppeared] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const vote = async (winner_id: string, loser_id: string) => {
+    fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/post-decision`,
+      {
+        method: "POST",
+        headers: {
+          "auth-token": cookies['user-id'],
+        },
+        body: JSON.stringify({
+          "winner_id": winner_id,
+          "loser_id": loser_id
+        })
+      }
+    );
+
+    transitionAnimation();
+  };
+
+  const transitionAnimation = async () => {
+    // TODO: implement animations
+
+    if (usersListIndex >= usersList.length - 3) {
+      // reached limit
+    } else {
+      setUsersListIndex(usersListIndex + 2);
+    }
+  }
+
+  useEffect(() => {
+    if (!cookies['user-id']) {
+      navigate("/");
+    }
+  }, [])
+
+  useEffect(() => {
+    async function fetchUserList() {
+      if (usersList.length < 24 && !isFinal && cookies['user-id']) {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/generate-feed`,
+          { 
+            headers: {
+              "auth-token": cookies['user-id'],
+            }
+          }
+        );
+        const users = await response.json() as UserResponse;
+        setUsersList([...usersList, ...users.user_list]);
+        setIsFinal(users.is_final);
+      }
+    }
+
+    fetchUserList();
+  }, [usersList, cookies])
+
+  useEffect(() => {
+    if (usersList.length > 0 && !votingAppeared) {
+      setVotingAppeared(true);
+    }
+  }, [usersList])
+
+  useEffect(() => {
+    if (votingAppeared) {
+      // TODO: intro animation
+    }
+  }, [votingAppeared])
+
  
   return (
     <div className="voteContainer">
@@ -40,23 +122,23 @@ const Vote = () => {
       <div className="voteContainer">
         <div className="voteTextContainer">
           <div className="voteLimitText">
-            1 of 12
+            {(usersListIndex / 2) + 1} of {usersList.length / 2}
           </div>
           <div className="voteQuestionText">
-            Anna or James?
+            {usersList[usersListIndex].name} or {usersList[usersListIndex + 1].name}?
           </div>
         </div>
         <div className="optionsContainer">
           <div className="optionContainer">
-            <img src={process.env.PUBLIC_URL + "assets/anna.png"} className="optionImage" />
-            <div className="optionButton">
-              Anna
+            <img src={usersList[usersListIndex].image_url} className="optionImage" />
+            <div className="optionButton" onClick={() => vote(usersList[usersListIndex].user_id, usersList[usersListIndex + 1].user_id)}>
+              {usersList[usersListIndex].name}
             </div>
           </div>
           <div className="optionContainer">
-            <img src={process.env.PUBLIC_URL + "assets/james.png"} className="optionImage" />
-            <div className="optionButton">
-              James
+            <img src={usersList[usersListIndex + 1].image_url} className="optionImage" />
+            <div className="optionButton" onClick={() => vote(usersList[usersListIndex + 1].user_id, usersList[usersListIndex].user_id)}>
+              {usersList[usersListIndex + 1].name}
             </div>
           </div>
         </div>
