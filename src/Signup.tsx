@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Webcam from 'react-webcam';
+import htmlToImage from 'html-to-image';
 
 
 import "@fontsource/rubik";
@@ -10,6 +11,7 @@ import "@fontsource/rubik/500.css";
 import "@fontsource/rubik/700.css"; 
 import "@fontsource/figtree/600.css";
 import "./Signup.css";
+import s3 from "./s3";
 import makeCookie from "./utils";
 import Modal from "./Modal";
 
@@ -49,9 +51,11 @@ const themes = [
 ];
 
 const Signup = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [page, setPage] = useState<number>(0);
-  const [placeholder, setPlaceholder] = useState<string>("(123) 456-789");
+  const [placeholder, setPlaceholder] = useState<string>("(123) 456-7890");
   const [text, setText] = useState<string>("");
+  const [rawNumber, setRawNumber] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -61,28 +65,6 @@ const Signup = () => {
   const webcamRef = useRef<Webcam | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
-
-  const clearTextArea = () => {
-    const el = document.getElementById("textInput") as HTMLInputElement;
-    if (el) el.value = "";
-    setText("");
-  }
-
-
-  const onTextInput = async (i: string) => {
-    if (i[i.length - 1] == "\n") {
-      if (i.length == 1) {
-        clearTextArea();
-      } else if (page < 3) {
-        // TODO: force regex compliance
-
-        await nextPage();
-      }
-
-      return;
-    }
-    setText(i);
-  }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -165,6 +147,9 @@ const Signup = () => {
       `${process.env.REACT_APP_BACKEND_URL}/create-user`,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
           "number": text
         })
@@ -173,23 +158,163 @@ const Signup = () => {
     
     if (response.status !== 200) {
       setErrorMessage(`A user already exists with that phone number. If that phone number is yours, please log in here: ${process.env.REACT_APP_BASE_URL}.\n\nIf not, please text us at 281-224-0743.`);
+      return false;
+    }
+
+    const respJson = await response.json();
+    if (respJson["cookie"]) {
+      const futureDate = new Date();
+      futureDate.setFullYear(futureDate.getFullYear() + 10);
+      setCookie("user-id", respJson["cookie"], { expires: futureDate });
     }
 
     return response.status === 200;
   }
 
-  const nextPage = async () => {
+  const updateUser = async (keyVal: any) => {
+    if (!cookies["user-id"]) {
+      setErrorMessage("cookie not set");
+      return false;
+    }
+
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/update-user`,
+      {
+        method: "POST",
+        headers: {
+          "auth-token": cookies["user-id"],
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(keyVal)
+      }
+    )
+
+    return response.status === 200;
+  }
+
+  const clearTextArea = () => {
+    const el = document.getElementById("textInput") as HTMLInputElement;
+    if (el) el.value = "";
+    setText("");
+  }
+
+  const formatPhoneNumber = (input: string) => {
+    if (input.length == 0) {
+      return ``;
+    } else if (input.length <= 3) {
+      return `(${input}`;
+    } else if (input.length <= 6) {
+      return `(${input.slice(0, 3)}) ${input.slice(3)}`;
+    } else {
+      return `(${input.slice(0, 3)}) ${input.slice(3, 6)}-${input.slice(6, 10)}`;
+    }
+  };
+
+  const onTextInput = async (i: string) => {
+    if (i[i.length - 1] == "\n") {
+      if (i.length == 1) {
+        clearTextArea();
+      } else if (page < 3) {
+        await nextClick();
+      }
+
+      return;
+    }
+  
+    const el = document.getElementById("textInput") as HTMLInputElement;
     if (page == 0) {
-      const ok = await createUser()
+      const inputText = i.replace(/\D/g, '').slice(0,10);
+      const formattedNumber = formatPhoneNumber(inputText);
+      if (el) el.value = formattedNumber;
+      setText(inputText);
+    } else if (page == 1 || page == 2) {
+      if (i.length < 30) {
+        setText(i);
+      } else {
+        if (el) el.value = i.slice(0, 30);
+        setText(i.slice(0, 30));
+      }
+    }
+  }
+
+  const validateLength = () => {
+
+    if (text.length == 0) {
+      setErrorMessage("Input field cannot be empty.")
+      return false;
+    }
+
+    if (page == 0 && text.length < 10) {
+      setErrorMessage("Number must be in the format (123) 456-7890");
+      return false;
+    }
+
+    return true;
+  }
+
+  const uploadImageToS3 = async () => {
+    // Create a new image element and set its source to the captured image.
+    // Define the S3 bucket name and file name
+    const bucketName = 'dopple-selfies';
+    const fileName = `selfie-1-${cookies['user-id']}.jpg`; // Unique file name
+
+    // Encode the image as a buffer
+    const imageBlob = await fetch(capturedImage || "").then((response) => response.blob());
+
+    // Set up the parameters for the S3 upload
+    const params = {
+      Bucket: bucketName,
+      Key: fileName,
+      Body: imageBlob,
+      ContentType: 'image/jpeg', // Adjust the content type as needed
+    };
+
+    // Upload the image to S3
+    s3.upload(params, (err, data) => {
+      if (err) {
+        console.error('Error uploading image to S3:', err);
+      } else {
+        console.log('Image uploaded successfully:', data.Location);
+        // You can handle success here, such as displaying a success message to the user.
+      }
+    });
+  }
+
+  const nextClick = async () => {
+
+    // validate input
+    if (page < 3) {
+      const validated = validateLength();
+      if (!validated) return;
+    }
+
+    if (page == 0) {
+      const ok = await createUser();
       if (!ok) return;
       setPlaceholder("FIRST NAME");
     } else if (page == 1) {
+      const ok = await updateUser({ "first_name": text });
+      if (!ok) {
+        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!")
+        return;
+      }
       setPlaceholder("LAST NAME");
+    } else if (page == 2) {
+      const ok = await updateUser({ "last_name": text });
+      if (!ok) {
+        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!")
+        return;
+      }
+    } else if (page == 3) {
+      uploadImageToS3();
     } else if (page == 4) {
       navigate("/vote");
       return;
     }
 
+    clearTextArea();
+    setText("");
+    setErrorMessage("");
     setPage(page + 1);
   }
  
@@ -215,7 +340,7 @@ const Signup = () => {
           />
         )}
         { camOpen && (
-          <Webcam forceScreenshotSourceSize className="fileInput" audio={false} ref={webcamRef} mirrored={true} />
+          <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
         )}
         <div id="streamingComponent" className="videoFullCircle" />
         { page == 3 && (
@@ -284,9 +409,14 @@ const Signup = () => {
             </div>
           </>
         )}
+        { errorMessage && (
+          <div className="errorText">
+            {errorMessage}
+          </div>
+        )}
       </div>
       { (page !== 3 || selectedFile || capturedImage) && (
-        <div className="nextButton" onClick={nextPage}>
+        <div className="nextButton" onClick={nextClick}>
             <div className="nextButtonText">
               {page < 3 && "Next"}
               {(page > 3 || selectedFile || capturedImage) && "Looks good"}
