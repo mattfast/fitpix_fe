@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Webcam from 'react-webcam';
+import { useSpring, animated } from 'react-spring';
 import htmlToImage from 'html-to-image';
 
 
@@ -62,9 +63,15 @@ const Signup = () => {
   const [streaming, setStreaming] = useState<boolean>(false);
   const [camOpen, setCamOpen] = useState<boolean>(false);
   const [themeList, setThemeList] = useState<string[]>([]);
+  const [show, setShow] = useState(true);
   const webcamRef = useRef<Webcam | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
+
+  const fadeAnimation = useSpring({
+    opacity: show ? 1 : 0,
+    config: { tension: 220, friction: 120 }
+  });
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -282,6 +289,8 @@ const Signup = () => {
 
   const nextClick = async () => {
 
+    setShow(false);
+
     // validate input
     if (page < 3) {
       const validated = validateLength();
@@ -316,11 +325,12 @@ const Signup = () => {
     setText("");
     setErrorMessage("");
     setPage(page + 1);
+    setShow(true);
   }
  
   return (
     <div className="signupContainer">
-      <div className="formContainer">
+      <animated.div className="formContainer" style={fadeAnimation}>
         <div className="formText">
           { page == 0 && "Enter your phone number"}
           { page == 1 && "What's your first name?"}
@@ -414,7 +424,7 @@ const Signup = () => {
             {errorMessage}
           </div>
         )}
-      </div>
+      </animated.div>
       { (page !== 3 || selectedFile || capturedImage) && (
         <div className="nextButton" onClick={nextClick}>
             <div className="nextButtonText">

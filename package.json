@@ -23,6 +23,7 @@
     "react-scripts": "5.0.1",
     "react-share": "^4.4.1",
     "react-spotify-embed": "^2.0.3",
+    "react-spring": "^9.7.3",
     "react-timer-hook": "^3.0.6",
     "react-use-websocket": "^4.4.0",
     "react-webcam": "^7.1.1",

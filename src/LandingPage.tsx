@@ -31,21 +31,28 @@ TODO:
 
 const LandingPage = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
-  const [actionIndex, setActionIndex] = useState(0);
-  const [sid, setSid] = useState<string>("");
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [prevActionIndex, setPrevActionIndex] = useState(0);
-  const [pageUp, setPageUp] = useState<boolean>(false);
-  const [totalScroll, setTotalScroll] = useState<number>(0);
-  const [initialTouch, setInitialTouch] = useState<number>(0);
-  const [currentTouch, setCurrentTouch] = useState<number>(0);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     if (cookies['user-id']) {
       navigate("/vote");
     }
   }, [cookies])
+
+  /* () => window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup`) */
+
+  // Add a touchstart event listener to remove the class on touch devices
+  /*const component = document.getElementById('signupButton');
+  component?.addEventListener('touchstart', function() {
+    // Remove the class that overrides hover styles
+    component.classList.add('clicked');
+  });
+
+  component?.addEventListener('touchend', function() {
+    // Remove the class that overrides hover styles
+    component.classList.remove('clicked');
+  });*/
  
   return (
     <div className="container">
@@ -60,7 +67,7 @@ const LandingPage = () => {
           </div>
         </div>
         <LandingPageImage />
-        <div className="button" onClick={() => window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup`)}>
+        <div id="signupButton" className="button">
           <div className="buttonText">
             Sign up
           </div>

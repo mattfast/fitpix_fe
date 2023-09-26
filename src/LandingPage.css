@@ -115,11 +115,6 @@ body {
   cursor: pointer;
 }
 
-.button:hover {
-/*  Making button bigger on hover  */
-  transform: scale(1.05) perspective(1px)
-}
-
 .buttonText {
   color: #EC11C8;
   text-align: center;
@@ -130,5 +125,14 @@ body {
   line-height: 130%; /* 24.7px */
   letter-spacing: -0.095px;
   text-transform: uppercase;
+}
+
+.button:active {
+  /*  Making button bigger on hover  */
+  transform: scale(1.05) perspective(1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { transform: scale(1.05) perspective(1px); }
 }
 
