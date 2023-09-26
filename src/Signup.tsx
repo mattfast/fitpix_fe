@@ -13,8 +13,7 @@ import "@fontsource/rubik/700.css";
 import "@fontsource/figtree/600.css";
 import "./Signup.css";
 import s3 from "./s3";
-import makeCookie from "./utils";
-import Modal from "./Modal";
+import { formatPhoneNumber } from "./utils";
 
 const themes = [
   {
@@ -205,18 +204,6 @@ const Signup = () => {
     setText("");
   }
 
-  const formatPhoneNumber = (input: string) => {
-    if (input.length == 0) {
-      return ``;
-    } else if (input.length <= 3) {
-      return `(${input}`;
-    } else if (input.length <= 6) {
-      return `(${input.slice(0, 3)}) ${input.slice(3)}`;
-    } else {
-      return `(${input.slice(0, 3)}) ${input.slice(3, 6)}-${input.slice(6, 10)}`;
-    }
-  };
-
   const onTextInput = async (i: string) => {
     if (i[i.length - 1] == "\n") {
       if (i.length == 1) {
@@ -294,24 +281,32 @@ const Signup = () => {
     // validate input
     if (page < 3) {
       const validated = validateLength();
-      if (!validated) return;
+      if (!validated) {
+        setShow(true);
+        return;
+      }
     }
 
     if (page == 0) {
       const ok = await createUser();
-      if (!ok) return;
+      if (!ok) {
+        setShow(true);
+        return;
+      }
       setPlaceholder("FIRST NAME");
     } else if (page == 1) {
       const ok = await updateUser({ "first_name": text });
       if (!ok) {
-        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!")
+        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
+        setShow(true);
         return;
       }
       setPlaceholder("LAST NAME");
     } else if (page == 2) {
       const ok = await updateUser({ "last_name": text });
       if (!ok) {
-        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!")
+        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
+        setShow(true);
         return;
       }
     } else if (page == 3) {

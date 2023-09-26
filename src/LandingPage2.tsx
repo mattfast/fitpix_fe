@@ -9,7 +9,7 @@ import "@fontsource/rubik/500.css";
 import "@fontsource/rubik/700.css"; 
 import "@fontsource/figtree/600.css";
 import "./LandingPage2.css";
-import makeCookie from "./utils";
+import { makeCookie } from "./utils";
 import Modal from "./Modal";
 
 const variants = {

@@ -10,7 +10,7 @@ import "@fontsource/figtree";
 import "@fontsource/figtree/600.css";
 import "./Chat.css";
 import "./Loader.css"
-import makeCookie from "./utils";
+import { makeCookie } from "./utils";
 
 import Modal from "./Modal";
 

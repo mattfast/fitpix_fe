@@ -1,5 +1,5 @@
 
-function makeCookie (len: number) {
+export const makeCookie = (len: number) => {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
@@ -11,6 +11,14 @@ function makeCookie (len: number) {
   return result;
 }
 
-export default (
-  makeCookie
-);
+export const formatPhoneNumber = (input: string) => {
+  if (input.length == 0) {
+    return ``;
+  } else if (input.length <= 3) {
+    return `(${input}`;
+  } else if (input.length <= 6) {
+    return `(${input.slice(0, 3)}) ${input.slice(3)}`;
+  } else {
+    return `(${input.slice(0, 3)}) ${input.slice(3, 6)}-${input.slice(6, 10)}`;
+  }
+};

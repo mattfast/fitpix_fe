@@ -9,12 +9,6 @@ import "@fontsource/rubik/500.css";
 import "@fontsource/rubik/700.css"; 
 import "@fontsource/figtree/600.css";
 import "./Leaderboard.css";
-import makeCookie from "./utils";
-import Modal from "./Modal";
-
-const variants = {
-
-};
 
 const leaderboard = [
   {
