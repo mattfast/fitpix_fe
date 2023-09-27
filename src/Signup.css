@@ -39,7 +39,7 @@
   display: flex;
   /*height: 100dvh;*/
   width: 100vw;
-  padding-top: 80px;
+  padding-top: 30px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -204,6 +204,15 @@
 /*.textInputText {
 
 }*/
+
+.themesArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: -20px;
+  align-self: stretch;
+}
 
 .themes {
   display: flex;

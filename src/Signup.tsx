@@ -418,14 +418,16 @@ const Signup = () => {
               {capturedImage && (
                 <img src={capturedImage} alt="Captured" className="photoFullCircle" />
               )}
-              <div className="themesInstructionText">Choose up to 3 personalities:</div>
-              <div className="themes">
-                { themes.map(t => (
-                  <div id={`emoji-button-${t.text}`} className="retakeButton" onClick={() => addToThemeList(t.text)}>
-                    <div>{t.emoji}</div>
-                    <div>{t.text}</div>
-                  </div>
-                ))}
+              <div className="themesArea">
+                <div className="themesInstructionText">Choose up to 3 personalities:</div>
+                <div className="themes">
+                  { themes.map(t => (
+                    <div id={`emoji-button-${t.text}`} className="retakeButton" onClick={() => addToThemeList(t.text)}>
+                      <div>{t.emoji}</div>
+                      <div>{t.text}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </>
           )}
