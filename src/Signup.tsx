@@ -280,6 +280,10 @@ const Signup = () => {
     });
   }
 
+  const enterDetector = (key: string) => {
+    if (key.toUpperCase() == "ENTER") nextClick();
+  }
+
   const nextClick = async () => {
 
     setShow(false);
@@ -345,6 +349,7 @@ const Signup = () => {
             id="textInput"
             className="textInput"
             placeholder={placeholder}
+            onKeyUp={(e) => enterDetector(e.key)}
             onChange={(e) => {
               onTextInput(e.currentTarget.value)
             }}
