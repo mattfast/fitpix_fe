@@ -73,7 +73,7 @@ const Signup = () => {
   const shiftNextButton = () => {
     const el = document.getElementById("nextButton");
     const px = window.visualViewport?.height;
-    if (el && px) el.style.bottom = "calc(26px + 100vh - " + px + "px)";
+    if (el && px) el.style.bottom = "calc(26px + 100dvh - " + px + "px)";
   }
 
   setInterval(shiftNextButton, 50);

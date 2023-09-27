@@ -32,17 +32,17 @@
   height: 100dvh;
   width: 100vw;
   overflow: hidden;
+  background: #0CA0E4;
 }
 
 .signupContainer {
   display: flex;
-  height: 100dvh;
+  /*height: 100dvh;*/
   width: 100vw;
   padding-top: 80px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background: #0CA0E4;
   overflow: hidden;
 }
 
