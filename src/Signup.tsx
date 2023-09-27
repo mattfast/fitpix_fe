@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Webcam from 'react-webcam';
 import { useSpring, animated } from 'react-spring';
-import htmlToImage from 'html-to-image';
-
 
 import "@fontsource/rubik";
 import "@fontsource/rubik/500.css"; 
@@ -71,6 +69,14 @@ const Signup = () => {
     opacity: show ? 1 : 0,
     config: { tension: 220, friction: 120 }
   });
+
+  const shiftNextButton = () => {
+    const el = document.getElementById("nextButton");
+    const px = window.visualViewport?.height;
+    if (el && px) el.style.bottom = "calc(26px + 100dvh - " + px + "px)";
+  }
+
+  setInterval(shiftNextButton, 50);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -421,7 +427,7 @@ const Signup = () => {
         )}
       </animated.div>
       { (page !== 3 || selectedFile || capturedImage) && (
-        <div className="nextButton" onClick={nextClick}>
+        <div id="nextButton" className="nextButton" onClick={nextClick}>
             <div className="nextButtonText">
               {page < 3 && "Next"}
               {(page > 3 || selectedFile || capturedImage) && "Looks good"}
