@@ -40,7 +40,7 @@ const LandingPage = () => {
       const param = searchParams.get('q');
       if (param) {
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/verify-auth`,
+          `${process.env.REACT_APP_BE_URL}/verify-auth`,
           {
             method: "POST",
             headers: {

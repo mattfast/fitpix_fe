@@ -44,7 +44,7 @@ const Vote = () => {
 
   const vote = async (winner_id: string, loser_id: string) => {
     fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/post-decision`,
+      `${process.env.REACT_APP_BE_URL}/post-decision`,
       {
         method: "POST",
         headers: {
@@ -80,7 +80,7 @@ const Vote = () => {
     async function fetchUserList() {
       if (usersList.length < 24 && !isFinal && cookies['user-id']) {
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/generate-feed`,
+          `${process.env.REACT_APP_BE_URL}/generate-feed`,
           { 
             headers: {
               "auth-token": cookies['user-id'],

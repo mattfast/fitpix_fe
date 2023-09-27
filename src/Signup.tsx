@@ -74,7 +74,7 @@ const Signup = () => {
     const el = document.getElementById("nextButton");
     const px1 = window.visualViewport?.height;
     const px2 = window.innerHeight;
-    if (el && px1) el.style.bottom = "calc(" + px2 + "px - " + px1 + "px)";
+    if (el && px1) el.style.bottom = "calc(26px + " + px2 + "px - " + px1 + "px)";
   }
 
   setInterval(shiftNextButton, 50);
@@ -157,7 +157,7 @@ const Signup = () => {
 
   const createUser = async () => {
     const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/create-user`,
+      `${process.env.REACT_APP_BE_URL}/create-user`,
       {
         method: "POST",
         headers: {
@@ -191,7 +191,7 @@ const Signup = () => {
     }
 
     const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/update-user`,
+      `${process.env.REACT_APP_BE_URL}/update-user`,
       {
         method: "POST",
         headers: {

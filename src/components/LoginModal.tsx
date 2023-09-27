@@ -63,7 +63,7 @@ const LoginModal = ({ setModalOpen, modalOpen, buttonRef }) => {
 
   const buttonClick = async () => {
     const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/generate-auth`,
+      `${process.env.REACT_APP_BE_URL}/generate-auth`,
       {
         method: "POST",
         headers: {

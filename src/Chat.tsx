@@ -29,7 +29,7 @@ type BackendMessage = {
   role: string;
 }
 
-const socket = io(process.env.REACT_APP_BACKEND_URL || "", { transports: ['websocket'] });
+const socket = io(process.env.REACT_APP_BE_URL || "", { transports: ['websocket'] });
 
 const firstMessages = [
   {
