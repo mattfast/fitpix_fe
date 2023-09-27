@@ -66,17 +66,17 @@
 }
 
 .height1 {
-  height: 265px;
+  height: min(265px, 25vh);
   background: rgba(255, 255, 255, 0.40);
 }
 
 .height2 {
-  height: 216px;
+  height: min(216px, 21.09375vh);
   background: rgba(255, 255, 255, 0.30);
 }
 
 .height3 {
-  height: 171px;
+  height: min(171px, 16.69921875vh);
   background: rgba(255, 255, 255, 0.20);
 }
 
