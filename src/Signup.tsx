@@ -63,6 +63,7 @@ const Signup = () => {
   const [show, setShow] = useState(true);
   const webcamRef = useRef<Webcam | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const textInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
 
   const fadeAnimation = useSpring({
@@ -350,6 +351,7 @@ const Signup = () => {
               type="text"
               id="textInput"
               className="textInput"
+              ref={textInputRef}
               placeholder={placeholder}
               onKeyUp={(e) => enterDetector(e.key)}
               onChange={(e) => {
@@ -434,7 +436,11 @@ const Signup = () => {
           )}
         </animated.div>
         { (page !== 3 || selectedFile || capturedImage) && (
-          <div id="nextButton" className="nextButton" onClick={nextClick}>
+          <div id="nextButton" className="nextButton" onClick={(e) => {
+            e.preventDefault();
+            if (textInputRef.current) textInputRef.current.focus();
+            nextClick();
+          }}>
               <div className="nextButtonText">
                 {page < 3 && "Next"}
                 {(page > 3 || selectedFile || capturedImage) && "Looks good"}
