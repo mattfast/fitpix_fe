@@ -82,26 +82,30 @@ const LandingPage = () => {
  
   return (
     <>
-      <div className="container">
-        <div className="contentContainer">
-          <div className="textContainer">
-            <div className="titleContainer">
-              <div className="crown">👑</div>
-              <div className="name">dopple.club</div>
+      <div className="overallContainer">
+        <div className="container">
+          <div className="contentContainer">
+            <div className="textContainer">
+              <div className="titleContainer">
+                <div className="crown">👑</div>
+                <div className="name">dopple.club</div>
+              </div>
+              <div className="subtitle">
+                <div className="pink">Find</div> the 🤴 and 👸🏻 of <div className="pink">your class</div>
+              </div>
             </div>
-            <div className="subtitle">
-              <div className="pink">Find</div> the 🤴 and 👸🏻 of <div className="pink">your class</div>
-            </div>
-          </div>
-          <LandingPageImage />
-          <div id="signupButton" className="signupButton" onClick={() => window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup`)}>
-            <div className="buttonText">
-              Sign up
-            </div>
-          </div>
-          <div id="loginButton" className="loginButton" onClick={() => setModalOpen(true)} ref={buttonRef}>
-            <div className="loginButtonText">
-              Log in
+            <LandingPageImage />
+            <div className="buttonGroup">
+              <div id="signupButton" className="signupButton" onClick={() => window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup`)}>
+                <div className="buttonText">
+                  Sign up
+                </div>
+              </div>
+              <div id="loginButton" className="loginButton" onClick={() => setModalOpen(true)} ref={buttonRef}>
+                <div className="loginButtonText">
+                  Log in
+                </div>
+              </div>
             </div>
           </div>
         </div>
