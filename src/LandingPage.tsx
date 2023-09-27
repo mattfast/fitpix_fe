@@ -35,6 +35,13 @@ const LandingPage = () => {
   const buttonRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
+  const shiftButtons = () => {
+    const el = document.getElementById("buttonGroup");
+    const px1 = window.visualViewport?.height;
+    const px2 = window.innerHeight;
+    if (el && px1) el.style.bottom = "calc(26px + " + px2 + "px - " + px1 + "px)";
+  }
+
   useEffect(() => {
     async function verifySP() {
       const param = searchParams.get('q');
@@ -95,7 +102,7 @@ const LandingPage = () => {
               </div>
             </div>
             <LandingPageImage />
-            <div className="buttonGroup">
+            <div id="buttonGroup" className="buttonGroup">
               <div id="signupButton" className="signupButton" onClick={() => window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup`)}>
                 <div className="buttonText">
                   Sign up

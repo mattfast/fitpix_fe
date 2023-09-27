@@ -115,6 +115,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  bottom: 26px;
+  position: absolute;
+
 }
 
 .signupButton {
