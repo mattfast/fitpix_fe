@@ -26,35 +26,35 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10.219px;
+  gap: min(10.219px, 1.98427vw);
 }
 
 .leaderboardImage1 {
-  width: 76.641px;
-  height: 76.641px;
-  border-radius: 76.641px;
+  width: min(76.641px, 14.8817vw);
+  height: min(76.641px, 14.8817vw);
+  border-radius: min(76.641px, 14.8817vw);
   animation: bounce 2s infinite; /* Adjust the duration as needed */
   animation-delay: 1100ms;
 }
 
 .leaderboardImage2 {
-  width: 76.641px;
-  height: 76.641px;
-  border-radius: 76.641px;
+  width: min(76.641px, 14.8817vw);
+  height: min(76.641px, 14.8817vw);
+  border-radius: min(76.641px, 14.8817vw);
   animation: bounce 2s infinite; /* Adjust the duration as needed */
   animation-delay: 650ms;
 }
 
 .leaderboardImage3 {
-  width: 76.641px;
-  height: 76.641px;
-  border-radius: 76.641px;
+  width: min(76.641px, 14.8817vw);
+  height: min(76.641px, 14.8817vw);
+  border-radius: min(76.641px, 14.8817vw);
   animation: bounce 2s infinite; /* Adjust the duration as needed */
 }
 
 .barGraphColumn {
   /*display: flex;*/
-  width: 103px;
+  width: min(103px, 20vw);
   /*padding: 8px 25.547px 25.547px 25.547px;*/
   flex-direction: column;
   align-items: center;
@@ -62,7 +62,7 @@
   /*gap: 25.547px;*/
   overflow:hidden;
   /*border-radius: 10.219px;*/
-  border-radius: 10.219px;
+  border-radius: min(10.219px, 1.984vw);
 }
 
 .height1 {
@@ -82,6 +82,6 @@
 
 .medal {
   padding-top: 8px;
-  width: 54x;
+  width: 54px;
   height: 54px;
 }
