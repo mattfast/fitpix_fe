@@ -334,112 +334,114 @@ const Signup = () => {
   }
  
   return (
-    <div className="signupContainer">
-      <animated.div className="formContainer" style={fadeAnimation}>
-        <div className="formText">
-          { page == 0 && "Enter your phone number"}
-          { page == 1 && "What's your first name?"}
-          { page == 2 && "What's your last name?"}
-          { page == 3 && "Create your dopple"}
-          { page == 4 && "Customize your dopple"}
-        </div>
-        { page < 3 && (
-          <input
-            type="text"
-            id="textInput"
-            className="textInput"
-            placeholder={placeholder}
-            onKeyUp={(e) => enterDetector(e.key)}
-            onChange={(e) => {
-              onTextInput(e.currentTarget.value)
-            }}
-          />
-        )}
-        { camOpen && (
-          <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
-        )}
-        <div id="streamingComponent" className="videoFullCircle" />
-        { page == 3 && (
-          <>
-            {selectedFile && (
-              <>
-                <img src={URL.createObjectURL(selectedFile)} className="photoFullCircle" alt="Selected" />
-                <div className="retakeButton" onClick={() => setSelectedFile(null)}>
-                  <div>📸</div>
-                  <div>Retake</div>
-                </div>
-              </>
-            )}
-            {capturedImage && (
-              <>
-                <img src={capturedImage} alt="Captured" className="photoFullCircle" />
-                <div className="retakeButton" onClick={() => setCapturedImage(null)}>
-                  <div>📸</div>
-                  <div>Retake</div>
-                </div>
-              </>
-            )}
-            {streaming && (
-              <>
-                <div className="retakeButton" onClick={capture}>
-                  <div>📸</div>
-                  <div>Capture</div>
-                </div>
-              </>
-            )}
-            {(!selectedFile && !capturedImage && !streaming) && (
-              <>
-                <div className="photoEmptyCircle">
-                  <img src={process.env.PUBLIC_URL + "assets/user.png"} className="photoPlaceholder" />
-                </div>
-                <div className="photoButtonGroup">
-                  <input type="file" ref={fileInputRef} className="fileInput" accept="image/*" onChange={handleFileChange} />
-                  <div className="photoButton" onClick={beginStream}>
-                    <div className="nextButtonText">🔥 take  a selfie 🔥</div>
+    <div className="overallSignupContainer">
+      <div className="signupContainer">
+        <animated.div className="formContainer" style={fadeAnimation}>
+          <div className="formText">
+            { page == 0 && "Enter your phone number"}
+            { page == 1 && "What's your first name?"}
+            { page == 2 && "What's your last name?"}
+            { page == 3 && "Create your dopple"}
+            { page == 4 && "Customize your dopple"}
+          </div>
+          { page < 3 && (
+            <input
+              type="text"
+              id="textInput"
+              className="textInput"
+              placeholder={placeholder}
+              onKeyUp={(e) => enterDetector(e.key)}
+              onChange={(e) => {
+                onTextInput(e.currentTarget.value)
+              }}
+            />
+          )}
+          { camOpen && (
+            <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
+          )}
+          <div id="streamingComponent" className="videoFullCircle" />
+          { page == 3 && (
+            <>
+              {selectedFile && (
+                <>
+                  <img src={URL.createObjectURL(selectedFile)} className="photoFullCircle" alt="Selected" />
+                  <div className="retakeButton" onClick={() => setSelectedFile(null)}>
+                    <div>📸</div>
+                    <div>Retake</div>
                   </div>
-                  <div className="photoButton" onClick={handleFileButtonClick}>
-                    <div className="nextButtonText">✨ upload a photo ✨</div>
+                </>
+              )}
+              {capturedImage && (
+                <>
+                  <img src={capturedImage} alt="Captured" className="photoFullCircle" />
+                  <div className="retakeButton" onClick={() => setCapturedImage(null)}>
+                    <div>📸</div>
+                    <div>Retake</div>
                   </div>
-                </div>
-              </>
-            )}
+                </>
+              )}
+              {streaming && (
+                <>
+                  <div className="retakeButton" onClick={capture}>
+                    <div>📸</div>
+                    <div>Capture</div>
+                  </div>
+                </>
+              )}
+              {(!selectedFile && !capturedImage && !streaming) && (
+                <>
+                  <div className="photoEmptyCircle">
+                    <img src={process.env.PUBLIC_URL + "assets/user.png"} className="photoPlaceholder" />
+                  </div>
+                  <div className="photoButtonGroup">
+                    <input type="file" ref={fileInputRef} className="fileInput" accept="image/*" onChange={handleFileChange} />
+                    <div className="photoButton" onClick={beginStream}>
+                      <div className="nextButtonText">🔥 take  a selfie 🔥</div>
+                    </div>
+                    <div className="photoButton" onClick={handleFileButtonClick}>
+                      <div className="nextButtonText">✨ upload a photo ✨</div>
+                    </div>
+                  </div>
+                </>
+              )}
 
-          </>
-        )}
-        { page == 4 && (
-          <>
-            {selectedFile && (
-              <img src={URL.createObjectURL(selectedFile)} className="photoFullCircle" alt="Selected" />
-            )}
-            {capturedImage && (
-              <img src={capturedImage} alt="Captured" className="photoFullCircle" />
-            )}
-            <div className="themesInstructionText">Choose up to 3 personalities:</div>
-            <div className="themes">
-              { themes.map(t => (
-                <div id={`emoji-button-${t.text}`} className="retakeButton" onClick={() => addToThemeList(t.text)}>
-                  <div>{t.emoji}</div>
-                  <div>{t.text}</div>
-                </div>
-              ))}
+            </>
+          )}
+          { page == 4 && (
+            <>
+              {selectedFile && (
+                <img src={URL.createObjectURL(selectedFile)} className="photoFullCircle" alt="Selected" />
+              )}
+              {capturedImage && (
+                <img src={capturedImage} alt="Captured" className="photoFullCircle" />
+              )}
+              <div className="themesInstructionText">Choose up to 3 personalities:</div>
+              <div className="themes">
+                { themes.map(t => (
+                  <div id={`emoji-button-${t.text}`} className="retakeButton" onClick={() => addToThemeList(t.text)}>
+                    <div>{t.emoji}</div>
+                    <div>{t.text}</div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          { errorMessage && (
+            <div className="errorText">
+              {errorMessage}
             </div>
-          </>
-        )}
-        { errorMessage && (
-          <div className="errorText">
-            {errorMessage}
+          )}
+        </animated.div>
+        { (page !== 3 || selectedFile || capturedImage) && (
+          <div id="nextButton" className="nextButton" onClick={nextClick}>
+              <div className="nextButtonText">
+                {page < 3 && "Next"}
+                {(page > 3 || selectedFile || capturedImage) && "Looks good"}
+              </div>
+            <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
           </div>
         )}
-      </animated.div>
-      { (page !== 3 || selectedFile || capturedImage) && (
-        <div id="nextButton" className="nextButton" onClick={nextClick}>
-            <div className="nextButtonText">
-              {page < 3 && "Next"}
-              {(page > 3 || selectedFile || capturedImage) && "Looks good"}
-            </div>
-          <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
-        </div>
-      )}
+      </div>
     </div>
   )
 };
