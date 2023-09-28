@@ -286,6 +286,13 @@ const Signup = () => {
     if (key.toUpperCase() == "ENTER") nextClick();
   }
 
+  useEffect(() => {
+    if (textInputRef.current) {
+      //textInputRef.current.blur();
+      textInputRef.current.focus();
+    }
+  }, [page])
+
   const nextClick = async () => {
 
     setShow(false);
@@ -333,6 +340,7 @@ const Signup = () => {
     setErrorMessage("");
     setPage(page + 1);
     setShow(true);
+    refocusKeyboard();
   }
  
   return (
