@@ -107,7 +107,7 @@ const LoginModal = ({ setModalOpen, modalOpen, buttonRef }) => {
               We'll text you a link that automatically logs you in
             </div>
           </div>
-          <input type="text" id="formInput" className="formInput" placeholder="(123) 456-7890" onKeyUp={(e) => enterDetector(e.key)} onChange={e => onTyping(e.currentTarget.value)}/>
+          <input type="tel" id="formInput" className="formInput" placeholder="(123) 456-7890" onKeyUp={(e) => enterDetector(e.key)} onChange={e => onTyping(e.currentTarget.value)}/>
           { errorMessage !== null && (
             <div className="errorMessage">{errorMessage}</div>
           )}

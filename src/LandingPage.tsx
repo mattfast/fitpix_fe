@@ -35,13 +35,6 @@ const LandingPage = () => {
   const buttonRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  const shiftButtons = () => {
-    const el = document.getElementById("buttonGroup");
-    const px1 = window.visualViewport?.height;
-    const px2 = window.innerHeight;
-    if (el && px1) el.style.bottom = "calc(26px + " + px2 + "px - " + px1 + "px)";
-  }
-
   useEffect(() => {
     async function verifySP() {
       const param = searchParams.get('q');
