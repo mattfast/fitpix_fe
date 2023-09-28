@@ -288,6 +288,7 @@ const Signup = () => {
 
   useEffect(() => {
     async function refocusKeyboard() {
+      console.log("REFOCUSING KEYBOARD");
       if (textInputRef.current) {
         textInputRef.current.blur();
         await new Promise(r => setTimeout(r, 500));
@@ -297,7 +298,7 @@ const Signup = () => {
 
     refocusKeyboard();
 
-  }, [page])
+  }, [textInputRef, page])
 
   const nextClick = async () => {
 
