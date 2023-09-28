@@ -112,7 +112,30 @@ const Signup = () => {
     if (el && px1) el.style.bottom = "calc(26px + " + px2 + "px - " + px1 + "px)";
   }
 
-  setInterval(shiftNextButton, 50);
+  const shiftContent = () => {
+    const el = document.getElementById("formContainer");
+    const px1 = window.visualViewport?.height;
+    if (el && px1) {
+      if (page == 3 || page == 4) el.style.marginTop = Math.floor(px1 / 7) + "px";
+      else el.style.marginTop = Math.floor(px1 / 4) + "px";
+    }
+  }
+
+  useEffect(() => {
+    // Set up the interval
+    const intervalId = setInterval(shiftNextButton, 50); // 1000 milliseconds = 1 second
+
+    // Cleanup: Clear the interval when the component unmounts or dependencies change
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    // Set up the interval
+    const intervalId = setInterval(shiftContent, 50); // 1000 milliseconds = 1 second
+
+    // Cleanup: Clear the interval when the component unmounts or dependencies change
+    return () => clearInterval(intervalId);
+  }, [page]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -402,7 +425,7 @@ const Signup = () => {
   return (
     <div className="overallSignupContainer">
       <div className="signupContainer">
-        <animated.div className="formContainer" style={fadeAnimation}>
+        <animated.div id="formContainer" className="formContainer" style={fadeAnimation}>
           <div className="formText">
             { page == 0 && "Enter your phone number"}
             { page == 1 && "What's your first name?"}
