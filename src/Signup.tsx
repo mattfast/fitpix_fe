@@ -340,7 +340,6 @@ const Signup = () => {
     setErrorMessage("");
     setPage(page + 1);
     setShow(true);
-    refocusKeyboard();
   }
  
   return (
