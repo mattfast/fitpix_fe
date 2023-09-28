@@ -7,6 +7,7 @@ import { io } from "socket.io-client";
 import "@fontsource/rubik/500.css";
 import "@fontsource/figtree/600.css";
 import "./LandingPage.css";
+import { validateCookie } from "./utils";
 
 import LandingPageImage from "./components/LandingPageImage";
 import LoginModal from "./components/LoginModal";
@@ -31,9 +32,29 @@ TODO:
 const LandingPage = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [searchParams, setSearchParams] = useSearchParams();
+
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function validate() {
+      if (await validateCookie(cookies['user-id'])) {
+        navigate("/vote");
+      }
+    }
+    
+    validate();
+  }, [])
+
+  useEffect(() => {
+    const rc = searchParams.get("rc");
+    if (rc) {
+      setReferralCode(rc);
+    }
+  }, [searchParams])
+
 
   useEffect(() => {
     async function verifySP() {
@@ -73,12 +94,6 @@ const LandingPage = () => {
 
     verifySP();
   }, [searchParams])
-
-  useEffect(() => {
-    if (cookies['user-id']) {
-      navigate("/vote");
-    }
-  }, [cookies])
  
   return (
     <>
@@ -96,7 +111,13 @@ const LandingPage = () => {
             </div>
             <LandingPageImage />
             <div id="buttonGroup" className="buttonGroup">
-              <div id="signupButton" className="signupButton" onClick={() => window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup`)}>
+              <div
+                id="signupButton"
+                className="signupButton"
+                onClick={
+                  () => window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup${referralCode ? `?rc=${referralCode}` : ``}`)
+                }
+              >
                 <div className="buttonText">
                   Sign up
                 </div>

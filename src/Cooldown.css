@@ -1,0 +1,41 @@
+
+.cooldownContainer {
+  display: flex;
+  padding: 24px 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.cooldownTextContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  align-self: stretch;
+}
+
+.countdownText {
+  color: #FFF;
+  text-align: center;
+  font-family: Rubik One;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%; /* 27.6px */
+  letter-spacing: -0.24px;
+  text-transform: uppercase;
+}
+
+.orText {
+  color: var(--white-64, rgba(255, 255, 255, 0.64));
+  text-align: center;
+  font-family: SF Pro Rounded;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%; /* 20.7px */
+}

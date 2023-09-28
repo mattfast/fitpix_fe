@@ -22,3 +22,27 @@ export const formatPhoneNumber = (input: string) => {
     return `(${input.slice(0, 3)}) ${input.slice(3, 6)}-${input.slice(6, 10)}`;
   }
 };
+
+export const s3_url = (user_id: string) => {
+  return `https://dopple-selfies.s3.amazonaws.com/generated-${user_id}.jpg`;
+};
+
+export const validateCookie = async (cookie: string | null | undefined) => {
+
+  if (!cookie) return false;
+
+  const response = await fetch(
+    `${process.env.REACT_APP_BE_URL}/validate-cookie`,
+    { 
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "cookie": cookie
+      })
+    }
+  );
+
+  return response.status == 200;
+}

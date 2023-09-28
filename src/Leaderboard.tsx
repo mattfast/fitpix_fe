@@ -9,6 +9,7 @@ import "@fontsource/rubik/500.css";
 import "@fontsource/rubik/700.css"; 
 import "@fontsource/figtree/600.css";
 import "./Leaderboard.css";
+import { validateCookie } from "./utils";
 
 const leaderboard = [
   {
@@ -88,6 +89,16 @@ const Leaderboard = () => {
   const [initialTouch, setInitialTouch] = useState<number>(0);
   const [currentTouch, setCurrentTouch] = useState<number>(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function validate() {
+      if (!(await validateCookie(cookies['user-id']))) {
+        navigate("/");
+      }
+    }
+    
+    validate();
+  }, [])
  
   return (
     <div className="leaderboardContainer">

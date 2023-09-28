@@ -83,7 +83,7 @@
   border-radius: 28px;
 }
 
-.voteContainer {
+.voteAreaContainer {
   display: flex;
   /*padding: 24px 16px;*/
   flex-direction: column;
@@ -171,7 +171,7 @@
   text-transform: uppercase;
 }
 
-.optionButton:hover {
+.optionButton:active {
   /*  Making button bigger on hover  */
   transform: scale(1.05) perspective(1px)
 }

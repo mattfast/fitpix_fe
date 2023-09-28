@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { motion } from "framer-motion"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Webcam from 'react-webcam';
 import { useSpring, animated } from 'react-spring';
@@ -12,6 +12,7 @@ import "@fontsource/figtree/600.css";
 import "./Signup.css";
 import s3 from "./s3";
 import { formatPhoneNumber } from "./utils";
+import ComeBackTomorrow from "./ComeBackTomorrow";
 
 const themes = [
   {
@@ -48,8 +49,17 @@ const themes = [
   },
 ];
 
+type User = {
+  number?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
+  images_uploaded?: boolean | null;
+}
+
 const Signup = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [page, setPage] = useState<number>(0);
   const [placeholder, setPlaceholder] = useState<string>("(123) 456-7890");
   const [text, setText] = useState<string>("");
@@ -65,6 +75,30 @@ const Signup = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const textInputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // fetch user, go to first uncompleted page
+    async function getUserProgress() {
+      const response = await fetch(
+        `${process.env.REACT_APP_BE_URL}/get-user`,
+        {
+          method: "GET",
+          headers: {
+            "auth-token": cookies["user-id"],
+          },
+        }
+      );
+      const respJson = await response.json();
+      console.log("USER FETCHED");
+      console.log(respJson);
+      if (respJson["images_uploaded"]) setPage(5);
+      else if (respJson["last_name"]) setPage(3);
+      else if (respJson["first_name"]) setPage(2);
+      else if (respJson["number"]) setPage(1);
+    }
+
+    getUserProgress();
+  }, [])
 
   const fadeAnimation = useSpring({
     opacity: show ? 1 : 0,
@@ -154,7 +188,6 @@ const Signup = () => {
       }
     }
   }
-
 
   const createUser = async () => {
     const response = await fetch(
@@ -310,6 +343,10 @@ const Signup = () => {
     }
   }, [shouldFocus]);
 
+  useEffect(() => {
+    if (page == 1) setPlaceholder("FIRST NAME");
+    else if (page == 2) setPlaceholder("LAST NAME");
+  }, [page])
 
   const nextClick = async () => {
 
@@ -330,7 +367,6 @@ const Signup = () => {
         setShow(true);
         return;
       }
-      setPlaceholder("FIRST NAME");
     } else if (page == 1) {
       const ok = await updateUser({ "first_name": text });
       if (!ok) {
@@ -338,7 +374,6 @@ const Signup = () => {
         setShow(true);
         return;
       }
-      setPlaceholder("LAST NAME");
     } else if (page == 2) {
       const ok = await updateUser({ "last_name": text });
       if (!ok) {
@@ -349,8 +384,12 @@ const Signup = () => {
     } else if (page == 3) {
       uploadImageToS3();
     } else if (page == 4) {
-      navigate("/vote");
-      return;
+      const ok = await updateUser({ "images_uploaded": true });
+      if (!ok) {
+        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
+        setShow(true);
+        return;
+      }
     }
 
     clearTextArea();
@@ -456,13 +495,16 @@ const Signup = () => {
               </div>
             </>
           )}
+          { page == 5 && (
+            <ComeBackTomorrow />
+          )}
           { errorMessage && (
             <div className="errorText">
               {errorMessage}
             </div>
           )}
         </animated.div>
-        { (page !== 3 || selectedFile || capturedImage) && (
+        { (page !== 3 || selectedFile || capturedImage) && page !== 5 && (
           <div id="nextButton" className="nextButton" onClick={(e) => {
             //e.preventDefault();
             /*if (textInputRef.current) {
