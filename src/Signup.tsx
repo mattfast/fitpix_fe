@@ -439,9 +439,9 @@ const Signup = () => {
         </animated.div>
         { (page !== 3 || selectedFile || capturedImage) && (
           <div id="nextButton" className="nextButton" onClick={(e) => {
-            e.preventDefault();
+            //e.preventDefault();
             if (textInputRef.current) {
-              textInputRef.current.blur();
+              //textInputRef.current.blur();
               textInputRef.current.focus();
             }
             nextClick();
