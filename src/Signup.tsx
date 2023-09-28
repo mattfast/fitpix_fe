@@ -53,7 +53,7 @@ const Signup = () => {
   const [page, setPage] = useState<number>(0);
   const [placeholder, setPlaceholder] = useState<string>("(123) 456-7890");
   const [text, setText] = useState<string>("");
-  const [rawNumber, setRawNumber] = useState<string>("");
+  const [shouldFocus, setShouldFocus] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -291,14 +291,22 @@ const Signup = () => {
       console.log("REFOCUSING KEYBOARD");
       if (textInputRef.current) {
         textInputRef.current.blur();
-        await new Promise(r => setTimeout(r, 500));
-        textInputRef.current.focus();
+        await new Promise(r => setTimeout(r, 1000));
+        setShouldFocus(true);
       }
     }
 
     refocusKeyboard();
 
   }, [textInputRef, page])
+
+  useEffect(() => {
+    if (shouldFocus) {
+      textInputRef.current?.focus();
+      setShouldFocus(false);
+    }
+  }, [shouldFocus]);
+
 
   const nextClick = async () => {
 
