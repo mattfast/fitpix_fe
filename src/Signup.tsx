@@ -287,10 +287,16 @@ const Signup = () => {
   }
 
   useEffect(() => {
-    if (textInputRef.current) {
-      //textInputRef.current.blur();
-      textInputRef.current.focus();
+    async function refocusKeyboard() {
+      if (textInputRef.current) {
+        textInputRef.current.blur();
+        await new Promise(r => setTimeout(r, 500));
+        textInputRef.current.focus();
+      }
     }
+
+    refocusKeyboard();
+
   }, [page])
 
   const nextClick = async () => {
