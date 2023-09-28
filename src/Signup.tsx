@@ -288,8 +288,9 @@ const Signup = () => {
 
   useEffect(() => {
     async function refocusKeyboard() {
-      console.log("REFOCUSING KEYBOARD");
+      
       if (textInputRef.current) {
+        console.log("BLURRING");
         textInputRef.current.blur();
         await new Promise(r => setTimeout(r, 1000));
         setShouldFocus(true);
@@ -302,6 +303,8 @@ const Signup = () => {
 
   useEffect(() => {
     if (shouldFocus) {
+      console.log("ABOUT TO FOCUS AGAIN");
+      console.log(textInputRef.current);
       textInputRef.current?.focus();
       setShouldFocus(false);
     }
@@ -461,7 +464,7 @@ const Signup = () => {
         </animated.div>
         { (page !== 3 || selectedFile || capturedImage) && (
           <div id="nextButton" className="nextButton" onClick={(e) => {
-            e.preventDefault();
+            //e.preventDefault();
             /*if (textInputRef.current) {
               //textInputRef.current.blur();
               textInputRef.current.focus();
