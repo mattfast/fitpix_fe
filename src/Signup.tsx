@@ -348,7 +348,7 @@ const Signup = () => {
           </div>
           { page < 3 && (
             <input
-              type="text"
+              type={page == 0 ? "tel" : "text"}
               id="textInput"
               className="textInput"
               ref={textInputRef}
