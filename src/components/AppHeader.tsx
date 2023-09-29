@@ -9,7 +9,10 @@ import "@fontsource/rubik/700.css";
 import "@fontsource/figtree/600.css";
 import "./AppHeader.css"
 
-const AppHeader = ({ page }) => {
+const AppHeader = ({ page, profileName }: {
+	page: string,
+	profileName?: string
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -21,7 +24,14 @@ const AppHeader = ({ page }) => {
 					{ page == "leaderboard" && (
 						<img className="voteLink" src={process.env.PUBLIC_URL + "assets/cards-blank.png"} onClick={() => navigate("/vote")} />
 					)}
-					<div className="voteHeaderIcon">{ page == "vote" ? "dopple.club" : "leaderboard" }</div>
+					{ page == "profile" && (
+						<img className="voteLink" src={process.env.PUBLIC_URL + "assets/cards-blank.png"} onClick={() => navigate("/vote")} />
+					)}
+					<div className="voteHeaderIcon">
+						{ page == "vote" && "dopple.club" }
+						{ page == "leaderboard" && "leaderboard" }
+						{ page == "profile" && profileName }
+					</div>
 					<img src={process.env.PUBLIC_URL + "assets/2.png"} className="profileLink" />
 			</div>
     </div>

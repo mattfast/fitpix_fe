@@ -13,6 +13,7 @@ import "./Signup.css";
 import s3 from "./s3";
 import { formatPhoneNumber } from "./utils";
 import ComeBackTomorrow from "./ComeBackTomorrow";
+import GenderButton from "./components/GenderButton";
 
 const themes = [
   {
@@ -49,10 +50,6 @@ const themes = [
   },
 ];
 
-const confirmReferral = async () => {
-
-}
-
 const Signup = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -60,6 +57,7 @@ const Signup = () => {
   const [page, setPage] = useState<number>(0);
   const [placeholder, setPlaceholder] = useState<string>("(123) 456-7890");
   const [text, setText] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
   const [shouldFocus, setShouldFocus] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -88,7 +86,8 @@ const Signup = () => {
       const respJson = await response.json();
       console.log("USER FETCHED");
       console.log(respJson);
-      if (respJson["images_uploaded"]) setPage(5);
+      if (respJson["images_uploaded"]) setPage(6);
+      else if (respJson["gender"]) setPage(4);
       else if (respJson["last_name"]) setPage(3);
       else if (respJson["first_name"]) setPage(2);
       else if (respJson["number"]) setPage(1);
@@ -362,6 +361,10 @@ const Signup = () => {
     else if (page == 2) setPlaceholder("LAST NAME");
   }, [page])
 
+  useEffect(() => {
+    if (gender !== "") nextClick();
+  }, [gender])
+
   const nextClick = async () => {
 
     setShow(false);
@@ -396,8 +399,15 @@ const Signup = () => {
         return;
       }
     } else if (page == 3) {
-      uploadImageToS3();
+      const ok = await updateUser({ "gender": gender })
+      if (!ok) {
+        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
+        setShow(true);
+        return;
+      }
     } else if (page == 4) {
+      uploadImageToS3();
+    } else if (page == 5) {
       const ok = await updateUser({ "images_uploaded": true });
       if (!ok) {
         setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
@@ -435,8 +445,9 @@ const Signup = () => {
             { page == 0 && "Enter your phone number"}
             { page == 1 && "What's your first name?"}
             { page == 2 && "What's your last name?"}
-            { page == 3 && "Create your dopple"}
-            { page == 4 && "Customize your dopple"}
+            { page == 3 && "What's your gender?" }
+            { page == 4 && "Create your dopple"}
+            { page == 5 && "Customize your dopple"}
           </div>
           { page < 3 && (
             <input
@@ -451,11 +462,18 @@ const Signup = () => {
               }}
             />
           )}
+          { page == 3 && (
+            <>
+              <GenderButton gender="Boy" setGender={setGender} />
+              <GenderButton gender="Girl" setGender={setGender} />
+              <GenderButton gender="Non-binary/Other" setGender={setGender} />
+            </>
+          )}
           { camOpen && (
             <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
           )}
           <div id="streamingComponent" className="videoFullCircle" />
-          { page == 3 && (
+          { page == 4 && (
             <>
               {selectedFile && (
                 <>
@@ -502,7 +520,7 @@ const Signup = () => {
 
             </>
           )}
-          { page == 4 && (
+          { page == 5 && (
             <>
               {selectedFile && (
                 <img src={URL.createObjectURL(selectedFile)} className="photoFullCircle" alt="Selected" />
@@ -523,7 +541,7 @@ const Signup = () => {
               </div>
             </>
           )}
-          { page == 5 && (
+          { page == 6 && (
             <ComeBackTomorrow />
           )}
           { errorMessage && (
@@ -532,7 +550,7 @@ const Signup = () => {
             </div>
           )}
         </animated.div>
-        { (page !== 3 || selectedFile || capturedImage) && page !== 5 && (
+        { (page !== 4 || selectedFile || capturedImage) && page !== 3 && page !== 6 && (
           <div id="nextButton" className="nextButton" onClick={(e) => {
             //e.preventDefault();
             /*if (textInputRef.current) {
@@ -543,7 +561,7 @@ const Signup = () => {
           }}>
               <div className="nextButtonText">
                 {page < 3 && "Next"}
-                {(page > 3 || selectedFile || capturedImage) && "Looks good"}
+                {(page > 4 || selectedFile || capturedImage) && "Looks good"}
               </div>
             <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
           </div>

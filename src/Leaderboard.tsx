@@ -11,6 +11,7 @@ import "@fontsource/figtree/600.css";
 import "./Leaderboard.css";
 import { validateCookie } from "./utils";
 import AppHeader from "./components/AppHeader";
+import ImageModal from "./components/ImageModal";
 
 const leaderboard = [
   {
@@ -81,14 +82,8 @@ const leaderboard = [
 
 const Leaderboard = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
-  const [actionIndex, setActionIndex] = useState(0);
-  const [sid, setSid] = useState<string>("");
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [prevActionIndex, setPrevActionIndex] = useState(0);
-  const [pageUp, setPageUp] = useState<boolean>(false);
-  const [totalScroll, setTotalScroll] = useState<number>(0);
-  const [initialTouch, setInitialTouch] = useState<number>(0);
-  const [currentTouch, setCurrentTouch] = useState<number>(0);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [currentImage, setCurrentImage] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -100,41 +95,51 @@ const Leaderboard = () => {
     
     validate();
   }, [])
+
+  const clickImage = (imageUrl: string) => {
+    setCurrentImage(imageUrl);
+    setShowModal(true);
+  }
  
   return (
-    <div className="leaderboardContainer">
-      <AppHeader page="leaderboard"/>
-      <div className="leaderboard">
-        { leaderboard.map((l, i) => (
-          <div className="leaderboardRow">
-            { i == 0 && (
-              <div className="leaderboardTopRank">
-                🥇
+    <>
+      <div className="leaderboardContainer">
+        <AppHeader page="leaderboard"/>
+        <div className="leaderboard">
+          { leaderboard.map((l, i) => (
+            <div className="leaderboardRow">
+              <div className="leaderboardLeft">
+                { i == 0 && (
+                  <div className="leaderboardTopRank">
+                    🥇
+                  </div>
+                )}
+                { i == 1 && (
+                  <div className="leaderboardTopRank">
+                    🥈
+                  </div>
+                )}
+                { i == 2 && (
+                  <div className="leaderboardTopRank">
+                    🥉
+                  </div>
+                )}
+                { i > 2 && (
+                  <div className="leaderboardRank">
+                    #{i} 
+                  </div>
+                )}
+                <div className="leaderboardText">
+                  {l.first_name} Lastname
+                </div>
               </div>
-            )}
-            { i == 1 && (
-              <div className="leaderboardTopRank">
-                🥈
-              </div>
-            )}
-            { i == 2 && (
-              <div className="leaderboardTopRank">
-                🥉
-              </div>
-            )}
-            { i > 2 && (
-              <div className="leaderboardRank">
-                #{i} 
-              </div>
-            )}
-            <div className="leaderboardText">
-              {l.first_name}
+              <img className="leaderboardImage" src={process.env.PUBLIC_URL + "assets/2.png"} onClick={() => clickImage(process.env.PUBLIC_URL + "assets/2.png")} />
             </div>
-            <img className="leaderboardImage" src={process.env.PUBLIC_URL + "assets/2.png"}/>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+      <ImageModal imageSrc={currentImage} showModal={showModal} setShowModal={setShowModal} />
+    </>
   )
 };
 

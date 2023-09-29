@@ -46,19 +46,27 @@
   overflow:scroll;
   margin-top: 70px;
   display: flex;
-  padding: 24px;
+  padding: 24px 24px 24px 24px;
   flex-direction: column;
-  align-items: space-between;
+  width: 90%;
+  /*align-items: space-between;
+  justify-content: space-between;*/
   gap: 16px;
   flex: 1 0 0;
-  /*align-self: stretch;*/
+  /*align-self: stretch;*/  
 }
 
 .leaderboardRow {
   display: flex;
-  align-items: space-between;
-  /*gap: 8px;*/
+  justify-content: space-between;
+  width: 100%;
   /*align-self: stretch;*/
+}
+
+.leaderboardLeft {
+  gap: 8px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .leaderboardTopRank {
@@ -92,12 +100,18 @@
   line-height: 130%; /* 24.7px */
   letter-spacing: -0.095px;
   text-transform: uppercase;
+
+  text-align: left;
+  align-self: stretch;
+
+  cursor: pointer;
 }
 
 .leaderboardImage {
   width: 41px;
   height: 41px;
   border-radius: 8px;
+  transform: translateY(-8px);
   cursor: pointer;
 }
 

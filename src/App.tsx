@@ -4,6 +4,7 @@ import LandingPage from "./LandingPage";
 import Leaderboard from "./Leaderboard";
 import Signup from "./Signup";
 import Vote from "./Vote";
+import Profile from "./Profile";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/leaderboard" element={ <Leaderboard /> } />
         <Route path="/signup" element={ <Signup /> } />
         <Route path="/vote" element={ <Vote /> } />
+        <Route path="/profile/:userId" element={ <Profile /> } />
       </Routes>
     </BrowserRouter>
   )
