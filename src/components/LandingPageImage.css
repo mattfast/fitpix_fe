@@ -30,6 +30,7 @@
 }
 
 .leaderboardImage1 {
+  filter: blur(10px);
   width: min(76.641px, 14.8817vw);
   height: min(76.641px, 14.8817vw);
   border-radius: min(76.641px, 14.8817vw);
@@ -38,6 +39,7 @@
 }
 
 .leaderboardImage2 {
+  filter: blur(10px);
   width: min(76.641px, 14.8817vw);
   height: min(76.641px, 14.8817vw);
   border-radius: min(76.641px, 14.8817vw);
@@ -46,6 +48,7 @@
 }
 
 .leaderboardImage3 {
+  filter: blur(10px);
   width: min(76.641px, 14.8817vw);
   height: min(76.641px, 14.8817vw);
   border-radius: min(76.641px, 14.8817vw);

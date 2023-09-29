@@ -108,24 +108,24 @@ const Signup = () => {
     if (el && px1) el.style.bottom = "calc(26px + " + px2 + "px - " + px1 + "px)";
   }
 
-  const shiftContent = () => {
+  /*const shiftContent = () => {
     const el = document.getElementById("formContainer");
     const px1 = window.visualViewport?.height;
     if (el && px1) {
       if (page == 3 || page == 4) el.style.marginTop = "calc(100dvh - " + Math.floor(px1) + "px)";
       else el.style.marginTop = "calc(100dvh - " + Math.floor(px1 / 1.5) + "px)";
     }
-  }
+  }*/
 
   useEffect(() => {
     const intervalId = setInterval(shiftNextButton, 50);
     return () => clearInterval(intervalId);
   }, []);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const intervalId = setInterval(shiftContent, 50);
     return () => clearInterval(intervalId);
-  }, [page]);
+  }, [page]);*/
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

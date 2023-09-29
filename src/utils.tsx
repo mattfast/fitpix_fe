@@ -44,5 +44,8 @@ export const validateCookie = async (cookie: string | null | undefined) => {
     }
   );
 
-  return response.status == 200;
+  const respJson = await response.json();
+  if (response.status !== 200) return "";
+
+  return respJson["user_id"];
 }

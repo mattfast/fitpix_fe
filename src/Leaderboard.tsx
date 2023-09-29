@@ -82,14 +82,18 @@ const leaderboard = [
 
 const Leaderboard = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
+  const [userId, setUserId] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
     async function validate() {
-      if (!(await validateCookie(cookies['user-id']))) {
+      const user_id = await validateCookie(cookies['user-id']);
+      if (user_id == "") {
         navigate("/");
+      } else {
+        setUserId(user_id);
       }
     }
     
@@ -104,7 +108,7 @@ const Leaderboard = () => {
   return (
     <>
       <div className="leaderboardContainer">
-        <AppHeader page="leaderboard"/>
+        <AppHeader page="leaderboard" userId={userId} />
         <div className="leaderboard">
           { leaderboard.map((l, i) => (
             <div className="leaderboardRow">

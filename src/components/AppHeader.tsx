@@ -8,9 +8,11 @@ import "@fontsource/rubik/500.css";
 import "@fontsource/rubik/700.css"; 
 import "@fontsource/figtree/600.css";
 import "./AppHeader.css"
+import { s3_url } from "../utils";
 
-const AppHeader = ({ page, profileName }: {
+const AppHeader = ({ page, userId, profileName }: {
 	page: string,
+	userId: string,
 	profileName?: string
 }) => {
   const navigate = useNavigate();
@@ -25,14 +27,14 @@ const AppHeader = ({ page, profileName }: {
 						<img className="voteLink" src={process.env.PUBLIC_URL + "assets/cards-blank.png"} onClick={() => navigate("/vote")} />
 					)}
 					{ page == "profile" && (
-						<img className="voteLink" src={process.env.PUBLIC_URL + "assets/cards-blank.png"} onClick={() => navigate("/vote")} />
+						<img className="voteLink" src={process.env.PUBLIC_URL + "assets/chevron-left.png"} onClick={() => navigate("/leaderboard")} />
 					)}
 					<div className="voteHeaderIcon">
 						{ page == "vote" && "dopple.club" }
 						{ page == "leaderboard" && "leaderboard" }
 						{ page == "profile" && profileName }
 					</div>
-					<img src={process.env.PUBLIC_URL + "assets/2.png"} className="profileLink" />
+					<img src={s3_url(userId)} className="profileLink" onClick={() => navigate(`/profile/${userId}`)}/>
 			</div>
     </div>
   );

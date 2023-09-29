@@ -40,6 +40,7 @@ function difference(date: Date) {
 
 const Vote = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
+  const [userId, setUserId] = useState<string>("");
   const [feedIndex, setFeedIndex] = useState<number>(0);
   const [usersList, setUsersList] = useState<User[]>([]);
   const [minutesLeft, setMinutesLeft] = useState<number | null>(null);
@@ -49,8 +50,11 @@ const Vote = () => {
 
   useEffect(() => {
     async function validate() {
-      if (!(await validateCookie(cookies['user-id']))) {
+      const user_id = await validateCookie(cookies['user-id']);
+      if (user_id == "") {
         navigate("/");
+      } else {
+        setUserId(user_id);
       }
     }
     
@@ -114,7 +118,7 @@ const Vote = () => {
  
   return (
     <div className="voteContainer">
-      <AppHeader page="vote" />
+      <AppHeader page="vote" userId={userId} />
       { !loading && feedIndex < usersList.length - 1 && (
         <div className="voteAreaContainer">
           <div className="voteTextContainer">

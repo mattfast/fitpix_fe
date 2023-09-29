@@ -124,3 +124,7 @@
   /*  Making button bigger on hover  */
   transform: scale(1.05) perspective(1px)
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .optionButton:hover { transform: scale(1.05) perspective(1px); }
+}

@@ -27,15 +27,6 @@ TODO:
 */
 
 const LandingPageImage = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
-  const [actionIndex, setActionIndex] = useState(0);
-  const [sid, setSid] = useState<string>("");
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [prevActionIndex, setPrevActionIndex] = useState(0);
-  const [pageUp, setPageUp] = useState<boolean>(false);
-  const [totalScroll, setTotalScroll] = useState<number>(0);
-  const [initialTouch, setInitialTouch] = useState<number>(0);
-  const [currentTouch, setCurrentTouch] = useState<number>(0);
   const navigate = useNavigate();
  
   return (
