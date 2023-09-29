@@ -69,6 +69,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 115%; /* 20.7px */
+  width: 32px;
 }
 
 .leaderboardRank {
@@ -79,6 +80,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 115%; /* 20.7px */
+  width: 32px;
 }
 
 .leaderboardText {
@@ -96,5 +98,6 @@
   width: 41px;
   height: 41px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
