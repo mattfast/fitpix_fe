@@ -113,8 +113,8 @@ const Signup = () => {
     const el = document.getElementById("formContainer");
     const px1 = window.visualViewport?.height;
     if (el && px1) {
-      if (page == 3 || page == 4) el.style.marginTop = Math.floor(px1 / 7) + "px";
-      else el.style.marginTop = Math.floor(px1 / 3) + "px";
+      if (page == 3 || page == 4) el.style.marginTop = "calc(100dvh - " + Math.floor(px1) + "px)";
+      else el.style.marginTop = "calc(100dvh - " + Math.floor(px1 / 1.5) + "px)";
     }
   }
 
