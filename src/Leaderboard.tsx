@@ -10,70 +10,71 @@ import "@fontsource/rubik/700.css";
 import "@fontsource/figtree/600.css";
 import "./Leaderboard.css";
 import { validateCookie } from "./utils";
+import AppHeader from "./components/AppHeader";
 
 const leaderboard = [
   {
-    "name": "Anna",
+    "first_name": "Anna",
     "score": 59
   },
   {
-    "name": "James",
+    "first_name": "James",
     "score": 49
   },
   {
-    "name": "Anna",
+    "first_name": "Anna",
     "score": 59
   },
   {
-    "name": "James",
+    "first_name": "James",
     "score": 49
   },
   {
-    "name": "Anna",
+    "first_name": "Anna",
     "score": 59
   },
   {
-    "name": "James",
+    "first_name": "James",
     "score": 49
   },
   {
-    "name": "Anna",
+    "first_name": "Anna",
     "score": 59
   },
   {
-    "name": "James",
+    "first_name": "James",
     "score": 49
   },
   {
-    "name": "Anna",
+    "first_name": "Anna",
     "score": 59
   },
   {
-    "name": "James",
+    "first_name": "James",
     "score": 49
   },
   {
-    "name": "Anna",
+    "first_name": "Anna",
     "score": 59
   },
   {
-    "name": "James",
+    "first_name": "James",
     "score": 49
   },
   {
-    "name": "Anna",
+    "first_name": "Anna",
     "score": 59
   },
   {
-    "name": "James",
+    "first_name": "James",
     "score": 49
   },
   {
-    "name": "Anna",
+    "first_name": "Anna",
     "score": 59
   },
   {
-    "name": "James",
+    "first_name": "James",
     "score": 49
   }
 ];
@@ -102,15 +103,20 @@ const Leaderboard = () => {
  
   return (
     <div className="leaderboardContainer">
-      <div className="leaderboardHeader">
-        <div className="leaderboardTitle">
-          Leaderboard
-        </div>
-      </div>
+      <AppHeader page="leaderboard"/>
       <div className="leaderboard">
         { leaderboard.map((l, i) => (
-          <div className="leaderboardText">
-            #{i + 1} {l.name} ({l.score} pts)
+          <div className="leaderboardRow">
+            <div className="leaderboardRank">
+              { i == 0 && "🥇" }
+              { i == 1 && "🥈" }
+              { i == 2 && "🥉" }
+              { i > 2 && "#" + i }
+            </div>
+            <div className="leaderboardText">
+              {l.first_name}
+            </div>
+            <img className="leaderboardImage" src={process.env.PUBLIC_URL + "assets/2.png"}/>
           </div>
         ))}
       </div>

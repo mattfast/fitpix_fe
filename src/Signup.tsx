@@ -49,11 +49,8 @@ const themes = [
   },
 ];
 
-type User = {
-  number?: string | null;
-  first_name?: string | null;
-  last_name?: string | null;
-  images_uploaded?: boolean | null;
+const confirmReferral = async () => {
+
 }
 
 const Signup = () => {
@@ -117,23 +114,17 @@ const Signup = () => {
     const px1 = window.visualViewport?.height;
     if (el && px1) {
       if (page == 3 || page == 4) el.style.marginTop = Math.floor(px1 / 7) + "px";
-      else el.style.marginTop = Math.floor(px1 / 4) + "px";
+      else el.style.marginTop = Math.floor(px1 / 3) + "px";
     }
   }
 
   useEffect(() => {
-    // Set up the interval
-    const intervalId = setInterval(shiftNextButton, 50); // 1000 milliseconds = 1 second
-
-    // Cleanup: Clear the interval when the component unmounts or dependencies change
+    const intervalId = setInterval(shiftNextButton, 50);
     return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
-    // Set up the interval
-    const intervalId = setInterval(shiftContent, 50); // 1000 milliseconds = 1 second
-
-    // Cleanup: Clear the interval when the component unmounts or dependencies change
+    const intervalId = setInterval(shiftContent, 50);
     return () => clearInterval(intervalId);
   }, [page]);
 
@@ -412,6 +403,20 @@ const Signup = () => {
         setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
         setShow(true);
         return;
+      }
+      if (searchParams.get("rc")) {
+        fetch(
+          `${process.env.REACT_APP_BE_URL}/confirm-referral`,
+          {
+            method: "POST",
+            headers: {
+              "auth-token": cookies["user-id"],
+            },
+            body: JSON.stringify({
+              "referral_code": searchParams.get("rc")
+            })
+          }
+        );
       }
     }
 

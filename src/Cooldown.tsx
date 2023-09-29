@@ -10,26 +10,9 @@ import "@fontsource/figtree/600.css";
 import "./Cooldown.css";
 import ShareButton from "./components/ShareButton";
 
-function difference(date: Date) {
-  const now = new Date();
-  const diffInMs = date.getTime() - now.getTime();
-  
-  const diffInSecs = Math.floor(diffInMs / 1000);
-  const mins = Math.floor(diffInSecs / 60);
-  const secs = diffInSecs % 60;
-
-  return { mins, secs }
-}
-
-const Cooldown = ({ cooldownTime }) => {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-
-  useEffect(() => {
-    const { mins, secs } = difference(cooldownTime);
-    setMinutes(mins);
-    setSeconds(secs);
-  }, [])
+const Cooldown = ({ initialMins, initialSecs }) => {
+  const [minutes, setMinutes] = useState(initialMins);
+  const [seconds, setSeconds] = useState(initialSecs);
 
   useEffect(() => {
     // Set the interval to update every second

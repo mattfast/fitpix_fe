@@ -1,0 +1,55 @@
+.voteHeader {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+
+  /*display: flex;
+  
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  align-self: stretch;*/
+}
+
+.voteHeaderItems {
+  display: flex;
+  /*display: flex;*/
+  justify-content: space-between;
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid var(--white-16, rgba(255, 255, 255, 0.16));
+}
+
+.leaderboardLink {
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: Rubik;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 115%; /* 32.2px */
+  letter-spacing: -0.28px;
+  cursor: pointer;
+}
+
+.voteLink {
+  width: 30px;
+  cursor: pointer;
+}
+
+.voteHeaderIcon {
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: Hobeaux;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 115%; /* 27.6px */
+  text-transform: uppercase;
+}
+
+.profileLink {
+  width: 28px;
+  height: 28px;
+  border-radius: 28px;
+  cursor: pointer;
+}

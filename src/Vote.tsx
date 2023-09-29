@@ -10,13 +10,10 @@ import "@fontsource/rubik/700.css";
 import "@fontsource/figtree/600.css";
 import "./Vote.css";
 import Modal from "./Modal";
-import { validateCookie } from "./utils";
+import { validateCookie, s3_url } from "./utils";
+import AppHeader from "./components/AppHeader";
 import Cooldown from "./Cooldown";
 import EndOfStack from "./EndOfStack";
-
-const variants = {
-
-};
 
 type User = {
   first_name: string;
@@ -26,29 +23,28 @@ type User = {
 
 type UserResponse = {
   user_list: User[];
-  cooldown_time: string;
-  is_final: boolean;
+  feed_index: boolean;
+  ready_at?: string;
 }
 
-function isInLast50Minutes(date: Date): boolean {
-  const now = new Date(); // Get the current date and time
-  const fiftyMinutesAgo = new Date(now.getTime() - 50 * 60 * 1000); // Calculate the time 50 minutes ago
-  return date > fiftyMinutesAgo && date <= now; // Check if the given date is within the last 50 minutes
+function difference(date: Date) {
+  const now = new Date();
+  const diffInMs = date.getTime() - now.getTime();
+  
+  const diffInSecs = Math.floor(diffInMs / 1000);
+  const mins = Math.floor(diffInSecs / 60);
+  const secs = diffInSecs % 60;
+
+  return { mins, secs }
 }
 
 const Vote = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [prevActionIndex, setPrevActionIndex] = useState(0);
-  const [pageUp, setPageUp] = useState<boolean>(false);
-  const [totalScroll, setTotalScroll] = useState<number>(0);
-  const [initialTouch, setInitialTouch] = useState<number>(0);
-  const [currentTouch, setCurrentTouch] = useState<number>(0);
-  const [usersListIndex, setUsersListIndex] = useState<number>(0);
+  const [feedIndex, setFeedIndex] = useState<number>(0);
   const [usersList, setUsersList] = useState<User[]>([]);
-  const [cooldownTime, setCooldownTime] = useState<Date | null>(null);
-  const [isFinal, setIsFinal] = useState<boolean>(false);
-  const [votingAppeared, setVotingAppeared] = useState<boolean>(false);
+  const [minutesLeft, setMinutesLeft] = useState<number | null>(null);
+  const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -82,10 +78,10 @@ const Vote = () => {
   const transitionAnimation = async () => {
     // TODO: implement animations
 
-    if (usersListIndex >= usersList.length - 3) {
+    if (feedIndex >= usersList.length - 3) {
       // reached limit
     } else {
-      setUsersListIndex(usersListIndex + 2);
+      setFeedIndex(feedIndex + 2);
     }
   }
 
@@ -99,66 +95,56 @@ const Vote = () => {
           }
         }
       );
-      const users = await response.json() as UserResponse;
-      setUsersList([...usersList, ...users.user_list]);
-      setCooldownTime(new Date(users.cooldown_time));
-      setIsFinal(users.is_final);
+      const users = await response.json();
+      if (users.user_list > 0) {
+        setUsersList([...usersList, ...users.user_list]);
+        setFeedIndex(users.feed_index);
+      } else if (users.ready_at) {
+        const readyAt = new Date(users.ready_at);
+        const { mins, secs } = difference(readyAt);
+        setMinutesLeft(mins);
+        setSecondsLeft(secs);
+      }
+
+      setLoading(false);
     }
 
     fetchUserList();
-  }, [cookies])
-
-  useEffect(() => {
-    if (usersList.length > 0 && !votingAppeared) {
-      setVotingAppeared(true);
-    }
-  }, [usersList])
-
-  useEffect(() => {
-    if (votingAppeared) {
-      // TODO: intro animation
-    }
-  }, [votingAppeared])
+  }, [])
  
   return (
     <div className="voteContainer">
-      <div className="voteHeader">
-        <div className="voteHeaderItems">
-          <div className="leaderboardLink" onClick={() => navigate("/leaderboard")}>🏆</div>
-          <div className="voteHeaderIcon">dopple.club</div>
-          <img src={process.env.PUBLIC_URL + "assets/2.png"} className="profileLink" />
-        </div>
-      </div>
-      { usersListIndex < usersList.length - 1 && (
+      <AppHeader page="vote" />
+      { !loading && feedIndex < usersList.length - 1 && (
         <div className="voteAreaContainer">
           <div className="voteTextContainer">
             <div className="voteLimitText">
-              {(usersListIndex / 2) + 1} of {usersList.length / 2}
+              {Math.floor(feedIndex / 2) + 1} of {Math.floor(usersList.length / 2)}
             </div>
             <div className="voteQuestionText">
-              {usersList[usersListIndex].first_name} or {usersList[usersListIndex + 1].first_name}?
+              {usersList[feedIndex].first_name} or {usersList[feedIndex + 1].first_name}?
             </div>
           </div>
           <div className="optionsContainer">
             <div className="optionContainer">
-              <img src={usersList[usersListIndex].image_url} className="optionImage" />
-              <div className="optionButton" onClick={() => vote(usersList[usersListIndex].user_id, usersList[usersListIndex + 1].user_id)}>
-                {usersList[usersListIndex].first_name}
+              <img src={s3_url(usersList[feedIndex].user_id)} className="optionImage" />
+              <div className="optionButton" onClick={() => vote(usersList[feedIndex].user_id, usersList[feedIndex + 1].user_id)}>
+                {usersList[feedIndex].first_name}
               </div>
             </div>
             <div className="optionContainer">
-              <img src={usersList[usersListIndex + 1].image_url} className="optionImage" />
-              <div className="optionButton" onClick={() => vote(usersList[usersListIndex + 1].user_id, usersList[usersListIndex].user_id)}>
-                {usersList[usersListIndex + 1].first_name}
+              <img src={s3_url(usersList[feedIndex + 1].user_id)} className="optionImage" />
+              <div className="optionButton" onClick={() => vote(usersList[feedIndex + 1].user_id, usersList[feedIndex].user_id)}>
+                {usersList[feedIndex + 1].first_name}
               </div>
             </div>
           </div>
         </div>
       )}
-      { (usersListIndex >= usersList.length - 1 && usersList.length == 24) || cooldownTime && (
-        <Cooldown cooldownTime={cooldownTime}/>
+      { !loading && minutesLeft !== null && secondsLeft !== null && (
+        <Cooldown initialMins={minutesLeft} initialSecs={secondsLeft} />
       )}
-      { usersListIndex >= usersList.length - 1 && usersList.length < 24 && (
+      { !loading && feedIndex >= usersList.length - 1 && !minutesLeft && !secondsLeft && (
         <EndOfStack />
       )}
     </div>

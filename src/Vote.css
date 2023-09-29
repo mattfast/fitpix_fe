@@ -32,57 +32,6 @@
   /*overflow: hidden;*/
 }
 
-.voteHeader {
-  display: flex;
-  padding: 24px 24px 16px 24px;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px;
-  align-self: stretch;
-  border-bottom: 1px solid var(--white-16, rgba(255, 255, 255, 0.16));
-}
-
-.voteHeaderItems {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  align-self: stretch;
-}
-
-.leaderboardLink {
-  position: absolute;
-  left: 20px;
-  color: var(--white, #FFF);
-  text-align: center;
-  font-family: Rubik;
-  font-size: 28px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 115%; /* 32.2px */
-  letter-spacing: -0.28px;
-  cursor: pointer;
-}
-
-.voteHeaderIcon {
-  color: var(--white, #FFF);
-  text-align: center;
-  font-family: Hobeaux;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 900;
-  line-height: 115%; /* 27.6px */
-  text-transform: uppercase;
-}
-
-.profileLink {
-  width: 28px;
-  height: 28px;
-  position: absolute;
-  right: 20px;
-  border-radius: 28px;
-}
-
 .voteAreaContainer {
   display: flex;
   /*padding: 24px 16px;*/

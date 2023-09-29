@@ -1,4 +1,16 @@
+@font-face {
+  font-family: 'SF Pro Rounded';
+  src: url('./fonts/SF-Pro-Rounded.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
+@font-face {
+  font-family: 'Hobeaux';
+  src: url('./fonts/Hobeaux-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 .leaderboardContainer {
   display: flex;
@@ -31,18 +43,37 @@
 }
 
 .leaderboard {
+  overflow:scroll;
+  margin-top: 70px;
   display: flex;
-  padding: 50px 24px;
+  padding: 24px;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 16px;
   flex: 1 0 0;
-  height: calc(100dvh - 80px);
-  overflow: auto;
   align-self: stretch;
 }
 
+.leaderboardRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.leaderboardRank {
+  color: var(--white-64, rgba(255, 255, 255, 0.64));
+  text-align: center;
+  font-family: SF Pro Rounded;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%; /* 20.7px */
+}
+
 .leaderboardText {
+  display: flex;
+  align-self: stretch;
   color: var(--white, #FFF);
   font-family: Hobeaux;
   font-size: 32px;
@@ -50,5 +81,11 @@
   font-weight: 900;
   line-height: 115%; /* 36.8px */
   text-transform: uppercase;
+}
+
+.leaderboardImage {
+  width: 41px;
+  height: 41px;
+  border-radius: 8px;
 }
 
