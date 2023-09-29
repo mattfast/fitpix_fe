@@ -107,12 +107,26 @@ const Leaderboard = () => {
       <div className="leaderboard">
         { leaderboard.map((l, i) => (
           <div className="leaderboardRow">
-            <div className="leaderboardRank">
-              { i == 0 && "🥇" }
-              { i == 1 && "🥈" }
-              { i == 2 && "🥉" }
-              { i > 2 && "#" + i }
-            </div>
+            { i == 0 && (
+              <div className="leaderboardTopRank">
+                🥇
+              </div>
+            )}
+            { i == 1 && (
+              <div className="leaderboardTopRank">
+                🥈
+              </div>
+            )}
+            { i == 2 && (
+              <div className="leaderboardTopRank">
+                🥉
+              </div>
+            )}
+            { i > 2 && (
+              <div className="leaderboardRank">
+                #{i} 
+              </div>
+            )}
             <div className="leaderboardText">
               {l.first_name}
             </div>

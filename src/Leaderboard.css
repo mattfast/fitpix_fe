@@ -6,8 +6,8 @@
 }
 
 @font-face {
-  font-family: 'Hobeaux';
-  src: url('./fonts/Hobeaux-Bold.ttf') format('truetype');
+  font-family: 'Rubik One';
+  src: url('./fonts/RubikOne-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -61,6 +61,16 @@
   align-self: stretch;
 }
 
+.leaderboardTopRank {
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: SF Pro Rounded;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%; /* 20.7px */
+}
+
 .leaderboardRank {
   color: var(--white-64, rgba(255, 255, 255, 0.64));
   text-align: center;
@@ -72,14 +82,13 @@
 }
 
 .leaderboardText {
-  display: flex;
-  align-self: stretch;
   color: var(--white, #FFF);
-  font-family: Hobeaux;
-  font-size: 32px;
+  font-family: Rubik One;
+  font-size: 19px;
   font-style: normal;
-  font-weight: 900;
-  line-height: 115%; /* 36.8px */
+  font-weight: 400;
+  line-height: 130%; /* 24.7px */
+  letter-spacing: -0.095px;
   text-transform: uppercase;
 }
 
