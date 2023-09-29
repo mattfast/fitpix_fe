@@ -21,32 +21,24 @@ const themes = [
     "text": "king"
   },
   {
+    "emoji": "👸🏻",
+    "text": "princess"
+  },
+  {
     "emoji": "🤠",
     "text": "cowboy"
   },
   {
     "emoji": "🏈",
-    "text": "jock"
+    "text": "athlete"
   },
   {
     "emoji": "🪄",
-    "text": "wizard"
+    "text": "magical"
   },
   {
-    "emoji": "🤓",
-    "text": "nerd"
-  },
-  {
-    "emoji": "🦄",
-    "text": "unicorn"
-  },
-  {
-    "emoji": "👸🏻",
-    "text": "princess"
-  },
-  {
-    "emoji": "🤑",
-    "text": "baller"
+    "emoji": "⚔️",
+    "text": "warrior"
   },
 ];
 
@@ -408,7 +400,12 @@ const Signup = () => {
     } else if (page == 4) {
       uploadImageToS3();
     } else if (page == 5) {
-      const ok = await updateUser({ "images_uploaded": true });
+      if (themeList.length == 0) {
+        setErrorMessage("You must select at least one personality.");
+        setShow(true);
+        return;
+      }
+      const ok = await updateUser({ "images_uploaded": true, "image_config": themeList });
       if (!ok) {
         setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
         setShow(true);
@@ -463,11 +460,11 @@ const Signup = () => {
             />
           )}
           { page == 3 && (
-            <>
+            <div className="genderButtonContainer">
               <GenderButton gender="Boy" setGender={setGender} />
               <GenderButton gender="Girl" setGender={setGender} />
               <GenderButton gender="Non-binary/Other" setGender={setGender} />
-            </>
+            </div>
           )}
           { camOpen && (
             <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
