@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import { io } from "socket.io-client";
+import { useSpring, animated } from 'react-spring';
 
 import "@fontsource/rubik";
 import "@fontsource/rubik/500.css"; 
@@ -48,7 +49,56 @@ const Vote = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [modalImage, setModalImage] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [transitioning, setTransitioning] = useState<boolean>(false);
+  const [selectedSide, setSelectedSide] = useState<string>("");
   const navigate = useNavigate();
+
+  const fadeAnimation = useSpring({
+    opacity: transitioning ? 0 : 1,
+    config: { tension: 320, friction: 40 }
+  });
+
+  const fadeAnimationReverse = useSpring({
+    opacity: transitioning ? 1 : 1,
+    config: { tension: 280, friction: 80 }
+  });
+
+  const refLeftImage = useRef<HTMLImageElement | null>(null);
+  const refRightImage = useRef<HTMLImageElement | null>(null);
+  const refLeftSelected = useRef<HTMLDivElement | null>(null);
+  const refRightSelected = useRef<HTMLDivElement | null>(null);
+
+  const updateRect = (
+    ref1: React.MutableRefObject<HTMLImageElement | null>,
+    ref2: React.MutableRefObject<HTMLDivElement | null>
+  ) => {
+    if (ref1.current && ref2.current) {
+      console.log("ALIGNING DIVS");
+      const rect = ref1.current.getBoundingClientRect();
+      ref2.current.style.top = `${rect.top}px`;
+      ref2.current.style.left = `${rect.left}px`;
+      ref2.current.style.width = `${rect.width}px`;
+      ref2.current.style.height = `${rect.height}px`;
+    }
+  }
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      updateRect(refLeftImage, refLeftSelected);
+    }, 100); // Poll every 100 milliseconds
+  
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      updateRect(refRightImage, refRightSelected);
+    }, 100); // Poll every 100 milliseconds
+  
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     async function validate() {
@@ -63,8 +113,11 @@ const Vote = () => {
     validate();
   }, [])
 
-  const vote = async (winner_id: string, loser_id: string) => {
-    fetch(
+  const vote = async (winner_id: string, loser_id: string, selected_side: string) => {
+    setSelectedSide(selected_side);
+    setTransitioning(true);
+
+    await fetch(
       `${process.env.REACT_APP_BE_URL}/post-decision`,
       {
         method: "POST",
@@ -78,19 +131,11 @@ const Vote = () => {
         })
       }
     );
+    //await new Promise(r => setTimeout(r, 1000));
 
-    transitionAnimation();
+    setFeedIndex(feedIndex + 2);
+    setTransitioning(false);
   };
-
-  const transitionAnimation = async () => {
-    // TODO: implement animations
-
-    if (feedIndex >= usersList.length - 3) {
-      // reached limit
-    } else {
-      setFeedIndex(feedIndex + 2);
-    }
-  }
 
   useEffect(() => {
     async function fetchUserList() {
@@ -103,10 +148,6 @@ const Vote = () => {
         }
       );
       const users = await response.json();
-      console.log("USER LIST");
-      console.log(users.user_list);
-      console.log("FEED INDEX");
-      console.log(users.feed_index);
       if (users.user_list.length > 0) {
         setUsersList([...usersList, ...users.user_list]);
         setFeedIndex(users.feed_index);
@@ -128,36 +169,38 @@ const Vote = () => {
       <div className="voteContainer">
         <AppHeader page="vote" userId={userId} />
         { !loading && feedIndex < usersList.length - 1 && (
-          <div className="voteAreaContainer">
-            <div className="voteTextContainer">
-              <div className="voteLimitText">
-                {Math.floor(feedIndex / 2) + 1} of {Math.floor(usersList.length / 2)}
-              </div>
-              <div className="voteQuestionText">
-                {usersList[feedIndex].first_name} or {usersList[feedIndex + 1].first_name}?
-              </div>
-            </div>
-            <div className="optionsContainer">
-              <div className="optionContainer">
-                <img src={s3_url(usersList[feedIndex].user_id)} className="optionImage" onClick={() => {
-                  setModalImage(s3_url(usersList[feedIndex].user_id));
-                  setShowModal(true);
-                }}/>
-                <div className="optionButton" onClick={() => vote(usersList[feedIndex].user_id, usersList[feedIndex + 1].user_id)}>
-                  {usersList[feedIndex].first_name}
+          <>
+            <animated.div className="voteAreaContainer" style={fadeAnimation}>
+              <div className="voteTextContainer">
+                <div className="voteLimitText">
+                  {Math.floor(feedIndex / 2) + 1} of {Math.floor(usersList.length / 2)}
+                </div>
+                <div className="voteQuestionText">
+                  {usersList[feedIndex].first_name} or {usersList[feedIndex + 1].first_name}?
                 </div>
               </div>
-              <div className="optionContainer">
-                <img src={s3_url(usersList[feedIndex + 1].user_id)} className="optionImage" onClick={() => {
-                  setModalImage(s3_url(usersList[feedIndex + 1].user_id));
-                  setShowModal(true);
-                }} />
-                <div className="optionButton" onClick={() => vote(usersList[feedIndex + 1].user_id, usersList[feedIndex].user_id)}>
-                  {usersList[feedIndex + 1].first_name}
+              <div className="optionsContainer">
+                <div className="optionContainer">
+                  <img src={s3_url(usersList[feedIndex].user_id)} ref={refLeftImage} className="optionImage" onClick={() => {
+                    setModalImage(s3_url(usersList[feedIndex].user_id));
+                    setShowModal(true);
+                  }}/>
+                  <div className="optionButton" onClick={() => vote(usersList[feedIndex].user_id, usersList[feedIndex + 1].user_id, "left")}>
+                    {usersList[feedIndex].first_name}
+                  </div>
+                </div>
+                <div className="optionContainer">
+                  <img src={s3_url(usersList[feedIndex + 1].user_id)} ref={refRightImage} className="optionImage" onClick={() => {
+                    setModalImage(s3_url(usersList[feedIndex + 1].user_id));
+                    setShowModal(true);
+                  }} />
+                  <div className="optionButton" onClick={() => vote(usersList[feedIndex + 1].user_id, usersList[feedIndex].user_id, "right")}>
+                    {usersList[feedIndex + 1].first_name}
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </animated.div>
+          </>
         )}
         { !loading && minutesLeft !== null && secondsLeft !== null && (
           <Cooldown initialMins={minutesLeft} initialSecs={secondsLeft} />
@@ -166,6 +209,12 @@ const Vote = () => {
           <EndOfStack />
         )}
       </div>
+      { selectedSide == "left" && transitioning && <animated.div ref={refLeftSelected} className="selectedContainer">
+        <img className="checkmark" src={process.env.PUBLIC_URL + "assets/circle-check.png"} />
+      </animated.div> }
+      { selectedSide == "right" && transitioning && <animated.div ref={refRightSelected} className="selectedContainer">
+        <img className="checkmark" src={process.env.PUBLIC_URL + "assets/circle-check.png"} />
+      </animated.div> }
       <ImageModal imageSrc={modalImage} showModal={showModal} setShowModal={setShowModal} />
     </>
   )

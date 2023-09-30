@@ -135,6 +135,20 @@ body {
   text-transform: uppercase;
 }
 
+.selectedContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  border-radius: 16px;
+  border: 1.5px solid #FFF;
+}
+
+.checkmark {
+  width: 32px;
+}
+
 .optionButton:active {
   /*  Making button bigger on hover  */
   transform: scale(1.05) perspective(1px)
