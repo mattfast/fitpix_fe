@@ -24,8 +24,9 @@ const Profile = () => {
   //const [newThemes, setNewThemes] = useState<string[]>([]);
   const [selectingThemes, setSelectingThemes] = useState<boolean>(false);
   const [position, setPosition] = useState<number>(0);
-  const [name, setName] = useState<string>("");
-  const [currentImage, setCurrentImage] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,7 +57,8 @@ const Profile = () => {
       
       setThemes(respJson["themes"]);
       setPosition(respJson["position"]);
-      setName(`${respJson["first_name"]} ${respJson["last_name"]}`)
+      setFirstName(respJson["first_name"]);
+      setLastName(respJson["last_name"]);
       setLoading(false);
     }
     
@@ -64,7 +66,10 @@ const Profile = () => {
   }, [])
 
   const changeOrSave = () => {
-    if (selectingThemes) saveThemes();
+    if (selectingThemes) {
+      saveThemes();
+      setSuccessMessage("Your changes will reflect in your dopple tomorrow :)");
+    }
     setSelectingThemes(!selectingThemes);
   }
 
@@ -95,19 +100,29 @@ const Profile = () => {
       <div className="profileContainer">
         { !loading && (
           <>
-            <AppHeader page="profile" userId={userIdViewing} profileName={name} position={position} />
+            <AppHeader page="profile" userId={userIdViewing} profileName={`${firstName} ${lastName}`} position={position} />
             <div className="profileContentContainer">
-            { userId == userIdViewing && (
-              <>
-                <ThemeArea themeList={themes} setThemeList={setThemes} isSelecting={selectingThemes} />
-                <div className="changeOrSaveButton" onClick={changeOrSave}>
-                  { selectingThemes ? "save" : "select new" }
-                </div>
-                <div className="logOutButton" onClick={logOut}>
-                  Log Out
-                </div>
-              </>
-            )}
+              <div className="doppleText">
+                { userId == userIdViewing && "Your Dopple" }
+                { userId != userIdViewing && `${firstName}'s Dopple` }
+              </div>
+              { userId && <img className="doppleImage" src={s3_url(userId)} onClick={() => setShowModal(true)} /> }
+              { userId == userIdViewing && (
+                <>
+                  <ThemeArea themeList={themes} setThemeList={setThemes} isSelecting={selectingThemes} />
+                  <div className="changeOrSaveButton" onClick={changeOrSave}>
+                    { selectingThemes ? "save" : "select new" }
+                  </div>
+                  { successMessage && (
+                    <div className="themeSuccessText">
+                      {successMessage}
+                    </div>
+                  )}
+                  <div className="logOutButton" onClick={logOut}>
+                    Log Out
+                  </div>
+                </>
+              )}
             </div>
           </>
         )}
