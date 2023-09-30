@@ -21,7 +21,7 @@ const Profile = () => {
   const [userIdViewing, setUserIdViewing] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [themes, setThemes] = useState<string[]>([]);
-  const [newThemes, setNewThemes] = useState<string[]>([]);
+  //const [newThemes, setNewThemes] = useState<string[]>([]);
   const [selectingThemes, setSelectingThemes] = useState<boolean>(false);
   const [position, setPosition] = useState<number>(0);
   const [name, setName] = useState<string>("");
@@ -63,6 +63,11 @@ const Profile = () => {
     retrieveProfile();
   }, [])
 
+  const changeOrSave = () => {
+    if (selectingThemes) saveThemes();
+    setSelectingThemes(!selectingThemes);
+  }
+
   const saveThemes = async () => {
     fetch(
       `${process.env.REACT_APP_BE_URL}/update-user`,
@@ -73,7 +78,7 @@ const Profile = () => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          "image_config": newThemes
+          "image_config": themes
         })
       }
     )
@@ -84,25 +89,6 @@ const Profile = () => {
     removeCookie("user-id", { path: '/' });
     window.location.replace(`${process.env.REACT_APP_BASE_URL}`);
   }
-
-  /*
-                  { selectingThemes && (
-                  <>
-                    <ThemeArea themeList={newThemes} setThemeList={setNewThemes} existingThemes={false} />
-                    <div className="changeOrSaveButton" onClick={saveThemes}>
-                      save
-                    </div>
-                  </>
-                )}
-                { !selectingThemes && (
-                  <>
-                    <ThemeArea themeList={newThemes} setThemeList={setNewThemes} existingThemes={themes} />
-                    <div className="changeOrSaveButton" onClick={() => setSelectingThemes(true)}>
-                      change themes
-                    </div>
-                  </>
-                )}
-                */
  
   return (
     <>
@@ -113,6 +99,10 @@ const Profile = () => {
             <div className="profileContentContainer">
             { userId == userIdViewing && (
               <>
+                <ThemeArea themeList={themes} setThemeList={setThemes} isSelecting={selectingThemes} />
+                <div className="changeOrSaveButton" onClick={changeOrSave}>
+                  { selectingThemes ? "save" : "select new" }
+                </div>
                 <div className="logOutButton" onClick={logOut}>
                   Log Out
                 </div>

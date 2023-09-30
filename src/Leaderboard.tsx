@@ -96,7 +96,7 @@ const Leaderboard = () => {
                   {l.first_name} {l.last_name}
                 </div>
               </div>
-              <img className="leaderboardImage" src={s3_url(l.user_id)} onClick={() => clickImage(process.env.PUBLIC_URL + "assets/2.png")} />
+              <img className="leaderboardImage" src={s3_url(l.user_id)} onClick={() => clickImage(s3_url(l.user_id))} />
             </div>
           ))}
         </div>

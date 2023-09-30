@@ -23,10 +23,22 @@ const themeEmojis = [
    "⚔️",
 ];
 
-const ThemeArea = ({ themeList, setThemeList, existingThemes }) => {
+const ThemeArea = ({ themeList, setThemeList, isSelecting }) => {
+
+  useEffect(() => {
+    if (isSelecting) {
+      for (let i = 0; i < themeList.length; i++) {
+        const targetComponent = document.getElementById(`emoji-button-${themeList[i]}`);
+        if (targetComponent) {
+          targetComponent.style.backgroundColor = "rgba(255, 255, 255, 1.0)";
+          targetComponent.style.color = "#0CA0E4";
+        }
+      }
+    }
+  }, [isSelecting])
 
   const addToThemeList = (text: string) => {
-    if (existingThemes) return;
+    if (!isSelecting) return;
 
     const targetComponent = document.getElementById(`emoji-button-${text}`);
     
@@ -46,17 +58,17 @@ const ThemeArea = ({ themeList, setThemeList, existingThemes }) => {
   return (
     <div className="themesArea">
       <div className="themesInstructionText">
-        { existingThemes && "Choose up to 3 personalities:" }
-        { !existingThemes && "Your personalities:" }
+        { isSelecting && "Choose up to 3 personalities:" }
+        { !isSelecting && "Your personalities:" }
       </div>
         <div className="themes">
-          { !existingThemes && themeNames.map((t, i) => (
+          { isSelecting && themeNames.map((t, i) => (
             <div id={`emoji-button-${t}`} className="retakeButton" onClick={() => addToThemeList(t)}>
               <div>{themeEmojis[i]}</div>
               <div>{t}</div>
             </div>
           ))}
-          { existingThemes && existingThemes.map(t => (
+          { !isSelecting && themeList.map(t => (
             <div id={`emoji-button-${t}`} className="retakeButton" onClick={() => addToThemeList(t)}>
               <div>{themeEmojis[themeNames.indexOf(t)]}</div>
               <div>{t}</div>
