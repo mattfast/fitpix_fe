@@ -9,7 +9,7 @@ import "@fontsource/rubik/500.css";
 import "@fontsource/rubik/700.css"; 
 import "@fontsource/figtree/600.css";
 import "./Vote.css";
-import Modal from "./Modal";
+import ImageModal from "./components/ImageModal";
 import { validateCookie, s3_url } from "./utils";
 import AppHeader from "./components/AppHeader";
 import Cooldown from "./Cooldown";
@@ -17,7 +17,7 @@ import EndOfStack from "./EndOfStack";
 
 type User = {
   first_name: string;
-  image_url: string;
+  last_name: string;
   user_id: string;
 }
 
@@ -46,6 +46,8 @@ const Vote = () => {
   const [minutesLeft, setMinutesLeft] = useState<number | null>(null);
   const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [modalImage, setModalImage] = useState<string>("");
+  const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,6 +70,7 @@ const Vote = () => {
         method: "POST",
         headers: {
           "auth-token": cookies['user-id'],
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           "winner_id": winner_id,
@@ -100,7 +103,11 @@ const Vote = () => {
         }
       );
       const users = await response.json();
-      if (users.user_list > 0) {
+      console.log("USER LIST");
+      console.log(users.user_list);
+      console.log("FEED INDEX");
+      console.log(users.feed_index);
+      if (users.user_list.length > 0) {
         setUsersList([...usersList, ...users.user_list]);
         setFeedIndex(users.feed_index);
       } else if (users.ready_at) {
@@ -117,41 +124,50 @@ const Vote = () => {
   }, [])
  
   return (
-    <div className="voteContainer">
-      <AppHeader page="vote" userId={userId} />
-      { !loading && feedIndex < usersList.length - 1 && (
-        <div className="voteAreaContainer">
-          <div className="voteTextContainer">
-            <div className="voteLimitText">
-              {Math.floor(feedIndex / 2) + 1} of {Math.floor(usersList.length / 2)}
-            </div>
-            <div className="voteQuestionText">
-              {usersList[feedIndex].first_name} or {usersList[feedIndex + 1].first_name}?
-            </div>
-          </div>
-          <div className="optionsContainer">
-            <div className="optionContainer">
-              <img src={s3_url(usersList[feedIndex].user_id)} className="optionImage" />
-              <div className="optionButton" onClick={() => vote(usersList[feedIndex].user_id, usersList[feedIndex + 1].user_id)}>
-                {usersList[feedIndex].first_name}
+    <>
+      <div className="voteContainer">
+        <AppHeader page="vote" userId={userId} />
+        { !loading && feedIndex < usersList.length - 1 && (
+          <div className="voteAreaContainer">
+            <div className="voteTextContainer">
+              <div className="voteLimitText">
+                {Math.floor(feedIndex / 2) + 1} of {Math.floor(usersList.length / 2)}
+              </div>
+              <div className="voteQuestionText">
+                {usersList[feedIndex].first_name} or {usersList[feedIndex + 1].first_name}?
               </div>
             </div>
-            <div className="optionContainer">
-              <img src={s3_url(usersList[feedIndex + 1].user_id)} className="optionImage" />
-              <div className="optionButton" onClick={() => vote(usersList[feedIndex + 1].user_id, usersList[feedIndex].user_id)}>
-                {usersList[feedIndex + 1].first_name}
+            <div className="optionsContainer">
+              <div className="optionContainer">
+                <img src={s3_url(usersList[feedIndex].user_id)} className="optionImage" onClick={() => {
+                  setModalImage(s3_url(usersList[feedIndex].user_id));
+                  setShowModal(true);
+                }}/>
+                <div className="optionButton" onClick={() => vote(usersList[feedIndex].user_id, usersList[feedIndex + 1].user_id)}>
+                  {usersList[feedIndex].first_name}
+                </div>
+              </div>
+              <div className="optionContainer">
+                <img src={s3_url(usersList[feedIndex + 1].user_id)} className="optionImage" onClick={() => {
+                  setModalImage(s3_url(usersList[feedIndex + 1].user_id));
+                  setShowModal(true);
+                }} />
+                <div className="optionButton" onClick={() => vote(usersList[feedIndex + 1].user_id, usersList[feedIndex].user_id)}>
+                  {usersList[feedIndex + 1].first_name}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-      { !loading && minutesLeft !== null && secondsLeft !== null && (
-        <Cooldown initialMins={minutesLeft} initialSecs={secondsLeft} />
-      )}
-      { !loading && feedIndex >= usersList.length - 1 && !minutesLeft && !secondsLeft && (
-        <EndOfStack />
-      )}
-    </div>
+        )}
+        { !loading && minutesLeft !== null && secondsLeft !== null && (
+          <Cooldown initialMins={minutesLeft} initialSecs={secondsLeft} />
+        )}
+        { !loading && feedIndex >= usersList.length - 1 && !minutesLeft && !secondsLeft && (
+          <EndOfStack />
+        )}
+      </div>
+      <ImageModal imageSrc={modalImage} showModal={showModal} setShowModal={setShowModal} />
+    </>
   )
 };
 

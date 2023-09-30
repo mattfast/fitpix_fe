@@ -104,13 +104,6 @@ const Signup = () => {
       setSelectedFile(file);
     }
   };
-
-  const handleFileButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click(); // Trigger the file input click
-    }
-  };
-
   
   const beginStream = async () => {
     setStreaming(true);
@@ -435,15 +428,6 @@ const Signup = () => {
           <div id="streamingComponent" className="videoFullCircle" />
           { page == 4 && (
             <>
-              {selectedFile && (
-                <>
-                  <img src={URL.createObjectURL(selectedFile)} className="photoFullCircle" alt="Selected" />
-                  <div className="retakeButton" onClick={() => setSelectedFile(null)}>
-                    <div>📸</div>
-                    <div>Retake</div>
-                  </div>
-                </>
-              )}
               {capturedImage && (
                 <>
                   <img src={capturedImage} alt="Captured" className="photoFullCircle" />
@@ -461,7 +445,7 @@ const Signup = () => {
                   </div>
                 </>
               )}
-              {(!selectedFile && !capturedImage && !streaming) && (
+              {(!capturedImage && !streaming) && (
                 <>
                   <div className="photoEmptyCircle">
                     <img src={process.env.PUBLIC_URL + "assets/user.png"} className="photoPlaceholder" />
@@ -471,9 +455,6 @@ const Signup = () => {
                     <div className="photoButton" onClick={beginStream}>
                       <div className="nextButtonText">🔥 take  a selfie 🔥</div>
                     </div>
-                    <div className="photoButton" onClick={handleFileButtonClick}>
-                      <div className="nextButtonText">✨ upload a photo ✨</div>
-                    </div>
                   </div>
                 </>
               )}
@@ -482,9 +463,6 @@ const Signup = () => {
           )}
           { page == 5 && (
             <>
-              {selectedFile && (
-                <img src={URL.createObjectURL(selectedFile)} className="photoFullCircle" alt="Selected" />
-              )}
               {capturedImage && (
                 <img src={capturedImage} alt="Captured" className="photoFullCircle" />
               )}
@@ -500,7 +478,7 @@ const Signup = () => {
             </div>
           )}
         </animated.div>
-        { (page !== 4 || selectedFile || capturedImage) && page !== 3 && page !== 6 && (
+        { (page !== 4 || capturedImage) && page !== 3 && page !== 6 && (
           <div id="nextButton" className="nextButton" onClick={(e) => {
             //e.preventDefault();
             /*if (textInputRef.current) {
@@ -511,7 +489,7 @@ const Signup = () => {
           }}>
               <div className="nextButtonText">
                 {page < 3 && "Next"}
-                {(page > 4 || selectedFile || capturedImage) && "Looks good"}
+                {(page > 4 || capturedImage) && "Looks good"}
               </div>
             <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
           </div>

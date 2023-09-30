@@ -20,6 +20,12 @@
   font-style: normal;
 }
 
+body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
 .voteContainer {
   display: flex;
   height: 100dvh;
@@ -28,6 +34,10 @@
   /*flex-direction: column;
   justify-content: space-between;
   align-items: center;*/
+  /*flex-direction: column;
+  justify-content: space-between;
+  align-items: center;*/
+  overflow: hidden;
   background: #0CA0E4;
   /*overflow: hidden;*/
 }
@@ -40,6 +50,7 @@
   gap: 40px;
   flex: 1 0 0;
   align-self: stretch;
+  margin-top: 100px;
 }
 
 .voteTextContainer {
@@ -90,10 +101,14 @@
 }
 
 .optionImage {
-  max-height: min(350px, 40vh);
-  height: auto;
-  width: auto;
-  max-width: 40vw;
+  /*max-height: min(350px, 40vh);*/
+  /*height: auto;
+  width: auto;*/
+  height: min(400px, 45vh);
+  width: min(300px, 40vw);
+  object-fit: cover;
+  cursor: pointer;
+  /*max-width: 40vw;*/
   border-radius: 16px;
 }
 
