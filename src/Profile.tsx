@@ -24,6 +24,7 @@ const Profile = () => {
   const [newThemes, setNewThemes] = useState<string[]>([]);
   const [selectingThemes, setSelectingThemes] = useState<boolean>(false);
   const [position, setPosition] = useState<number>(0);
+  const [name, setName] = useState<string>("");
   const [currentImage, setCurrentImage] = useState<string>("");
   const navigate = useNavigate();
 
@@ -55,6 +56,7 @@ const Profile = () => {
       
       setThemes(respJson["themes"]);
       setPosition(respJson["position"]);
+      setName(`${respJson["first_name"]} ${respJson["last_name"]}`)
       setLoading(false);
     }
     
@@ -82,17 +84,9 @@ const Profile = () => {
     removeCookie("user-id", { path: '/' });
     window.location.replace(`${process.env.REACT_APP_BASE_URL}`);
   }
- 
-  return (
-    <>
-      <div className="profileContainer">
-        { !loading && (
-          <>
-            <AppHeader page="profile" userId={userIdViewing} position={position} />
-            <div className="profileContentContainer">
-            { userId == userIdViewing && (
-              <>
-                { selectingThemes && (
+
+  /*
+                  { selectingThemes && (
                   <>
                     <ThemeArea themeList={newThemes} setThemeList={setNewThemes} existingThemes={false} />
                     <div className="changeOrSaveButton" onClick={saveThemes}>
@@ -108,6 +102,17 @@ const Profile = () => {
                     </div>
                   </>
                 )}
+                */
+ 
+  return (
+    <>
+      <div className="profileContainer">
+        { !loading && (
+          <>
+            <AppHeader page="profile" userId={userIdViewing} profileName={name} position={position} />
+            <div className="profileContentContainer">
+            { userId == userIdViewing && (
+              <>
                 <div className="logOutButton" onClick={logOut}>
                   Log Out
                 </div>
