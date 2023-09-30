@@ -88,7 +88,7 @@ const Profile = () => {
       <div className="profileContainer">
         { !loading && (
           <>
-            <AppHeader page="profile" userId={userIdViewing} />
+            <AppHeader page="profile" userId={userIdViewing} position={position} />
             <div className="profileContentContainer">
             { userId == userIdViewing && (
               <>
@@ -114,7 +114,6 @@ const Profile = () => {
               </>
             )}
             </div>
-
           </>
         )}
       </div>

@@ -13,78 +13,18 @@ import { validateCookie } from "./utils";
 import AppHeader from "./components/AppHeader";
 import ImageModal from "./components/ImageModal";
 
-const leaderboard = [
-  {
-    "first_name": "Anna",
-    "score": 59
-  },
-  {
-    "first_name": "James",
-    "score": 49
-  },
-  {
-    "first_name": "Anna",
-    "score": 59
-  },
-  {
-    "first_name": "James",
-    "score": 49
-  },
-  {
-    "first_name": "Anna",
-    "score": 59
-  },
-  {
-    "first_name": "James",
-    "score": 49
-  },
-  {
-    "first_name": "Anna",
-    "score": 59
-  },
-  {
-    "first_name": "James",
-    "score": 49
-  },
-  {
-    "first_name": "Anna",
-    "score": 59
-  },
-  {
-    "first_name": "James",
-    "score": 49
-  },
-  {
-    "first_name": "Anna",
-    "score": 59
-  },
-  {
-    "first_name": "James",
-    "score": 49
-  },
-  {
-    "first_name": "Anna",
-    "score": 59
-  },
-  {
-    "first_name": "James",
-    "score": 49
-  },
-  {
-    "first_name": "Anna",
-    "score": 59
-  },
-  {
-    "first_name": "James",
-    "score": 49
-  }
-];
+type LeaderboardUser = {
+  user_id: string;
+  first_name: string;
+  last_name: string;
+}
 
 const Leaderboard = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [userId, setUserId] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<string>("");
+  const [leaderboard, setLeaderboard] = useState<LeaderboardUser[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -98,6 +38,25 @@ const Leaderboard = () => {
     }
     
     validate();
+  }, [])
+
+  useEffect(() => {
+    async function getLeaderboard() {
+      const response = await fetch(
+        `${process.env.REACT_APP_BE_URL}/get-leaderboard`,
+        {
+          method: "GET",
+          headers: {
+            "auth-token": cookies['user-id']
+          }
+        }
+      )
+
+      const respJson = await response.json();
+      setLeaderboard(respJson["leaderboard"])
+    }
+    
+    getLeaderboard();
   }, [])
 
   const clickImage = (imageUrl: string) => {
@@ -130,11 +89,11 @@ const Leaderboard = () => {
                 )}
                 { i > 2 && (
                   <div className="leaderboardRank">
-                    #{i} 
+                    #{i + 1} 
                   </div>
                 )}
-                <div className="leaderboardText">
-                  {l.first_name} Lastname
+                <div className="leaderboardText" onClick={() => navigate(`/profile/${l.user_id}`)}>
+                  {l.first_name} {l.last_name}
                 </div>
               </div>
               <img className="leaderboardImage" src={process.env.PUBLIC_URL + "assets/2.png"} onClick={() => clickImage(process.env.PUBLIC_URL + "assets/2.png")} />
