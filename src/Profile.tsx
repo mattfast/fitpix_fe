@@ -23,6 +23,7 @@ const Profile = () => {
   const [themes, setThemes] = useState<string[]>([]);
   const [newThemes, setNewThemes] = useState<string[]>([]);
   const [selectingThemes, setSelectingThemes] = useState<boolean>(false);
+  const [position, setPosition] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<string>("");
   const navigate = useNavigate();
 
@@ -52,7 +53,8 @@ const Profile = () => {
       );
       const respJson = await response.json();
       
-      setThemes(respJson["image_config"]);
+      setThemes(respJson["themes"]);
+      setPosition(respJson["position"]);
       setLoading(false);
     }
     

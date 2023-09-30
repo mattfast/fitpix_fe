@@ -10,10 +10,11 @@ import "@fontsource/figtree/600.css";
 import "./AppHeader.css"
 import { s3_url } from "../utils";
 
-const AppHeader = ({ page, userId, profileName }: {
+const AppHeader = ({ page, userId, profileName, position }: {
 	page: string,
 	userId: string,
-	profileName?: string
+	profileName?: string,
+	position?: number
 }) => {
   const navigate = useNavigate();
 
@@ -34,7 +35,12 @@ const AppHeader = ({ page, userId, profileName }: {
 						{ page == "leaderboard" && "leaderboard" }
 						{ page == "profile" && profileName }
 					</div>
-					<img src={s3_url(userId)} className="profileLink" onClick={() => navigate(`/profile/${userId}`)}/>
+					{ page != "profile" && (
+						<img src={s3_url(userId)} className="profileLink" onClick={() => navigate(`/profile/${userId}`)}/>
+					)}
+					{ page == "profile" && (
+						<div className="voteHeaderIcon">{ position && position != 0 && `#${position}` }</div>
+					)}
 			</div>
     </div>
   );
