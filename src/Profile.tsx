@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion"
 import { useNavigate, useParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import { io } from "socket.io-client";
@@ -8,11 +7,12 @@ import "@fontsource/rubik";
 import "@fontsource/rubik/500.css"; 
 import "@fontsource/rubik/700.css"; 
 import "@fontsource/figtree/600.css";
-import "./Leaderboard.css";
+import "./Profile.css";
 import { validateCookie } from "./utils";
 import { s3_url } from "./utils";
 import AppHeader from "./components/AppHeader";
 import ImageModal from "./components/ImageModal";
+import ThemeArea from "./components/ThemeArea";
 
 const Profile = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
@@ -20,6 +20,9 @@ const Profile = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [userIdViewing, setUserIdViewing] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [themes, setThemes] = useState<string[]>([]);
+  const [newThemes, setNewThemes] = useState<string[]>([]);
+  const [selectingThemes, setSelectingThemes] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<string>("");
   const navigate = useNavigate();
 
@@ -36,8 +39,45 @@ const Profile = () => {
     validate();
   }, [])
 
+  useEffect(() => {
+    async function retrieveProfile() {
+      const response = await fetch(
+        `${process.env.REACT_APP_BE_URL}/profile/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "auth-token": cookies["user-id"],
+          },
+        }
+      );
+      const respJson = await response.json();
+      
+      setThemes(respJson["image_config"]);
+      setLoading(false);
+    }
+    
+    retrieveProfile();
+  }, [])
+
+  const saveThemes = async () => {
+    fetch(
+      `${process.env.REACT_APP_BE_URL}/update-user`,
+      {
+        method: "POST",
+        headers: {
+          "auth-token": cookies["user-id"],
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "image_config": newThemes
+        })
+      }
+    )
+    setSelectingThemes(false);
+  }
+
   const logOut = () => {
-    removeCookie("user-id");
+    removeCookie("user-id", { path: '/' });
     window.location.replace(`${process.env.REACT_APP_BASE_URL}`);
   }
  
@@ -47,11 +87,32 @@ const Profile = () => {
         { !loading && (
           <>
             <AppHeader page="profile" userId={userIdViewing} />
+            <div className="profileContentContainer">
             { userId == userIdViewing && (
-              <div className="logOutButton" onClick={logOut}>
-                Log Out
-              </div>
+              <>
+                { selectingThemes && (
+                  <>
+                    <ThemeArea themeList={newThemes} setThemeList={setNewThemes} existingThemes={false} />
+                    <div className="changeOrSaveButton" onClick={saveThemes}>
+                      save
+                    </div>
+                  </>
+                )}
+                { !selectingThemes && (
+                  <>
+                    <ThemeArea themeList={newThemes} setThemeList={setNewThemes} existingThemes={themes} />
+                    <div className="changeOrSaveButton" onClick={() => setSelectingThemes(true)}>
+                      change themes
+                    </div>
+                  </>
+                )}
+                <div className="logOutButton" onClick={logOut}>
+                  Log Out
+                </div>
+              </>
             )}
+            </div>
+
           </>
         )}
       </div>

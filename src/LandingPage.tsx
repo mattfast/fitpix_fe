@@ -87,6 +87,7 @@ const LandingPage = () => {
           const futureDate = new Date();
           futureDate.setFullYear(futureDate.getFullYear() + 10);
           setCookie("user-id", respJson["cookie"], { expires: futureDate });
+          navigate("/vote");
         }
       }
 

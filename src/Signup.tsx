@@ -14,33 +14,7 @@ import s3 from "./s3";
 import { formatPhoneNumber } from "./utils";
 import ComeBackTomorrow from "./ComeBackTomorrow";
 import GenderButton from "./components/GenderButton";
-
-const themes = [
-  {
-    "emoji": "👑",
-    "text": "king"
-  },
-  {
-    "emoji": "👸🏻",
-    "text": "princess"
-  },
-  {
-    "emoji": "🤠",
-    "text": "cowboy"
-  },
-  {
-    "emoji": "🏈",
-    "text": "athlete"
-  },
-  {
-    "emoji": "🪄",
-    "text": "magical"
-  },
-  {
-    "emoji": "⚔️",
-    "text": "warrior"
-  },
-];
+import ThemeArea from "./components/ThemeArea";
 
 const Signup = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
@@ -175,24 +149,6 @@ const Signup = () => {
       videoComponent.style.height = "1px";
     }
   };
-
-  const addToThemeList = (text: string) => {
-    const targetComponent = document.getElementById(`emoji-button-${text}`);
-    console.log("HERE");
-    console.log(targetComponent);
-    
-    if (targetComponent) {
-      if (themeList.includes(text)) {
-        setThemeList(themeList.filter(t => t != text));
-        targetComponent.style.backgroundColor = "rgba(255, 255, 255, 0.16)";
-        targetComponent.style.color = "#FFF";
-      } else if (themeList.length < 3) {
-        setThemeList([...themeList, text]);
-        targetComponent.style.backgroundColor = "rgba(255, 255, 255, 1.0)";
-        targetComponent.style.color = "#0CA0E4";
-      }
-    }
-  }
 
   const createUser = async () => {
     const response = await fetch(
@@ -525,17 +481,7 @@ const Signup = () => {
               {capturedImage && (
                 <img src={capturedImage} alt="Captured" className="photoFullCircle" />
               )}
-              <div className="themesArea">
-                <div className="themesInstructionText">Choose up to 3 personalities:</div>
-                <div className="themes">
-                  { themes.map(t => (
-                    <div id={`emoji-button-${t.text}`} className="retakeButton" onClick={() => addToThemeList(t.text)}>
-                      <div>{t.emoji}</div>
-                      <div>{t.text}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <ThemeArea themeList={themeList} setThemeList={setThemeList} existingThemes={false} />
             </>
           )}
           { page == 6 && (

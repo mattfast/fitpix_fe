@@ -27,7 +27,7 @@ const AppHeader = ({ page, userId, profileName }: {
 						<img className="voteLink" src={process.env.PUBLIC_URL + "assets/cards-blank.png"} onClick={() => navigate("/vote")} />
 					)}
 					{ page == "profile" && (
-						<img className="voteLink" src={process.env.PUBLIC_URL + "assets/chevron-left.png"} onClick={() => navigate("/leaderboard")} />
+						<img className="voteLink" src={process.env.PUBLIC_URL + "assets/cards-blank.png"} onClick={() => navigate("/leaderboard")} />
 					)}
 					<div className="voteHeaderIcon">
 						{ page == "vote" && "dopple.club" }
