@@ -24,7 +24,7 @@ export const formatPhoneNumber = (input: string) => {
 };
 
 export const s3_url = (user_id: string) => {
-  return `https://dopple-selfies.s3.amazonaws.com/generated-${user_id}.jpg`;
+  return `https://dopple-selfies.s3.amazonaws.com/selfie-1-${user_id}.jpg`;
 };
 
 export const validateCookie = async (cookie: string | null | undefined) => {

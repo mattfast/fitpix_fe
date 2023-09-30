@@ -22,6 +22,7 @@ const Signup = () => {
 
   const [page, setPage] = useState<number>(0);
   const [placeholder, setPlaceholder] = useState<string>("(123) 456-7890");
+  const [userId, setUserId] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [shouldFocus, setShouldFocus] = useState<boolean>(false);
@@ -52,6 +53,10 @@ const Signup = () => {
       const respJson = await response.json();
       console.log("USER FETCHED");
       console.log(respJson);
+      // set user_id
+      if (respJson["user_id"]) setUserId(respJson["user_id"]);
+
+      // set
       if (respJson["images_uploaded"]) setPage(6);
       else if (respJson["gender"]) setPage(4);
       else if (respJson["last_name"]) setPage(3);
@@ -176,6 +181,8 @@ const Signup = () => {
       setCookie("user-id", respJson["cookie"], { expires: futureDate });
     }
 
+    if (respJson["user_id"]) setUserId(respJson["user_id"]);
+
     return response.status === 200;
   }
 
@@ -252,7 +259,7 @@ const Signup = () => {
     // Create a new image element and set its source to the captured image.
     // Define the S3 bucket name and file name
     const bucketName = 'dopple-selfies';
-    const fileName = `selfie-1-${cookies['user-id']}.jpg`; // Unique file name
+    const fileName = `selfie-1-${userId}.jpg`; // Unique file name
 
     // Encode the image as a buffer
     const imageBlob = await fetch(capturedImage || "").then((response) => response.blob());

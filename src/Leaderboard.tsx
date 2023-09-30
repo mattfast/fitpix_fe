@@ -9,7 +9,7 @@ import "@fontsource/rubik/500.css";
 import "@fontsource/rubik/700.css"; 
 import "@fontsource/figtree/600.css";
 import "./Leaderboard.css";
-import { validateCookie } from "./utils";
+import { validateCookie, s3_url } from "./utils";
 import AppHeader from "./components/AppHeader";
 import ImageModal from "./components/ImageModal";
 
@@ -96,7 +96,7 @@ const Leaderboard = () => {
                   {l.first_name} {l.last_name}
                 </div>
               </div>
-              <img className="leaderboardImage" src={process.env.PUBLIC_URL + "assets/2.png"} onClick={() => clickImage(process.env.PUBLIC_URL + "assets/2.png")} />
+              <img className="leaderboardImage" src={s3_url(l.user_id)} onClick={() => clickImage(process.env.PUBLIC_URL + "assets/2.png")} />
             </div>
           ))}
         </div>
