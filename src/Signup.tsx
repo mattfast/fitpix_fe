@@ -466,10 +466,10 @@ const Signup = () => {
           { page == 1 && !streaming && !capturedImage5 && (
             <div className="formTextGap">
               <div className="formSubtext">
-                To make your dopple look like you, we have to take some selfies
+                The best dopples look like 
               </div>
               <div className="formSubtext">
-                (don't worry, they don't have to be high quality)
+                (don't worry, they can be **)
               </div>
             </div>
           )}
@@ -588,7 +588,7 @@ const Signup = () => {
           }}>
               <div className="nextButtonText">
                 { page == 0 && "Let's create"}
-                {(page == 2) && "Looks good"}
+                {(page == 1 || page == 2) && "Looks good"}
                 {page > 2 && "Next"}
               </div>
             <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
