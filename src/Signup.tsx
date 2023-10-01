@@ -27,12 +27,22 @@ const Signup = () => {
   const [gender, setGender] = useState<string>("");
   const [shouldFocus, setShouldFocus] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [streaming, setStreaming] = useState<boolean>(false);
   const [camOpen, setCamOpen] = useState<boolean>(false);
   const [themeList, setThemeList] = useState<string[]>([]);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState<boolean>(true);
+  const [showNumber, setShowNumber] = useState<boolean>(false);
+  const [showInstructions, setShowInstructions] = useState<boolean>(false);
+  const [currentNumber, setCurrentNumber] = useState<number>(4);
+  const [currentInstructions, setCurrentInstructions] = useState<string>("");
+  const [selfieAnimationHappening, setSelfieAnimationHappening] = useState<boolean>(false);
+
+  const [capturedImage1, setCapturedImage1] = useState<string | null>(null);
+  const [capturedImage2, setCapturedImage2] = useState<string | null>(null);
+  const [capturedImage3, setCapturedImage3] = useState<string | null>(null);
+  const [capturedImage4, setCapturedImage4] = useState<string | null>(null);
+  const [capturedImage5, setCapturedImage5] = useState<string | null>(null);
+
   const webcamRef = useRef<Webcam | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const textInputRef = useRef<HTMLInputElement | null>(null);
@@ -72,6 +82,11 @@ const Signup = () => {
     config: { tension: 220, friction: 120 }
   });
 
+  const fadeAnimationQuick = useSpring({
+    opacity: showNumber ? 1 : 0,
+    config: { tension: 320, friction: 40 }
+  });
+
   const shiftNextButton = () => {
     const el = document.getElementById("nextButton");
     const px1 = window.visualViewport?.height;
@@ -79,36 +94,20 @@ const Signup = () => {
     if (el && px1) el.style.bottom = "calc(26px + " + px2 + "px - " + px1 + "px)";
   }
 
-  /*const shiftContent = () => {
-    const el = document.getElementById("formContainer");
-    const px1 = window.visualViewport?.height;
-    if (el && px1) {
-      if (page == 3 || page == 4) el.style.marginTop = "calc(100dvh - " + Math.floor(px1) + "px)";
-      else el.style.marginTop = "calc(100dvh - " + Math.floor(px1 / 1.5) + "px)";
-    }
-  }*/
-
   useEffect(() => {
     const intervalId = setInterval(shiftNextButton, 50);
     return () => clearInterval(intervalId);
   }, []);
 
-  /*useEffect(() => {
-    const intervalId = setInterval(shiftContent, 50);
-    return () => clearInterval(intervalId);
-  }, [page]);*/
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-    }
-  };
   
   const beginStream = async () => {
     setStreaming(true);
     setCamOpen(true);
-    setCapturedImage(null);
+    setCapturedImage1(null);
+    setCapturedImage2(null);
+    setCapturedImage3(null);
+    setCapturedImage4(null);
+    setCapturedImage5(null);
     const targetComponent = document.getElementById("streamingComponent");
 
     await new Promise(r => setTimeout(r, 100));
@@ -130,7 +129,60 @@ const Signup = () => {
     }
   }
 
-  const capture = async () => {
+  const numberAnimation = async () => {
+    for (let i = 4; i >= 1; i--) {
+      await new Promise(r => setTimeout(r, 350));
+      setCurrentNumber(i);
+      await new Promise(r => setTimeout(r, 350));
+      setShowNumber(true);
+      await new Promise(r => setTimeout(r, 600));
+      setShowNumber(false);
+    }
+  }
+
+  const selfieAnimation = async () => {
+    setSelfieAnimationHappening(true);
+
+    setCurrentInstructions("Look up! (Chin facing camera)");
+    await numberAnimation();
+    capture(setCapturedImage1);
+
+    setCurrentInstructions("Look down! (Forehead facing camera)");
+    await numberAnimation();
+    capture(setCapturedImage2);
+
+    setCurrentInstructions("Look left! (Cheek facing camera)");
+    await numberAnimation();
+    capture(setCapturedImage3);
+
+    setCurrentInstructions("Look left! (Cheek facing camera)");
+    await numberAnimation();
+    capture(setCapturedImage4);
+
+    setCurrentInstructions("Look forward! (Normal selfie)");
+    await numberAnimation();
+    capture(setCapturedImage5);
+
+    collapseCamera();
+    setSelfieAnimationHappening(false)
+  }
+
+  const collapseCamera = () => {
+
+    const targetComponent = document.getElementById("streamingComponent");
+    const videoComponent = document.getElementById("webcamVideo");
+
+    if (targetComponent && videoComponent) {
+      setStreaming(false);
+      targetComponent.style.width = "1px";
+      targetComponent.style.height = "1px";
+      targetComponent.style.marginTop = "-41px";
+      videoComponent.style.width = "1px";
+      videoComponent.style.height = "1px";
+    }
+  }
+
+  const capture = async (setCapturedImage) => {
     const targetComponent = document.getElementById("streamingComponent");
     const videoComponent = document.getElementById("webcamVideo");
 
@@ -139,12 +191,12 @@ const Signup = () => {
       await new Promise(r => setTimeout(r, 200));
       setCapturedImage(imageSrc);
       console.log(imageSrc);
-      setStreaming(false);
-      targetComponent.style.width = "1px";
+      //setStreaming(false);
+      /*targetComponent.style.width = "1px";
       targetComponent.style.height = "1px";
       targetComponent.style.marginTop = "-41px";
       videoComponent.style.width = "1px";
-      videoComponent.style.height = "1px";
+      videoComponent.style.height = "1px";*/
     }
   };
 
@@ -248,32 +300,37 @@ const Signup = () => {
     return true;
   }
 
-  const uploadImageToS3 = async () => {
+  const uploadImagesToS3 = async (capturedImages: (string | null)[]) => {
     // Create a new image element and set its source to the captured image.
     // Define the S3 bucket name and file name
     const bucketName = 'dopple-selfies';
-    const fileName = `selfie-1-${userId}.jpg`; // Unique file name
 
     // Encode the image as a buffer
-    const imageBlob = await fetch(capturedImage || "").then((response) => response.blob());
+    for (let i = 0; i < capturedImages.length; i++) {
+      const fileName = `selfie-${i}-${userId}.jpg`; // Unique file name
 
-    // Set up the parameters for the S3 upload
-    const params = {
-      Bucket: bucketName,
-      Key: fileName,
-      Body: imageBlob,
-      ContentType: 'image/jpeg', // Adjust the content type as needed
-    };
+      const imageBlob = await fetch(capturedImages[i] || "").then((response) => response.blob());
 
-    // Upload the image to S3
-    s3.upload(params, (err, data) => {
-      if (err) {
-        console.error('Error uploading image to S3:', err);
-      } else {
-        console.log('Image uploaded successfully:', data.Location);
-        // You can handle success here, such as displaying a success message to the user.
-      }
-    });
+      // Set up the parameters for the S3 upload
+      const params = {
+        Bucket: bucketName,
+        Key: fileName,
+        Body: imageBlob,
+        ContentType: 'image/jpeg', // Adjust the content type as needed
+      };
+  
+      // Upload the image to S3
+      s3.upload(params, (err, data) => {
+        if (err) {
+          console.error('Error uploading image to S3:', err);
+        } else {
+          console.log('Image uploaded successfully:', data.Location);
+          // You can handle success here, such as displaying a success message to the user.
+        }
+      });
+
+    }
+
   }
 
   const enterDetector = (key: string) => {
@@ -354,7 +411,7 @@ const Signup = () => {
         return;
       }
     } else if (page == 4) {
-      uploadImageToS3();
+      uploadImagesToS3([capturedImage1, capturedImage2, capturedImage3, capturedImage4, capturedImage5]);
     } else if (page == 5) {
       if (themeList.length == 0) {
         setErrorMessage("You must select at least one personality.");
@@ -425,33 +482,48 @@ const Signup = () => {
           { camOpen && (
             <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
           )}
-          <div id="streamingComponent" className="videoFullCircle" />
+          <div id="streamingComponent" className="videoFullCircle">
+            <animated.div className="numberAnimation" style={fadeAnimationQuick}>
+              {currentNumber}
+            </animated.div>
+          </div>
           { page == 4 && (
             <>
-              {capturedImage && (
+              {capturedImage5 && (
+                <img src={capturedImage5} alt="Captured" className="photoFullCircle" />
+              )}
+              <div className="miniImages">
+                { capturedImage1 && <img src={capturedImage1} alt="Captured" className="miniImage" /> }
+                { capturedImage2 && <img src={capturedImage2} alt="Captured" className="miniImage" /> }
+                { capturedImage3 && <img src={capturedImage3} alt="Captured" className="miniImage" /> }
+                { capturedImage4 && <img src={capturedImage4} alt="Captured" className="miniImage" /> }
+              </div>
+              {capturedImage5 && (
+                <div className="retakeButton" onClick={() => {
+                  setCapturedImage1(null);
+                  setCapturedImage2(null);
+                  setCapturedImage3(null);
+                  setCapturedImage4(null);
+                  setCapturedImage5(null);
+                }}>
+                  <div>📸</div>
+                  <div>Retake Selfies</div>
+                </div>
+              )}
+              {streaming && !selfieAnimationHappening &&  (
                 <>
-                  <img src={capturedImage} alt="Captured" className="photoFullCircle" />
-                  <div className="retakeButton" onClick={() => setCapturedImage(null)}>
+                  <div className="retakeButton" onClick={selfieAnimation}>
                     <div>📸</div>
-                    <div>Retake</div>
+                    <div>Capture Selfies</div>
                   </div>
                 </>
               )}
-              {streaming && (
-                <>
-                  <div className="retakeButton" onClick={capture}>
-                    <div>📸</div>
-                    <div>Capture</div>
-                  </div>
-                </>
-              )}
-              {(!capturedImage && !streaming) && (
+              {(!capturedImage5 && !streaming) && (
                 <>
                   <div className="photoEmptyCircle">
                     <img src={process.env.PUBLIC_URL + "assets/user.png"} className="photoPlaceholder" />
                   </div>
                   <div className="photoButtonGroup">
-                    <input type="file" ref={fileInputRef} className="fileInput" accept="image/*" onChange={handleFileChange} />
                     <div className="photoButton" onClick={beginStream}>
                       <div className="nextButtonText">🔥 take  a selfie 🔥</div>
                     </div>
@@ -463,8 +535,8 @@ const Signup = () => {
           )}
           { page == 5 && (
             <>
-              {capturedImage && (
-                <img src={capturedImage} alt="Captured" className="photoFullCircle" />
+              {capturedImage5 && (
+                <img src={capturedImage5} alt="Captured" className="photoFullCircle" />
               )}
               <ThemeArea themeList={themeList} setThemeList={setThemeList} isSelecting={true} />
             </>
@@ -478,7 +550,7 @@ const Signup = () => {
             </div>
           )}
         </animated.div>
-        { (page !== 4 || capturedImage) && page !== 3 && page !== 6 && (
+        { (page !== 4 || capturedImage5) && page !== 3 && page !== 6 && (
           <div id="nextButton" className="nextButton" onClick={(e) => {
             //e.preventDefault();
             /*if (textInputRef.current) {
@@ -489,7 +561,7 @@ const Signup = () => {
           }}>
               <div className="nextButtonText">
                 {page < 3 && "Next"}
-                {(page > 4 || capturedImage) && "Looks good"}
+                {(page > 4 || capturedImage5) && "Looks good"}
               </div>
             <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
           </div>

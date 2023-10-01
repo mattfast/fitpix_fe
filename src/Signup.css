@@ -267,6 +267,30 @@
   margin-top: -20px;
 }
 
+.numberAnimation {
+  text-align: center;
+  font-family: SF Pro Rounded;
+  color: #FFF;
+  font-size: 100px;
+  font-style: normal;
+  font-weight: 200;
+  z-index: 100;
+}
+
+.miniImages {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: min(5vw, 33px);
+}
+
+.miniImage {
+  width: min(15vw, 100px);
+  height: min(15vw, 100px);
+  border-radius: min(15vw, 100px);
+  object-fit: cover;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .nextButton:hover { transform: scale(1.05) perspective(1px); }
   .retakeButton:hover { transform: scale(1.05) perspective(1px); }
