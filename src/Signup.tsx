@@ -168,8 +168,8 @@ const Signup = () => {
     await numberAnimation();
     capture(setCapturedImage5);
 
+    setSelfieAnimationHappening(false);
     collapseCamera();
-    setSelfieAnimationHappening(false)
   }
 
   const collapseCamera = () => {
@@ -178,13 +178,14 @@ const Signup = () => {
     const videoComponent = document.getElementById("webcamVideo");
 
     if (targetComponent && videoComponent) {
-      setStreaming(false);
       targetComponent.style.width = "1px";
       targetComponent.style.height = "1px";
       targetComponent.style.marginTop = "-41px";
       videoComponent.style.width = "1px";
       videoComponent.style.height = "1px";
     }
+
+    setStreaming(false);
   }
 
   const capture = async (setCapturedImage) => {
