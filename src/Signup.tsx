@@ -462,17 +462,14 @@ const Signup = () => {
           { page == 1 && !streaming && !capturedImage5 && (
             <div className="formTextGap">
               <div className="formSubtext">
-                Let's make your dopple look like you with some selfies.
-              </div>
-              <div className="formSubtext">
-                (don't worry, they can be bad)
+                To beat your classmates, take some 🔥 selfies
               </div>
             </div>
           )}
           { page == 1 && streaming && !selfieAnimationHappening && (
             <div className="formTextGap">
               <div className="formSubtext">
-                Instructions will be here :)
+                Instructions will be HERE
               </div>
             </div>
           )}

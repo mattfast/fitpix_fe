@@ -120,7 +120,7 @@ const LandingPage = () => {
                 }
               >
                 <div className="buttonText">
-                  Create Your Dopple
+                  Compete Now
                 </div>
               </div>
               <div id="loginButton" className="loginButton" onClick={() => setModalOpen(true)} ref={buttonRef}>
