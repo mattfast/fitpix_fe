@@ -168,8 +168,10 @@ const Signup = () => {
     await numberAnimation();
     capture(setCapturedImage5);
 
-    setSelfieAnimationHappening(false);
+    await new Promise(r => setTimeout(r, 200));
+
     collapseCamera();
+    setSelfieAnimationHappening(false);
   }
 
   const collapseCamera = () => {
@@ -540,7 +542,7 @@ const Signup = () => {
                   </div>
                 </>
               )}
-              {(!capturedImage5 && !streaming) && (
+              {(!capturedImage5 && !streaming && !selfieAnimationHappening) && (
                 <>
                   <div className="photoEmptyCircle">
                     <img src={process.env.PUBLIC_URL + "assets/user.png"} className="photoPlaceholder" />
