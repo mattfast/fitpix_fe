@@ -67,10 +67,10 @@ const Signup = () => {
       if (respJson["user_id"]) setUserId(respJson["user_id"]);
 
       // set
-      if (respJson["images_uploaded"]) setPage(6);
-      else if (respJson["gender"]) setPage(4);
-      else if (respJson["last_name"]) setPage(3);
-      else if (respJson["first_name"]) setPage(2);
+      if (respJson["gender"]) setPage(6);
+      else if (respJson["last_name"]) setPage(5);
+      else if (respJson["first_name"]) setPage(4);
+      else if (respJson["images_uploaded"]) setPage(3);
       else if (respJson["number"]) setPage(1);
     }
 
@@ -101,6 +101,7 @@ const Signup = () => {
 
   
   const beginStream = async () => {
+    console.log("HERE");
     setStreaming(true);
     setCamOpen(true);
     setCapturedImage1(null);
@@ -125,8 +126,10 @@ const Signup = () => {
       webcamVideo.style.objectFit = "cover";
       webcamVideo.id = "webcamVideo";
       console.log(webcamVideo);
-      targetComponent.appendChild(webcamVideo);
+      //targetComponent.appendChild(webcamVideo);
     }
+
+    console.log("STREAM HAS BEGUN");
   }
 
   const numberAnimation = async () => {
@@ -141,11 +144,17 @@ const Signup = () => {
   }
 
   const selfieAnimation = async () => {
+    console.log("1");
     setSelfieAnimationHappening(true);
+    console.log("2");
 
     setCurrentInstructions("Look up! (Chin facing camera)");
+    console.log("3");
     await numberAnimation();
+    console.log("4");
     capture(setCapturedImage1);
+
+    console.log("3");
 
     setCurrentInstructions("Look down! (Forehead facing camera)");
     await numberAnimation();
@@ -155,11 +164,11 @@ const Signup = () => {
     await numberAnimation();
     capture(setCapturedImage3);
 
-    setCurrentInstructions("Look left! (Cheek facing camera)");
+    setCurrentInstructions("Look forward! (Normal selfie)");
     await numberAnimation();
     capture(setCapturedImage4);
 
-    setCurrentInstructions("Look forward! (Normal selfie)");
+    setCurrentInstructions("Do something crazy! (Whatever you want lol)");
     await numberAnimation();
     capture(setCapturedImage5);
 
@@ -190,13 +199,6 @@ const Signup = () => {
       const imageSrc = webcamRef.current.getScreenshot();
       await new Promise(r => setTimeout(r, 200));
       setCapturedImage(imageSrc);
-      console.log(imageSrc);
-      //setStreaming(false);
-      /*targetComponent.style.width = "1px";
-      targetComponent.style.height = "1px";
-      targetComponent.style.marginTop = "-41px";
-      videoComponent.style.width = "1px";
-      videoComponent.style.height = "1px";*/
     }
   };
 
@@ -262,7 +264,7 @@ const Signup = () => {
     if (i[i.length - 1] == "\n") {
       if (i.length == 1) {
         clearTextArea();
-      } else if (page < 3) {
+      } else if (page !== 1 && page !== 2) {
         await nextClick();
       }
 
@@ -275,7 +277,7 @@ const Signup = () => {
       const formattedNumber = formatPhoneNumber(inputText);
       if (el) el.value = formattedNumber;
       setText(inputText);
-    } else if (page == 1 || page == 2) {
+    } else if (page == 3 || page == 4) {
       if (i.length < 30) {
         setText(i);
       } else {
@@ -362,8 +364,8 @@ const Signup = () => {
   }, [shouldFocus]);
 
   useEffect(() => {
-    if (page == 1) setPlaceholder("FIRST NAME");
-    else if (page == 2) setPlaceholder("LAST NAME");
+    if (page == 3) setPlaceholder("FIRST NAME");
+    else if (page == 4) setPlaceholder("LAST NAME");
   }, [page])
 
   useEffect(() => {
@@ -375,7 +377,7 @@ const Signup = () => {
     setShow(false);
 
     // validate input
-    if (page < 3) {
+    if (page == 0 || page == 3 || page == 4) {
       const validated = validateLength();
       if (!validated) {
         setShow(true);
@@ -390,35 +392,37 @@ const Signup = () => {
         return;
       }
     } else if (page == 1) {
-      const ok = await updateUser({ "first_name": text });
-      if (!ok) {
-        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
-        setShow(true);
-        return;
-      }
-    } else if (page == 2) {
-      const ok = await updateUser({ "last_name": text });
-      if (!ok) {
-        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
-        setShow(true);
-        return;
-      }
-    } else if (page == 3) {
-      const ok = await updateUser({ "gender": gender })
-      if (!ok) {
-        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
-        setShow(true);
-        return;
-      }
-    } else if (page == 4) {
       uploadImagesToS3([capturedImage1, capturedImage2, capturedImage3, capturedImage4, capturedImage5]);
-    } else if (page == 5) {
+
+    } else if (page == 2) {
+
       if (themeList.length == 0) {
         setErrorMessage("You must select at least one personality.");
         setShow(true);
         return;
       }
       const ok = await updateUser({ "images_uploaded": true, "image_config": themeList });
+      if (!ok) {
+        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
+        setShow(true);
+        return;
+      }
+    } else if (page == 3) {
+      const ok = await updateUser({ "first_name": text });
+      if (!ok) {
+        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
+        setShow(true);
+        return;
+      }
+    } else if (page == 4) {
+      const ok = await updateUser({ "last_name": text });
+      if (!ok) {
+        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
+        setShow(true);
+        return;
+      }
+    } else if (page == 5) {
+      const ok = await updateUser({ "gender": gender })
       if (!ok) {
         setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
         setShow(true);
@@ -453,13 +457,37 @@ const Signup = () => {
         <animated.div id="formContainer" className="formContainer" style={fadeAnimation}>
           <div className="formText">
             { page == 0 && "Enter your phone number"}
-            { page == 1 && "What's your first name?"}
-            { page == 2 && "What's your last name?"}
-            { page == 3 && "What's your gender?" }
-            { page == 4 && "Create your dopple"}
-            { page == 5 && "Customize your dopple"}
+            { page == 1 && "Create your dopple"}
+            { page == 2 && "Customize your dopple"}
+            { page == 3 && "What's your first name?"}
+            { page == 4 && "What's your last name?"}
+            { page == 5 && "What's your gender?" }
           </div>
-          { page < 3 && (
+          { page == 1 && !streaming && !capturedImage5 && (
+            <div className="formTextGap">
+              <div className="formSubtext">
+                To make your dopple look like you, we have to take some selfies
+              </div>
+              <div className="formSubtext">
+                (don't worry, they don't have to be high quality)
+              </div>
+            </div>
+          )}
+          { page == 1 && streaming && !selfieAnimationHappening && (
+            <div className="formTextGap">
+              <div className="formSubtext">
+                Instructions will be here :)
+              </div>
+            </div>
+          )}
+          { page == 1 && selfieAnimationHappening && (
+            <div className="formTextGap">
+              <div className="formSubtext">
+                {currentInstructions}
+              </div>
+            </div>
+          )}
+          { (page == 0 || page == 3 || page == 4) && (
             <input
               type={page == 0 ? "tel" : "text"}
               id="textInput"
@@ -472,22 +500,22 @@ const Signup = () => {
               }}
             />
           )}
-          { page == 3 && (
+          { page == 5 && (
             <div className="genderButtonContainer">
               <GenderButton gender="Boy" setGender={setGender} />
               <GenderButton gender="Girl" setGender={setGender} />
               <GenderButton gender="Non-binary/Other" setGender={setGender} />
             </div>
           )}
-          { camOpen && (
-            <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
-          )}
           <div id="streamingComponent" className="videoFullCircle">
+            { camOpen && (
+              <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
+            )}
             <animated.div className="numberAnimation" style={fadeAnimationQuick}>
               {currentNumber}
             </animated.div>
           </div>
-          { page == 4 && (
+          { page == 1 && (
             <>
               {capturedImage5 && (
                 <img src={capturedImage5} alt="Captured" className="photoFullCircle" />
@@ -514,7 +542,7 @@ const Signup = () => {
                 <>
                   <div className="retakeButton" onClick={selfieAnimation}>
                     <div>📸</div>
-                    <div>Capture Selfies</div>
+                    <div>Are you ready?</div>
                   </div>
                 </>
               )}
@@ -525,15 +553,14 @@ const Signup = () => {
                   </div>
                   <div className="photoButtonGroup">
                     <div className="photoButton" onClick={beginStream}>
-                      <div className="nextButtonText">🔥 take  a selfie 🔥</div>
+                      <div className="nextButtonText">🔥 take selfies 🔥</div>
                     </div>
                   </div>
                 </>
               )}
-
             </>
           )}
-          { page == 5 && (
+          { page == 2 && (
             <>
               {capturedImage5 && (
                 <img src={capturedImage5} alt="Captured" className="photoFullCircle" />
@@ -550,7 +577,7 @@ const Signup = () => {
             </div>
           )}
         </animated.div>
-        { (page !== 4 || capturedImage5) && page !== 3 && page !== 6 && (
+        { (page !== 1 || capturedImage5) && page !== 5 && page !== 6 && (
           <div id="nextButton" className="nextButton" onClick={(e) => {
             //e.preventDefault();
             /*if (textInputRef.current) {
@@ -560,8 +587,9 @@ const Signup = () => {
             nextClick();
           }}>
               <div className="nextButtonText">
-                {page < 3 && "Next"}
-                {(page > 4 || capturedImage5) && "Looks good"}
+                { page == 0 && "Let's create"}
+                {(page == 2) && "Looks good"}
+                {page > 2 && "Next"}
               </div>
             <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
           </div>

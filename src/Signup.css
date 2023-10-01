@@ -64,6 +64,11 @@
   gap: 10px;
 }
 
+.formTextGap {
+  margin-top: -20px;
+  gap: 8px;
+}
+
 .formText {
   align-self: stretch;
   color: #FFF;
@@ -76,6 +81,20 @@
   letter-spacing: -0.24px;
   text-transform: uppercase;
 }
+
+.formSubtext {
+  align-self: stretch;
+  color: #FFF;
+  text-align: center;
+  font-family: SF Pro Rounded;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 200;
+  line-height: 115%; /* 27.6px */
+  letter-spacing: -0.24px;
+  text-transform: uppercase;
+}
+
 
 .textInput {
   display: flex;
