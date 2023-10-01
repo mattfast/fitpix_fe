@@ -37,8 +37,8 @@
 
 .changeOrSaveButton {
   display: flex;
-  height: 48px;
-  padding: 0px 24px;
+  /*height: 48px;*/
+  padding: 12px 24px;
   justify-content: center;
   align-items: center;
   gap: 8px;
@@ -59,10 +59,9 @@
 
 .logOutButton {
   display: flex;
-  position: absolute;
-  bottom: 24px;
-  height: 48px;
-  padding: 0px 24px;
+  margin-top: 80px;
+  /*height: 48px;*/
+  padding: 12px 24px;
   justify-content: center;
   align-items: center;
   gap: 8px;
@@ -111,6 +110,11 @@
   cursor: pointer;
 }
 
+.changeOrSaveButton:active {
+  /*  Making button bigger on hover  */
+  transform: scale(1.05) perspective(1px)
+}
+
 .logOutButton:active {
   /*  Making button bigger on hover  */
   transform: scale(1.05) perspective(1px)
@@ -118,6 +122,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .logOutButton:hover { transform: scale(1.05) perspective(1px); }
+  .changeOrSaveButton:hover { transform: scale(1.05) perspective(1px); }
 }
 
 
