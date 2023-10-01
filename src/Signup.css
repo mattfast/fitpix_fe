@@ -139,6 +139,7 @@
   display: flex;
   width: 255px;
   height: 255px;
+  margin-top: -40px;
   /*padding: 0px 61.2px;*/
   justify-content: center;
   align-items: center;
@@ -301,6 +302,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: -20px;
   gap: min(5vw, 33px);
 }
 
