@@ -50,12 +50,12 @@
 
 .formContainer {
   display: flex;
-  padding-top: -10px;
+  padding-top: -15vw;
   padding: 24px 16px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
   flex: 1 0 0;
   align-self: stretch;
 }
@@ -65,8 +65,8 @@
 }
 
 .formTextGap {
-  margin-top: -20px;
   gap: 16px;
+  height: 24px;
 }
 
 .formText {
@@ -139,7 +139,7 @@
   display: flex;
   width: 255px;
   height: 255px;
-  margin-top: -20px;
+  /*margin-top: -20px;*/
   /*padding: 0px 61.2px;*/
   justify-content: center;
   align-items: center;
@@ -151,7 +151,7 @@
   display: flex;
   width: 1px;
   height: 1px;
-  margin-top: -81px;
+  margin-top: -41px;
   /*padding: 0px 61.2px;*/
   justify-content: center;
   align-items: center;
@@ -194,7 +194,7 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  margin-top: -30px;
+  /*margin-top: -30px;*/
 
   border-radius: 1000px;
   border: 2px solid var(--white, #FFF);
@@ -285,7 +285,7 @@
   /*line-height: 115%; /* 27.6px */
   letter-spacing: -0.24px;
   text-transform: uppercase;
-  margin-top: -20px;
+  /*margin-top: -20px;*/
 }
 
 .numberAnimation {
@@ -302,7 +302,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: -20px;
+  /*margin-top: -20px;*/
   gap: min(5vw, 33px);
 }
 

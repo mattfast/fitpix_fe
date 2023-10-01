@@ -164,7 +164,7 @@ const Signup = () => {
     await numberAnimation();
     capture(setCapturedImage4);
 
-    setCurrentInstructions("Do something crazy! (Whatever you want lol)");
+    setCurrentInstructions("Do something crazy! (Whatever you want)");
     await numberAnimation();
     capture(setCapturedImage5);
 
