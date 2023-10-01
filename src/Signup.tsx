@@ -141,20 +141,16 @@ const Signup = () => {
       await new Promise(r => setTimeout(r, 600));
       setShowNumber(false);
     }
+
+    await new Promise(r => setTimeout(r, 350));
   }
 
   const selfieAnimation = async () => {
-    console.log("1");
     setSelfieAnimationHappening(true);
-    console.log("2");
 
     setCurrentInstructions("Look up! (Chin facing camera)");
-    console.log("3");
     await numberAnimation();
-    console.log("4");
     capture(setCapturedImage1);
-
-    console.log("3");
 
     setCurrentInstructions("Look down! (Forehead facing camera)");
     await numberAnimation();
@@ -466,10 +462,10 @@ const Signup = () => {
           { page == 1 && !streaming && !capturedImage5 && (
             <div className="formTextGap">
               <div className="formSubtext">
-                The best dopples look like 
+                Let's make your dopple look like you with some selfies.
               </div>
               <div className="formSubtext">
-                (don't worry, they can be **)
+                (don't worry, they can be bad)
               </div>
             </div>
           )}
