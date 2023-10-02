@@ -449,27 +449,9 @@ const Signup = () => {
     setPage(page + 1);
     setShow(true);
   }
- 
-  return (
-    <div className="overallSignupContainer">
-      <div className="signupContainer">
-        <animated.div id="formContainer" className="formContainer" style={fadeAnimation}>
-          <div className="formText">
-            { page == 0 && "Enter your phone number"}
-            { page == 1 && "Create your dopple"}
-            { page == 2 && "Customize your dopple"}
-            { page == 3 && "What's your first name?"}
-            { page == 4 && "What's your last name?"}
-            { page == 5 && "What's your gender?" }
-          </div>
-          { page == 1 && !streaming && !capturedImage5 && (
-            <div className="formTextGap">
-              <div className="formSubtext">
-                To beat your classmates, take some 🔥 selfies
-              </div>
-            </div>
-          )}
-          { page == 1 && streaming && !selfieAnimationHappening && (
+
+  /*
+            { page == 1 && streaming && !selfieAnimationHappening && (
             <div className="formTextGap">
               <div className="formSubtext">
                 Instructions will be HERE
@@ -480,6 +462,29 @@ const Signup = () => {
             <div className="formTextGap">
               <div className="formSubtext">
                 {currentInstructions}
+              </div>
+            </div>
+          )}
+  */
+ 
+  return (
+    <div className="overallSignupContainer">
+      <div className="signupContainer">
+        <animated.div id="formContainer" className="formContainer" style={fadeAnimation}>
+          <div className="formText">
+            { page == 0 && "Enter your phone number"}
+            { page == 1 && !streaming && !selfieAnimationHappening && "Create your dopple"}
+            { page == 1 && streaming && !selfieAnimationHappening && "Instructions will be HERE"}
+            { page == 1 && selfieAnimationHappening && currentInstructions }
+            { page == 2 && "Customize your dopple"}
+            { page == 3 && "What's your first name?"}
+            { page == 4 && "What's your last name?"}
+            { page == 5 && "What's your gender?" }
+          </div>
+          { page == 1 && !streaming && !capturedImage5 && (
+            <div className="formTextGap">
+              <div className="formSubtext">
+                To beat your classmates, take some 🔥 selfies
               </div>
             </div>
           )}
