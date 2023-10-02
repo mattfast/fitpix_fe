@@ -10,9 +10,10 @@ import "@fontsource/figtree/600.css";
 import "./Cooldown.css";
 import ShareButton from "./components/ShareButton";
 
-const Cooldown = ({ initialMins, initialSecs }) => {
-  const [minutes, setMinutes] = useState(initialMins);
-  const [seconds, setSeconds] = useState(initialSecs);
+const Cooldown = ({ initialHrs, initialMins, initialSecs }) => {
+  const [hours, setHours] = useState<number>(initialHrs);
+  const [minutes, setMinutes] = useState<number>(initialMins);
+  const [seconds, setSeconds] = useState<number>(initialSecs);
 
   useEffect(() => {
     // Set the interval to update every second
@@ -30,6 +31,10 @@ const Cooldown = ({ initialMins, initialSecs }) => {
       // Decrement minutes and reset seconds to 59
       setMinutes(minutes - 1);
       setSeconds(59);
+    } else if (hours > 0) {
+      setHours(hours - 1);
+      setMinutes(59);
+      setSeconds(59);
     } else {
       window.location.reload();
     }
@@ -38,12 +43,15 @@ const Cooldown = ({ initialMins, initialSecs }) => {
   return (
     <div className="cooldownContainer">
       <div className="cooldownTextContainer">
-        <div className="countdownText">
-          new pics in {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+        <div className="countdownText2">
+          New pics in {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+        </div>
+        <div className="lockText">
+            🔒
         </div>
         <div className="orText">or</div>
       </div>
-      <ShareButton />
+      <ShareButton buttonText="Invite a Friend"/>
     </div>
   );
 };

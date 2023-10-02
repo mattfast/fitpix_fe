@@ -49,6 +49,7 @@ const Vote = () => {
   const [userId, setUserId] = useState<string>("");
   const [feedIndex, setFeedIndex] = useState<number>(0);
   const [usersList, setUsersList] = useState<User[]>([]);
+  const [hoursLeft, setHoursLeft] = useState<number | null>(null);
   const [minutesLeft, setMinutesLeft] = useState<number | null>(null);
   const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -139,7 +140,12 @@ const Vote = () => {
         })
       }
     );
-    //await new Promise(r => setTimeout(r, 1000));
+
+    if (feedIndex + 2 >= 23) {
+      setHoursLeft(0);
+      setMinutesLeft(41);
+      setSecondsLeft(0);
+    }
 
     setFeedIndex(feedIndex + 2);
     setTransitioning(false);
@@ -161,7 +167,8 @@ const Vote = () => {
         setFeedIndex(users.feed_index);
       } else if (users.ready_at) {
         const readyAt = new Date(users.ready_at);
-        const { mins, secs } = difference(readyAt);
+        const { hours, mins, secs } = difference(readyAt);
+        setHoursLeft(hours);
         setMinutesLeft(mins);
         setSecondsLeft(secs);
       }
@@ -176,7 +183,7 @@ const Vote = () => {
     <>
       <div className="voteContainer">
         <AppHeader page="vote" userId={userId} />
-        { !loading && feedIndex < usersList.length - 1 && (
+        { !loading && feedIndex < usersList.length - 1 && secondsLeft == null && (
           <>
             <animated.div className="voteAreaContainer" style={fadeAnimation}>
               <div className="voteTextContainer">
@@ -210,8 +217,8 @@ const Vote = () => {
             </animated.div>
           </>
         )}
-        { !loading && minutesLeft !== null && secondsLeft !== null && (
-          <Cooldown initialMins={minutesLeft} initialSecs={secondsLeft} />
+        { !loading && secondsLeft !== null && (
+          <Cooldown initialHrs={hoursLeft} initialMins={minutesLeft} initialSecs={secondsLeft} />
         )}
         { !loading && feedIndex >= usersList.length - 1 && !minutesLeft && !secondsLeft && (
           <EndOfStack />

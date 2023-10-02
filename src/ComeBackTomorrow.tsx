@@ -44,6 +44,10 @@ const ComeBackTomorrow = () => {
       // Decrement minutes and reset seconds to 59
       setMinutes(minutes - 1);
       setSeconds(59);
+    } else if (hours > 0) {
+      setHours(hours - 1);
+      setMinutes(59);
+      setSeconds(59);
     } else {
       window.location.reload();
     }
