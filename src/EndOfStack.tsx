@@ -19,11 +19,11 @@ const EndOfStack = () => {
     <div className="cooldownContainer">
       <div className="cooldownTextContainer">
         <div className="countdownText">
-          end of da stack
+          You've voted on everyone's dopple today 😭
         </div>
-        <div className="orText">or</div>
+        <div className="orText">but</div>
       </div>
-      <ShareButton />
+      <ShareButton buttonText="Invite Friends for Tomorrow"/>
     </div>
   );
 };

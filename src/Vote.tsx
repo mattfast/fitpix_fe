@@ -11,7 +11,7 @@ import "@fontsource/rubik/700.css";
 import "@fontsource/figtree/600.css";
 import "./Vote.css";
 import ImageModal from "./components/ImageModal";
-import { validateCookie, s3_url } from "./utils";
+import { validateCookie, s3_url, difference } from "./utils";
 import AppHeader from "./components/AppHeader";
 import Cooldown from "./Cooldown";
 import EndOfStack from "./EndOfStack";
@@ -26,17 +26,6 @@ type UserResponse = {
   user_list: User[];
   feed_index: boolean;
   ready_at?: string;
-}
-
-function difference(date: Date) {
-  const now = new Date();
-  const diffInMs = date.getTime() - now.getTime();
-  
-  const diffInSecs = Math.floor(diffInMs / 1000);
-  const mins = Math.floor(diffInSecs / 60);
-  const secs = diffInSecs % 60;
-
-  return { mins, secs }
 }
 
 const updateRect = (

@@ -49,3 +49,16 @@ export const validateCookie = async (cookie: string | null | undefined) => {
 
   return respJson["user_id"];
 }
+
+export const difference = (date: Date) =>{
+  const now = new Date();
+  const diffInMs = date.getTime() - now.getTime();
+  
+  const diffInSecs = Math.floor(diffInMs / 1000);
+  const diffInMins = Math.floor(diffInSecs / 60);
+  const hours = Math.floor(diffInMins / 60);
+  const secs = diffInSecs % 60;
+  const mins = diffInMins % 60;
+
+  return { hours, mins, secs }
+}

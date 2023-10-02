@@ -5,7 +5,9 @@ import { useCookies } from 'react-cookie';
 
 import "./ShareButton.css";
 
-const ShareButton = () => {
+const ShareButton = ({ buttonText }: {
+  buttonText?: string
+}) => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [referralCode, setReferralCode] = useState<string>("");
 
@@ -36,7 +38,7 @@ const ShareButton = () => {
         )
       }
     >
-      <div className="shareButtonText">Invite a Friend</div>
+      <div className="shareButtonText">{ buttonText ? buttonText : "Invite Friends" }</div>
       <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="shareButtonArrow" />
     </div>
   )
