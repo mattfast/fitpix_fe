@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import { io } from "socket.io-client";
 import { useSpring, animated } from 'react-spring';
@@ -39,8 +39,24 @@ function difference(date: Date) {
   return { mins, secs }
 }
 
+const updateRect = (
+  ref1: React.MutableRefObject<HTMLImageElement | null>,
+  ref2: React.MutableRefObject<HTMLDivElement | null>
+) => {
+  if (ref1.current && ref2.current) {
+    console.log("ALIGNING DIVS");
+    const rect = ref1.current.getBoundingClientRect();
+    ref2.current.style.top = `${rect.top}px`;
+    ref2.current.style.left = `${rect.left}px`;
+    ref2.current.style.width = `${rect.width}px`;
+    ref2.current.style.height = `${rect.height}px`;
+  }
+}
+
 const Vote = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [userId, setUserId] = useState<string>("");
   const [feedIndex, setFeedIndex] = useState<number>(0);
   const [usersList, setUsersList] = useState<User[]>([]);
@@ -53,34 +69,50 @@ const Vote = () => {
   const [selectedSide, setSelectedSide] = useState<string>("");
   const navigate = useNavigate();
 
-  const fadeAnimation = useSpring({
-    opacity: transitioning ? 0 : 1,
-    config: { tension: 320, friction: 40 }
-  });
-
-  const fadeAnimationReverse = useSpring({
-    opacity: transitioning ? 1 : 1,
-    config: { tension: 280, friction: 80 }
-  });
-
   const refLeftImage = useRef<HTMLImageElement | null>(null);
   const refRightImage = useRef<HTMLImageElement | null>(null);
   const refLeftSelected = useRef<HTMLDivElement | null>(null);
   const refRightSelected = useRef<HTMLDivElement | null>(null);
 
-  const updateRect = (
-    ref1: React.MutableRefObject<HTMLImageElement | null>,
-    ref2: React.MutableRefObject<HTMLDivElement | null>
-  ) => {
-    if (ref1.current && ref2.current) {
-      console.log("ALIGNING DIVS");
-      const rect = ref1.current.getBoundingClientRect();
-      ref2.current.style.top = `${rect.top}px`;
-      ref2.current.style.left = `${rect.left}px`;
-      ref2.current.style.width = `${rect.width}px`;
-      ref2.current.style.height = `${rect.height}px`;
+  const fadeAnimation = useSpring({
+    opacity: transitioning ? 0 : 1,
+    config: { tension: 320, friction: 40 }
+  });
+
+  useEffect(() => {
+    async function validate() {
+      const user_id = await validateCookie(cookies['user-id']);
+      if (user_id == "") {
+        navigate("/");
+      } else {
+        setUserId(user_id);
+      }
     }
-  }
+    
+    validate();
+  }, [])
+
+  useEffect(() => {
+    async function mark_text_opened() {
+      const text_id = searchParams.get("t");
+      if (text_id) {
+        const response = await fetch(
+          `${process.env.REACT_APP_BE_URL}/mark-text-opened`,
+          { 
+            headers: {
+              "auth-token": cookies['user-id'],
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              "text_id": text_id
+            })
+          }
+        );
+      }
+    }
+    
+    mark_text_opened();
+  }, [searchParams])
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -99,19 +131,6 @@ const Vote = () => {
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
-
-  useEffect(() => {
-    async function validate() {
-      const user_id = await validateCookie(cookies['user-id']);
-      if (user_id == "") {
-        navigate("/");
-      } else {
-        setUserId(user_id);
-      }
-    }
-    
-    validate();
-  }, [])
 
   const vote = async (winner_id: string, loser_id: string, selected_side: string) => {
     setSelectedSide(selected_side);

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import { io } from "socket.io-client";
 
@@ -21,6 +21,8 @@ type LeaderboardUser = {
 
 const Leaderboard = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [userId, setUserId] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<string>("");
@@ -39,6 +41,28 @@ const Leaderboard = () => {
     
     validate();
   }, [])
+
+  useEffect(() => {
+    async function mark_text_opened() {
+      const text_id = searchParams.get("t");
+      if (text_id) {
+        const response = await fetch(
+          `${process.env.REACT_APP_BE_URL}/mark-text-opened`,
+          { 
+            headers: {
+              "auth-token": cookies['user-id'],
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              "text_id": text_id
+            })
+          }
+        );
+      }
+    }
+    
+    mark_text_opened();
+  }, [searchParams])
 
   useEffect(() => {
     async function getLeaderboard() {
