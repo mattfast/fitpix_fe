@@ -499,6 +499,7 @@ const Signup = () => {
               onChange={(e) => {
                 onTextInput(e.currentTarget.value)
               }}
+              data-1p-ignore
             />
           )}
           { page == 5 && (
