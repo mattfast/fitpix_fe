@@ -26,6 +26,8 @@ const Profile = () => {
   const [position, setPosition] = useState<number>(0);
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
+  const [regenerations, setRegenerations] = useState<number>(0);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const navigate = useNavigate();
 
@@ -59,6 +61,7 @@ const Profile = () => {
       setPosition(respJson["position"]);
       setFirstName(respJson["first_name"]);
       setLastName(respJson["last_name"]);
+      setRegenerations(respJson["regenerations"]);
       setLoading(false);
     }
     
@@ -90,6 +93,25 @@ const Profile = () => {
     setSelectingThemes(false);
   }
 
+  const regenerate = async () => {
+    if (regenerations > 3) {
+      setErrorMessage("You're out of regenerations today!");
+      return;
+    }
+
+    fetch(
+      `${process.env.REACT_APP_BE_URL}/regenerate-image`,
+      {
+        method: "POST",
+        headers: {
+          "auth-token": cookies["user-id"],
+        }
+      }
+    )
+
+    setRegenerations(regenerations + 1);
+  }
+
   const logOut = () => {
     removeCookie("user-id", { path: '/' });
     window.location.replace(`${process.env.REACT_APP_BASE_URL}`);
@@ -106,9 +128,16 @@ const Profile = () => {
                 { userId == userIdViewing && "Your Dopple" }
                 { userId != userIdViewing && `${firstName}'s Dopple` }
               </div>
-              { userId && <img className="doppleImage" src={s3_url(userId)} onClick={() => setShowModal(true)} /> }
+              { userId && <img className="doppleImage" src={s3_url(userId, regenerations)} onClick={() => setShowModal(true)} /> }
               { userId == userIdViewing && (
                 <>
+                  <div className="changeOrSaveButton" onClick={regenerate}>Regenerate Image</div>
+                  <div className="themeSuccessText">{4 - regenerations} / 4 Daily Regenerations Left</div>
+                  { errorMessage && (
+                    <div className="themeSuccessText">
+                      {errorMessage}
+                    </div>
+                  )}
                   <ThemeArea themeList={themes} setThemeList={setThemes} isSelecting={selectingThemes} />
                   <div className="changeOrSaveButton" onClick={changeOrSave}>
                     { selectingThemes ? "save" : "select new" }
@@ -127,7 +156,7 @@ const Profile = () => {
           </>
         )}
       </div>
-      { userId && <ImageModal imageSrc={s3_url(userId)} showModal={showModal} setShowModal={setShowModal} /> }
+      { userId && <ImageModal imageSrc={s3_url(userId, regenerations)} showModal={showModal} setShowModal={setShowModal} /> }
     </>
   )
 };

@@ -17,9 +17,28 @@ const AppHeader = ({ page, userId, profileName, position }: {
 	position?: number
 }) => {
   const navigate = useNavigate();
+	const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
+	const [regenerations, setRegenerations] = useState<number>(0);
 
-	console.log(page);
-	console.log(process.env.PUBLIC_URL + "assets/cards-blank.png");
+	useEffect(() => {
+		async function getLeaderboard() {
+			const response = await fetch(
+				`${process.env.REACT_APP_BE_URL}/get-user`,
+				{
+					method: "GET",
+					headers: {
+						"auth-token": cookies['user-id']
+					}
+				}
+			)
+
+			const respJson = await response.json();
+			setRegenerations(respJson["regenerations"])
+		}
+		
+		getLeaderboard();
+
+	}, [])
 
   return (
     <div className="voteHeader">
@@ -39,7 +58,7 @@ const AppHeader = ({ page, userId, profileName, position }: {
 						{ page == "profile" && profileName }
 					</div>
 					{ page != "profile" && (
-						<img src={s3_url(userId)} className="profileLink" onClick={() => navigate(`/profile/${userId}`)}/>
+						<img src={s3_url(userId, regenerations)} className="profileLink" onClick={() => navigate(`/profile/${userId}`)}/>
 					)}
 					{ page == "profile" && (
 						<div className="voteHeaderIcon">{ position && position != 0 && `#${position}` }</div>

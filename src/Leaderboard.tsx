@@ -17,6 +17,7 @@ type LeaderboardUser = {
   user_id: string;
   first_name: string;
   last_name: string;
+  regenerations: number;
 }
 
 const Leaderboard = () => {
@@ -120,7 +121,7 @@ const Leaderboard = () => {
                   {l.first_name} {l.last_name}
                 </div>
               </div>
-              <img className="leaderboardImage" src={s3_url(l.user_id)} onClick={() => clickImage(s3_url(l.user_id))} />
+              <img className="leaderboardImage" src={s3_url(l.user_id, l.regenerations)} onClick={() => clickImage(s3_url(l.user_id, l.regenerations))} />
             </div>
           ))}
         </div>

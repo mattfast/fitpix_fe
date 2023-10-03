@@ -20,6 +20,7 @@ type User = {
   first_name: string;
   last_name: string;
   user_id: string;
+  regenerations: number;
 }
 
 type UserResponse = {
@@ -196,8 +197,8 @@ const Vote = () => {
               </div>
               <div className="optionsContainer">
                 <div className="optionContainer">
-                  <img src={s3_url(usersList[feedIndex].user_id)} ref={refLeftImage} className="optionImage" onClick={() => {
-                    setModalImage(s3_url(usersList[feedIndex].user_id));
+                  <img src={s3_url(usersList[feedIndex].user_id, usersList[feedIndex].regenerations)} ref={refLeftImage} className="optionImage" onClick={() => {
+                    setModalImage(s3_url(usersList[feedIndex].user_id, usersList[feedIndex].regenerations));
                     setShowModal(true);
                   }}/>
                   <div className="optionButton" onClick={() => vote(usersList[feedIndex].user_id, usersList[feedIndex + 1].user_id, "left")}>
@@ -205,8 +206,8 @@ const Vote = () => {
                   </div>
                 </div>
                 <div className="optionContainer">
-                  <img src={s3_url(usersList[feedIndex + 1].user_id)} ref={refRightImage} className="optionImage" onClick={() => {
-                    setModalImage(s3_url(usersList[feedIndex + 1].user_id));
+                  <img src={s3_url(usersList[feedIndex + 1].user_id, usersList[feedIndex].regenerations)} ref={refRightImage} className="optionImage" onClick={() => {
+                    setModalImage(s3_url(usersList[feedIndex + 1].user_id, usersList[feedIndex].regenerations));
                     setShowModal(true);
                   }} />
                   <div className="optionButton" onClick={() => vote(usersList[feedIndex + 1].user_id, usersList[feedIndex].user_id, "right")}>
