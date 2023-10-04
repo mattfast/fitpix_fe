@@ -38,7 +38,7 @@ const LandingPage = () => {
   const buttonRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  /*useEffect(() => {
     async function validate() {
       if (await validateCookie(cookies['user-id'])) {
         navigate("/vote");
@@ -46,7 +46,7 @@ const LandingPage = () => {
     }
     
     validate();
-  }, [])
+  }, [])*/
 
   useEffect(() => {
     const rc = searchParams.get("rc");
