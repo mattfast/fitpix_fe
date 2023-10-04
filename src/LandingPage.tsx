@@ -126,7 +126,7 @@ const LandingPage = () => {
                 }
               >
                 <div className="buttonText">
-                  Create a Dopple
+                  Create your Dopple
                 </div>
               </div>
             </div>
