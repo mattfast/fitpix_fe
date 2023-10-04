@@ -63,15 +63,32 @@ body {
   align-self: stretch;
 }
 
-.crown {
+/*.crown {
   color: var(--white, #FFF);
   text-align: center;
   font-family: Rubik;
   font-size: min(6vh, 6vw);
   font-style: normal;
   font-weight: 500;
+  line-height: 115%; /* 46px 
+  letter-spacing: -0.4px;
+  position: absolute;
+  top-margin: 
+}*/
+
+.crown {
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: Rubik;
+  font-size: min(2vh, 2vw);
+  font-style: normal;
+  font-weight: 500;
   line-height: 115%; /* 46px */
   letter-spacing: -0.4px;
+  position: absolute;
+  margin-right: min(19vh, 19vw);
+  top: 25px;
+  transform: rotate(20.833deg);
 }
 
 .name {
