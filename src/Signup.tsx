@@ -392,6 +392,12 @@ const Signup = () => {
       }
     } else if (page == 1) {
       uploadImagesToS3([capturedImage1, capturedImage2, capturedImage3, capturedImage4, capturedImage5]);
+      const ok = await updateUser({ "images_uploaded": true });
+      if (!ok) {
+        setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
+        setShow(true);
+        return;
+      }
 
     } else if (page == 2) {
 
@@ -400,7 +406,7 @@ const Signup = () => {
         setShow(true);
         return;
       }
-      const ok = await updateUser({ "images_uploaded": true, "image_config": themeList });
+      const ok = await updateUser({ "image_config": themeList });
       if (!ok) {
         setErrorMessage("We're having trouble communicating with our servers right now. Try again in a sec!");
         setShow(true);
