@@ -113,7 +113,7 @@ const LandingPage = () => {
                 <div className="name">dopple.club</div>
               </div>
               <div className="subtitle">
-                <div className="pink">Create</div> a dopple. <div className="pink">Vote</div> for friends. <div className="pink">Win</div> prizes.
+                <div className="pink">Sign up to</div> compete against <div className="pink">your</div> friends
               </div>
             </div>
             <LandingPageImage />

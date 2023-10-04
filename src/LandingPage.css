@@ -140,7 +140,7 @@ body {
 .signupButton {
   display: flex;
   height: 64px;
-  width: min(327px, 70vw);
+  width: min(357px, 80vw);
   /*padding: 0px 40px;*/
   justify-content: center;
   align-items: center;
