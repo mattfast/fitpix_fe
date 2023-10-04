@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import { io } from "socket.io-client";
+import { Analytics } from '@vercel/analytics/react';
 
 import "@fontsource/rubik/500.css";
 import "@fontsource/figtree/600.css";
@@ -134,6 +135,7 @@ const LandingPage = () => {
         </div>
       </div>
       <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} buttonRef={buttonRef} />
+      <Analytics />
     </>
   )
 };
