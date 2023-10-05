@@ -46,7 +46,7 @@ body {
   /*padding: 0px 24px;*/
   width: 80vw;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 30px;
   /*align-self: stretch;*/
@@ -108,7 +108,7 @@ body {
 }
 
 .subtitle {
-  margin-top: 25vh;
+  margin-top: 25dvh;
   color: #FFF;
   font-family: Rubik One;
   /*font-size: min(9vh, 9vw);*/

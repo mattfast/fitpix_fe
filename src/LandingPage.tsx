@@ -114,9 +114,9 @@ const LandingPage = () => {
                 <div className="crown">👑</div>
                 <div className="name">dopple.club</div>
               </div>
-              <div className="subtitle">
-                <div className="subtitleRow">See yourself in every <div className="pink">universe.</div></div>
-              </div>
+            </div>
+            <div className="subtitle">
+              <div className="subtitleRow">See yourself in every <div className="pink">universe.</div></div>
             </div>
             <div id="buttonGroup" className="buttonGroup">
               <div
