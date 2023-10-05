@@ -65,7 +65,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 4px;
-  align-self: stretch;
+  /*align-self: stretch;*/
 }
 
 /*.crown {
@@ -108,6 +108,7 @@ body {
 }
 
 .subtitle {
+  margin-top: 25vh;
   color: #FFF;
   font-family: Rubik One;
   /*font-size: min(9vh, 9vw);*/
