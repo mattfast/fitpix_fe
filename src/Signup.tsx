@@ -490,7 +490,7 @@ const Signup = () => {
           { page == 1 && !streaming && !capturedImage5 && (
             <div className="formTextGap">
               <div className="formSubtext">
-                To beat your classmates, take some 🔥 selfies
+                To create your dopple, take some 🔥 selfies
               </div>
             </div>
           )}
