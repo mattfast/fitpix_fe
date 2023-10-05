@@ -2,6 +2,11 @@ body {
   padding: 0;
   margin: 0;
   overflow-y: hidden;
+
+  background-image: url('../public/assets/landing-page-collage-2.jpg'); /* Insert the URL of your image */
+  background-size: cover; /* This will make your image cover the entire viewport */
+  background-position: center; /* This will center your image */
+  background-repeat: no-repeat; /* This will prevent the image from repeating */
 }
 
 @font-face {
@@ -22,7 +27,7 @@ body {
   height: 100dvh;
   width: 100vw;
   overflow: hidden;
-  background: #0CA0E4;
+  /*background: #0CA0E4;*/
 }
 
 .container {

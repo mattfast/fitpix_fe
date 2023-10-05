@@ -97,7 +97,8 @@ const LandingPage = () => {
     verifySP();
   }, [searchParams])
 
-  /*              <div id="loginButton" className="loginButton" onClick={() => setModalOpen(true)} ref={buttonRef}>
+  /* <LandingPageImage />
+  <div id="loginButton" className="loginButton" onClick={() => setModalOpen(true)} ref={buttonRef}>
                 <div className="loginButtonText">
                   Log in
                 </div>
@@ -117,7 +118,6 @@ const LandingPage = () => {
                 <div className="pink">Sign up to</div> compete against <div className="pink">your</div> friends
               </div>
             </div>
-            <LandingPageImage />
             <div id="buttonGroup" className="buttonGroup">
               <div
                 id="signupButton"
