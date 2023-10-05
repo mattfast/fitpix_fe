@@ -111,7 +111,7 @@ body {
   color: #FFF;
   font-family: Rubik One;
   /*font-size: min(9vh, 9vw);*/
-  font-size: min(9vh, 7vw);
+  font-size: min(9vh, 10vw);
   font-style: normal;
   font-weight: 400;
   line-height: 115%;
@@ -123,8 +123,13 @@ body {
 
 .pink {
   /*color: #FF86EB;*/
-  color: #D3D3D3;
+  color: #001F3F;
   display: inline;
+  text-shadow: 
+    -1px -1px 0 #fff, /* top left */
+    1px -1px 0 #fff,  /* top right */
+    -1px 1px 0 #fff,  /* bottom left */
+    1px 1px 0 #fff;   /* bottom right */
 }
 
 .leaderboardPhoto {
