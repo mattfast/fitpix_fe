@@ -20,7 +20,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background: #0CA0E4;
+  background: #181818;
 }
 
 .profileContentContainer {
@@ -107,6 +107,21 @@
 .doppleImage {
   max-width: min(80vw, 400px);
   max-height: min(45vh, 300px);
+  cursor: pointer;
+}
+
+.doppleImageOptions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  flex-wrap: wrap;
+}
+
+.doppleImageOption {
+  max-width: min(30vw, 200px);
+  max-height: min(20vh, 200px);
   cursor: pointer;
 }
 

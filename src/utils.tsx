@@ -23,8 +23,8 @@ export const formatPhoneNumber = (input: string) => {
   }
 };
 
-export const s3_url = (user_id: string, regenerations: number) => {
-  return `https://dopple-generated.s3.amazonaws.com/${user_id}/profile_${regenerations}.png`;
+export const s3_url = (user_id: string, num: number) => {
+  return `https://dopple-generated.s3.amazonaws.com/${user_id}/profile_${num}.png`;
 };
 
 export const validateCookie = async (cookie: string | null | undefined) => {
@@ -44,10 +44,14 @@ export const validateCookie = async (cookie: string | null | undefined) => {
     }
   );
 
-  const respJson = await response.json();
-  if (response.status !== 200) return "";
-
-  return respJson["user_id"];
+  try {
+    const respJson = await response.json();
+    if (response.status !== 200) return "";
+  
+    return respJson["user_id"];
+  } catch (e) {
+    return "";
+  }
 }
 
 export const difference = (date: Date) =>{

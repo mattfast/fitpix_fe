@@ -17,7 +17,7 @@ type LeaderboardUser = {
   user_id: string;
   first_name: string;
   last_name: string;
-  regenerations: number;
+  primary_image: number;
 }
 
 const Leaderboard = () => {
@@ -33,7 +33,7 @@ const Leaderboard = () => {
   useEffect(() => {
     async function validate() {
       const user_id = await validateCookie(cookies['user-id']);
-      if (user_id == "") {
+      if (!user_id) {
         navigate("/");
       } else {
         setUserId(user_id);
@@ -121,7 +121,7 @@ const Leaderboard = () => {
                   {l.first_name} {l.last_name}
                 </div>
               </div>
-              <img className="leaderboardImage" src={s3_url(l.user_id, l.regenerations)} onClick={() => clickImage(s3_url(l.user_id, l.regenerations))} />
+              <img className="leaderboardImage" src={s3_url(l.user_id, l.primary_image)} onClick={() => clickImage(s3_url(l.user_id, l.primary_image))} />
             </div>
           ))}
         </div>

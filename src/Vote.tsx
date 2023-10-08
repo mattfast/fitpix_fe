@@ -20,7 +20,7 @@ type User = {
   first_name: string;
   last_name: string;
   user_id: string;
-  regenerations: number;
+  primary_image: number;
 }
 
 type UserResponse = {
@@ -73,7 +73,8 @@ const Vote = () => {
   useEffect(() => {
     async function validate() {
       const user_id = await validateCookie(cookies['user-id']);
-      if (user_id == "") {
+      console.log(user_id);
+      if (!user_id) {
         navigate("/");
       } else {
         setUserId(user_id);
@@ -197,8 +198,8 @@ const Vote = () => {
               </div>
               <div className="optionsContainer">
                 <div className="optionContainer">
-                  <img src={s3_url(usersList[feedIndex].user_id, usersList[feedIndex].regenerations)} ref={refLeftImage} className="optionImage" onClick={() => {
-                    setModalImage(s3_url(usersList[feedIndex].user_id, usersList[feedIndex].regenerations));
+                  <img src={s3_url(usersList[feedIndex].user_id, usersList[feedIndex].primary_image)} ref={refLeftImage} className="optionImage" onClick={() => {
+                    setModalImage(s3_url(usersList[feedIndex].user_id, usersList[feedIndex].primary_image));
                     setShowModal(true);
                   }}/>
                   <div className="optionButton" onClick={() => vote(usersList[feedIndex].user_id, usersList[feedIndex + 1].user_id, "left")}>
@@ -206,8 +207,8 @@ const Vote = () => {
                   </div>
                 </div>
                 <div className="optionContainer">
-                  <img src={s3_url(usersList[feedIndex + 1].user_id, usersList[feedIndex].regenerations)} ref={refRightImage} className="optionImage" onClick={() => {
-                    setModalImage(s3_url(usersList[feedIndex + 1].user_id, usersList[feedIndex].regenerations));
+                  <img src={s3_url(usersList[feedIndex + 1].user_id, usersList[feedIndex].primary_image)} ref={refRightImage} className="optionImage" onClick={() => {
+                    setModalImage(s3_url(usersList[feedIndex + 1].user_id, usersList[feedIndex].primary_image));
                     setShowModal(true);
                   }} />
                   <div className="optionButton" onClick={() => vote(usersList[feedIndex + 1].user_id, usersList[feedIndex].user_id, "right")}>

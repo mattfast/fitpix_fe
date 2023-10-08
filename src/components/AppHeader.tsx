@@ -18,7 +18,7 @@ const AppHeader = ({ page, userId, profileName, position }: {
 }) => {
   const navigate = useNavigate();
 	const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
-	const [regenerations, setRegenerations] = useState<number>(0);
+	const [primaryImage, setPrimaryImage] = useState<number>(0);
 
 	useEffect(() => {
 		async function getLeaderboard() {
@@ -33,7 +33,7 @@ const AppHeader = ({ page, userId, profileName, position }: {
 			)
 
 			const respJson = await response.json();
-			setRegenerations(respJson["regenerations"])
+			setPrimaryImage(respJson["primary_image"])
 		}
 		
 		getLeaderboard();
@@ -58,7 +58,7 @@ const AppHeader = ({ page, userId, profileName, position }: {
 						{ page == "profile" && profileName }
 					</div>
 					{ page != "profile" && (
-						<img src={s3_url(userId, regenerations)} className="profileLink" onClick={() => navigate(`/profile/${userId}`)}/>
+						<img src={s3_url(userId, primaryImage)} className="profileLink" onClick={() => navigate(`/profile/${userId}`)}/>
 					)}
 					{ page == "profile" && (
 						<div className="voteHeaderIcon">{ position && position != 0 && `#${position}` }</div>
