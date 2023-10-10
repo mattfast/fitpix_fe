@@ -12,6 +12,7 @@ import { validateCookie } from "./utils";
 
 import LandingPageImage from "./components/LandingPageImage";
 import LoginModal from "./components/LoginModal";
+import InfoModal from "./components/InfoModal";
 
 const variants = {
 
@@ -34,12 +35,14 @@ const LandingPage = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [infoModalOpen, setInfoModalOpen] = useState<boolean>(false);
   const [referralCode, setReferralCode] = useState<string | null>(null);
-  const buttonRef = useRef<HTMLDivElement>(null);
+  const loginButtonRef = useRef<HTMLDivElement>(null);
+  const infoButtonRef = useRef<HTMLImageElement>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  /*useEffect(() => {
     async function validate() {
       const user_id = await validateCookie(cookies['user-id']);
       if (user_id) {
@@ -48,7 +51,7 @@ const LandingPage = () => {
     }
     
     validate();
-  }, [])
+  }, [])*/
 
   useEffect(() => {
     const rc = searchParams.get("rc");
@@ -98,8 +101,11 @@ const LandingPage = () => {
     verifySP();
   }, [searchParams])
 
-  /* <LandingPageImage />
-  <div id="loginButton" className="loginButton" onClick={() => setModalOpen(true)} ref={buttonRef}>
+  /* 
+        <LoginModal modalOpen={loginModalOpen} setModalOpen={setLoginModalOpen} buttonRef={loginButtonRef} />
+
+        <LandingPageImage />
+  <div id="loginButton" className="loginButton" onClick={() => setModalOpen(true)} ref={loginButtonRef}>
                 <div className="loginButtonText">
                   Log in
                 </div>
@@ -117,7 +123,7 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="subtitle">
-              <div className="subtitleRow">See yourself in every <div className="pink">universe.</div></div>
+              <div className="subtitleRow">See yourself in every <div className="pink">universe. </div><img className="infoButton" src={process.env.PUBLIC_URL + "assets/info.png"} onClick={() => setInfoModalOpen(true)} ref={infoButtonRef} /></div>
             </div>
             <div id="buttonGroup" className="buttonGroup">
               <div
@@ -135,7 +141,7 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
-      <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} buttonRef={buttonRef} />
+      <InfoModal modalOpen={infoModalOpen} setModalOpen={setInfoModalOpen} buttonRef={infoButtonRef}/>
       <Analytics />
     </>
   )

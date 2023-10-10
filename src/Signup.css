@@ -315,6 +315,19 @@
   object-fit: cover;
 }
 
+.signupInfoButton {
+  /*position: absolute;*/
+  /*top: 30px;
+  right: 30px;*/
+
+  width: min(5vh, 5vw);
+  height: min(5vh, 5vw);
+  color: #fff;
+  cursor: pointer;
+  z-index: 100;
+  filter: invert(1);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .nextButton:hover { transform: scale(1.05) perspective(1px); }
   .retakeButton:hover { transform: scale(1.05) perspective(1px); }

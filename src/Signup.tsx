@@ -15,6 +15,7 @@ import { formatPhoneNumber } from "./utils";
 import ComeBackTomorrow from "./ComeBackTomorrow";
 import GenderButton from "./components/GenderButton";
 import ThemeArea from "./components/ThemeArea";
+import InfoModal from "./components/InfoModal";
 
 const Signup = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
@@ -36,6 +37,7 @@ const Signup = () => {
   const [currentNumber, setCurrentNumber] = useState<number>(4);
   const [currentInstructions, setCurrentInstructions] = useState<string>("");
   const [selfieAnimationHappening, setSelfieAnimationHappening] = useState<boolean>(false);
+  const [infoModalOpen, setInfoModalOpen] = useState<boolean>(false);
 
   const [capturedImage1, setCapturedImage1] = useState<string | null>(null);
   const [capturedImage2, setCapturedImage2] = useState<string | null>(null);
@@ -46,6 +48,8 @@ const Signup = () => {
   const webcamRef = useRef<Webcam | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const textInputRef = useRef<HTMLInputElement | null>(null);
+  const infoButtonRef = useRef<HTMLImageElement>(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -474,136 +478,147 @@ const Signup = () => {
   */
  
   return (
-    <div className="overallSignupContainer">
-      <div className="signupContainer">
-        <animated.div id="formContainer" className="formContainer" style={fadeAnimation}>
-          <div className="formText">
-            { page == 0 && "Enter your phone number"}
-            { page == 1 && !streaming && !selfieAnimationHappening && "Create your dopple"}
-            { page == 1 && streaming && !selfieAnimationHappening && "Instructions will be HERE"}
-            { page == 1 && selfieAnimationHappening && currentInstructions }
-            { page == 2 && "Customize your dopple"}
-            { page == 3 && "What's your first name?"}
-            { page == 4 && "What's your last name?"}
-            { page == 5 && "What's your gender?" }
-          </div>
-          { page == 1 && !streaming && !capturedImage5 && (
-            <div className="formTextGap">
-              <div className="formSubtext">
-                To create your dopple, take some 🔥 selfies
-              </div>
-            </div>
-          )}
-          { (page == 0 || page == 3 || page == 4) && (
-            <input
-              type={page == 0 ? "tel" : "text"}
-              id="textInput"
-              className="textInput"
-              ref={textInputRef}
-              placeholder={placeholder}
-              onKeyUp={(e) => enterDetector(e.key)}
-              onChange={(e) => {
-                onTextInput(e.currentTarget.value)
-              }}
-              data-1p-ignore
-            />
-          )}
-          { page == 5 && (
-            <div className="genderButtonContainer">
-              <GenderButton gender="Boy" setGender={setGender} />
-              <GenderButton gender="Girl" setGender={setGender} />
-              <GenderButton gender="Non-binary/Other" setGender={setGender} />
-            </div>
-          )}
-          <div id="streamingComponent" className="videoFullCircle">
-            { camOpen && (
-              <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
-            )}
-            <animated.div className="numberAnimation" style={fadeAnimationQuick}>
-              {currentNumber}
-            </animated.div>
-          </div>
-          { page == 1 && (
-            <>
-              {capturedImage5 && (
-                <img src={capturedImage5} alt="Captured" className="photoFullCircle" />
+    <>
+      <div className="overallSignupContainer">
+        <div className="signupContainer">
+          <animated.div id="formContainer" className="formContainer" style={fadeAnimation}>
+            <div className="formText">
+              { page == 0 && "Enter your phone number "}
+              { page == 1 && !streaming && !selfieAnimationHappening && "Create your dopple "}
+              { page == 1 && streaming && !selfieAnimationHappening && "Instructions will be HERE "}
+              { page == 1 && selfieAnimationHappening && currentInstructions + " " }
+              { page == 2 && "Customize your dopple "}
+              { page == 3 && "What's your first name? "}
+              { page == 4 && "What's your last name? "}
+              { page == 5 && "What's your gender? " }
+              { (page !== 1 || !streaming) && (
+                <img
+                  className="signupInfoButton"
+                  src={process.env.PUBLIC_URL + "assets/info.png"}
+                  onClick={() => setInfoModalOpen(true)}
+                  ref={infoButtonRef}
+                />
               )}
-              <div className="miniImages">
-                { capturedImage1 && <img src={capturedImage1} alt="Captured" className="miniImage" /> }
-                { capturedImage2 && <img src={capturedImage2} alt="Captured" className="miniImage" /> }
-                { capturedImage3 && <img src={capturedImage3} alt="Captured" className="miniImage" /> }
-                { capturedImage4 && <img src={capturedImage4} alt="Captured" className="miniImage" /> }
-              </div>
-              {capturedImage5 && (
-                <div className="retakeButton" onClick={() => {
-                  setCapturedImage1(null);
-                  setCapturedImage2(null);
-                  setCapturedImage3(null);
-                  setCapturedImage4(null);
-                  setCapturedImage5(null);
-                }}>
-                  <div>📸</div>
-                  <div>Retake Selfies</div>
+            </div>
+            { page == 1 && !streaming && !capturedImage5 && (
+              <div className="formTextGap">
+                <div className="formSubtext">
+                  To create your dopple, take some 🔥 selfies
                 </div>
+              </div>
+            )}
+            { (page == 0 || page == 3 || page == 4) && (
+              <input
+                type={page == 0 ? "tel" : "text"}
+                id="textInput"
+                className="textInput"
+                ref={textInputRef}
+                placeholder={placeholder}
+                onKeyUp={(e) => enterDetector(e.key)}
+                onChange={(e) => {
+                  onTextInput(e.currentTarget.value)
+                }}
+                data-1p-ignore
+              />
+            )}
+            { page == 5 && (
+              <div className="genderButtonContainer">
+                <GenderButton gender="Boy" setGender={setGender} />
+                <GenderButton gender="Girl" setGender={setGender} />
+                <GenderButton gender="Non-binary/Other" setGender={setGender} />
+              </div>
+            )}
+            <div id="streamingComponent" className="videoFullCircle">
+              { camOpen && (
+                <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
               )}
-              {streaming && !selfieAnimationHappening &&  (
-                <>
-                  <div className="retakeButton" onClick={selfieAnimation}>
+              <animated.div className="numberAnimation" style={fadeAnimationQuick}>
+                {currentNumber}
+              </animated.div>
+            </div>
+            { page == 1 && (
+              <>
+                {capturedImage5 && (
+                  <img src={capturedImage5} alt="Captured" className="photoFullCircle" />
+                )}
+                <div className="miniImages">
+                  { capturedImage1 && <img src={capturedImage1} alt="Captured" className="miniImage" /> }
+                  { capturedImage2 && <img src={capturedImage2} alt="Captured" className="miniImage" /> }
+                  { capturedImage3 && <img src={capturedImage3} alt="Captured" className="miniImage" /> }
+                  { capturedImage4 && <img src={capturedImage4} alt="Captured" className="miniImage" /> }
+                </div>
+                {capturedImage5 && (
+                  <div className="retakeButton" onClick={() => {
+                    setCapturedImage1(null);
+                    setCapturedImage2(null);
+                    setCapturedImage3(null);
+                    setCapturedImage4(null);
+                    setCapturedImage5(null);
+                  }}>
                     <div>📸</div>
-                    <div>Are you ready?</div>
+                    <div>Retake Selfies</div>
                   </div>
-                </>
-              )}
-              {(!capturedImage5 && !streaming && !selfieAnimationHappening) && (
-                <>
-                  <div className="photoEmptyCircle">
-                    <img src={process.env.PUBLIC_URL + "assets/user.png"} className="photoPlaceholder" />
-                  </div>
-                  <div className="photoButtonGroup">
-                    <div className="photoButton" onClick={beginStream}>
-                      <div className="nextButtonText">🔥 take selfies 🔥</div>
+                )}
+                {streaming && !selfieAnimationHappening &&  (
+                  <>
+                    <div className="retakeButton" onClick={selfieAnimation}>
+                      <div>📸</div>
+                      <div>Are you ready?</div>
                     </div>
-                  </div>
-                </>
-              )}
-            </>
-          )}
-          { page == 2 && (
-            <>
-              {capturedImage5 && (
-                <img src={capturedImage5} alt="Captured" className="photoFullCircle" />
-              )}
-              <ThemeArea themeList={themeList} setThemeList={setThemeList} isSelecting={true} />
-            </>
-          )}
-          { page == 6 && (
-            <ComeBackTomorrow />
-          )}
-          { errorMessage && (
-            <div className="errorText">
-              {errorMessage}
+                  </>
+                )}
+                {(!capturedImage5 && !streaming && !selfieAnimationHappening) && (
+                  <>
+                    <div className="photoEmptyCircle">
+                      <img src={process.env.PUBLIC_URL + "assets/user.png"} className="photoPlaceholder" />
+                    </div>
+                    <div className="photoButtonGroup">
+                      <div className="photoButton" onClick={beginStream}>
+                        <div className="nextButtonText">🔥 take selfies 🔥</div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
+            { page == 2 && (
+              <>
+                {capturedImage5 && (
+                  <img src={capturedImage5} alt="Captured" className="photoFullCircle" />
+                )}
+                <ThemeArea themeList={themeList} setThemeList={setThemeList} isSelecting={true} />
+              </>
+            )}
+            { page == 6 && (
+              <ComeBackTomorrow />
+            )}
+            { errorMessage && (
+              <div className="errorText">
+                {errorMessage}
+              </div>
+            )}
+          </animated.div>
+          { (page !== 1 || capturedImage5) && page !== 5 && page !== 6 && (
+            <div id="nextButton" className="nextButton" onClick={(e) => {
+              //e.preventDefault();
+              /*if (textInputRef.current) {
+                //textInputRef.current.blur();
+                textInputRef.current.focus();
+              }*/
+              nextClick();
+            }}>
+                <div className="nextButtonText">
+                  { page == 0 && "Let's create"}
+                  {(page == 1 || page == 2) && "Looks good"}
+                  {page > 2 && "Next"}
+                </div>
+              <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
             </div>
           )}
-        </animated.div>
-        { (page !== 1 || capturedImage5) && page !== 5 && page !== 6 && (
-          <div id="nextButton" className="nextButton" onClick={(e) => {
-            //e.preventDefault();
-            /*if (textInputRef.current) {
-              //textInputRef.current.blur();
-              textInputRef.current.focus();
-            }*/
-            nextClick();
-          }}>
-              <div className="nextButtonText">
-                { page == 0 && "Let's create"}
-                {(page == 1 || page == 2) && "Looks good"}
-                {page > 2 && "Next"}
-              </div>
-            <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
-          </div>
-        )}
+        </div>
       </div>
-    </div>
+      <InfoModal modalOpen={infoModalOpen} setModalOpen={setInfoModalOpen} buttonRef={infoButtonRef} page={page} />
+    </>
   )
 };
 

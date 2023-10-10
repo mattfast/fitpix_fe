@@ -205,6 +205,20 @@ body {
   text-transform: uppercase;
 }
 
+.infoButton {
+  /*position: absolute;*/
+  /*top: 30px;
+  right: 30px;*/
+  margin-bottom: min(2vh, 2vw);
+
+  width: min(5vh, 5vw);
+  height: min(5vh, 5vw);
+  color: #fff;
+  cursor: pointer;
+  z-index: 100;
+  filter: invert(1);
+}
+
 .signupButton:active {
   /*  Making button bigger on hover  */
   transform: scale(1.05) perspective(1px);

@@ -1,0 +1,65 @@
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  position: relative;
+  display: flex;
+  width: min(327px, 70vw);
+  padding: 20px 24px 32px 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px 8px;
+  border-radius: 16px;
+  background: var(--black, #000);
+}
+
+.formEmoji {
+  text-align: center;
+  font-size: 50px;
+}
+
+.loginFormText {
+  display: flex;
+  flex-direction: column;
+  /*align-items: flex-start;*/
+  gap: 16px;
+  align-self: stretch;
+}
+
+.formTitle {
+  align-self: stretch;
+  color: var(--white, #FFF);
+  /* display/display S */
+  font-family: Rubik;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 115%; /* 27.6px */
+  letter-spacing: -0.12px;
+}
+
+.formDescription {
+  align-self: stretch;
+  color: var(--white, #FFF);
+  /* text/text L */
+  font-family: Figtree;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%; /* 20.8px */
+  letter-spacing: -0.08px;
+  text-transform: none;
+
+}
