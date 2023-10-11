@@ -86,15 +86,18 @@ const Profile = () => {
 
   useEffect(() => {
     async function checkImages() {
+      const newInvalid: number[] = [];
       for (let i = 0; i < 15; i++) {
         const response = await fetch(
           s3_url(userIdViewing, i)
         );
 
         if (response.status == 403) {
-          setInvalidImages([i, ...invalidImages]);
+          newInvalid.push(i);
         }
       }
+
+      setInvalidImages(newInvalid);
     };
     
     checkImages();
