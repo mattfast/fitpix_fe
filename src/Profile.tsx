@@ -71,7 +71,7 @@ const Profile = () => {
   }, [])
 
   useEffect(() => {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 15; i++) {
       const el = document.getElementById(`doppleImage${i}`);
       if (el) {
         if (i == newPrimaryImage) {
