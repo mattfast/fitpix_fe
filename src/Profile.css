@@ -147,8 +147,8 @@
 }
 
 .doppleImageOption {
-  max-width: min(45vw, 200px);
-  max-height: min(20vh, 200px);
+  max-width: min(45vw, 250px);
+  max-height: min(25vh, 250px);
   cursor: pointer;
 }
 
