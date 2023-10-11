@@ -68,7 +68,7 @@ const InfoModal = ({ setModalOpen, modalOpen, buttonRef, page }: {
             <div className="formDescription">
               { page === undefined && "Create 10 of you in under 1 minute." }
               { page === 0 && "we'll text you, so you don't have to keep checking" }
-              { page === 1 && "don't worry, nobody will see these selfies except you" }
+              { page === 1 && "don't worry, nobody will see these selfies except you (not even us)" }
             </div>
             <div className="formDescription">
               { page === undefined && "Share and vote on friends." }

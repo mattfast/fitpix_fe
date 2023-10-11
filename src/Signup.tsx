@@ -132,8 +132,6 @@ const Signup = () => {
       console.log(webcamVideo);
       //targetComponent.appendChild(webcamVideo);
     }
-
-    console.log("STREAM HAS BEGUN");
   }
 
   const numberAnimation = async () => {
@@ -485,13 +483,13 @@ const Signup = () => {
             <div className="formText">
               { page == 0 && "Enter your phone number "}
               { page == 1 && !streaming && !selfieAnimationHappening && "Create your dopple "}
-              { page == 1 && streaming && !selfieAnimationHappening && "Instructions will be HERE "}
-              { page == 1 && selfieAnimationHappening && currentInstructions + " " }
-              { page == 2 && "Customize your dopple "}
-              { page == 3 && "What's your first name? "}
-              { page == 4 && "What's your last name? "}
-              { page == 5 && "What's your gender? " }
-              { (page !== 1 || !streaming) && (
+              { page == 1 && streaming && !selfieAnimationHappening && "Instructions will be HERE"}
+              { page == 1 && selfieAnimationHappening && currentInstructions }
+              { page == 2 && "Customize your dopple"}
+              { page == 3 && "What's your first name?"}
+              { page == 4 && "What's your last name?"}
+              { page == 5 && "What's your gender?" }
+              { (page == 0 || (page == 1 && !streaming)) && (
                 <img
                   className="signupInfoButton"
                   src={process.env.PUBLIC_URL + "assets/info.png"}

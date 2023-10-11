@@ -320,8 +320,8 @@
   /*top: 30px;
   right: 30px;*/
 
-  width: min(5vh, 5vw);
-  height: min(5vh, 5vw);
+  width: min(2vh, 5vw);
+  height: min(2vh, 5vw);
   color: #fff;
   cursor: pointer;
   z-index: 100;

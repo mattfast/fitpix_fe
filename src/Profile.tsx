@@ -154,7 +154,7 @@ const Profile = () => {
                     Other Options
                   </div>
                   <div className="doppleImageOptions">
-                    { [0,1,2,3,4,5,6,7,8,9].map(n => (
+                    { [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14].map(n => (
                       n !== primaryImage && <img id={`doppleImage${n}`} className="doppleImageOption" src={s3_url(userId, n)} onClick={() => setNewPrimaryImage(n)} />
                     ))}
                   </div>
