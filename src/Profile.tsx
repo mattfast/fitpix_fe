@@ -92,11 +92,16 @@ const Profile = () => {
           s3_url(userId || "", i)
         );
 
+        console.log(`STATUS FOR ${i}`);
+        console.log(response.status);
+
         if (response.status != 200) {
+          console.log("PUSHING");
           newInvalid.push(i);
         }
       }
 
+      console.log(newInvalid);
       setInvalidImages(newInvalid);
     };
     
