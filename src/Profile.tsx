@@ -102,8 +102,10 @@ const Profile = () => {
           }
 
         } catch (e) {
-          newInvalid.push(i);
+          console.log("cors stuff");
         }
+
+        //await new Promise(r => setTimeout(r, 500));
 
       }
 
