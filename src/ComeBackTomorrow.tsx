@@ -59,13 +59,13 @@ const ComeBackTomorrow = () => {
         <>
           <div className="cooldownTextContainer">
             <div className="countdownText2">
-              Return tomorrow to see your dopple 
+              Return soon to see your dopple 
             </div>
             <div className="lockText">
                 🔒
             </div>
             <div className="unlocksText">
-              Unlocks in {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+              We'll text you when it's ready. (It usually takes around 30 minutes.)
             </div>
             <div className="orText">and</div>
           </div>
