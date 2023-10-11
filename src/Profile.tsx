@@ -101,7 +101,7 @@ const Profile = () => {
     };
     
     checkImages();
-  }, [userIdViewing])
+  }, [userId])
 
   const changeOrSave = () => {
     if (selectingThemes) {
