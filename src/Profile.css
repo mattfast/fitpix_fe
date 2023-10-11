@@ -139,9 +139,10 @@
 .doppleImageOptions {
   display: flex;
   gap: 6px;
-  align-items: center;
   align-content: center;
-  align-self: center;
+  justify-content: center;
+ /*align-items: center;
+  align-self: center;*/
   flex-wrap: wrap;
 }
 
