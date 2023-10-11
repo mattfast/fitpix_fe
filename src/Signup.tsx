@@ -132,6 +132,7 @@ const Signup = () => {
       console.log(webcamVideo);
       //targetComponent.appendChild(webcamVideo);
     }
+
   }
 
   const numberAnimation = async () => {
@@ -473,6 +474,14 @@ const Signup = () => {
               </div>
             </div>
           )}
+                          {streaming && !selfieAnimationHappening &&  (
+                  <>
+                    <div className="retakeButton" onClick={selfieAnimation}>
+                      <div>📸</div>
+                      <div>Are you ready?</div>
+                    </div>
+                  </>
+                )}
   */
  
   return (
@@ -528,7 +537,7 @@ const Signup = () => {
             )}
             <div id="streamingComponent" className="videoFullCircle">
               { camOpen && (
-                <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} />
+                <Webcam forceScreenshotSourceSize className="fileInput" screenshotFormat="image/jpeg" audio={false} ref={webcamRef} mirrored={true} onUserMedia={selfieAnimation} />
               )}
               <animated.div className="numberAnimation" style={fadeAnimationQuick}>
                 {currentNumber}
@@ -556,14 +565,6 @@ const Signup = () => {
                     <div>📸</div>
                     <div>Retake Selfies</div>
                   </div>
-                )}
-                {streaming && !selfieAnimationHappening &&  (
-                  <>
-                    <div className="retakeButton" onClick={selfieAnimation}>
-                      <div>📸</div>
-                      <div>Are you ready?</div>
-                    </div>
-                  </>
                 )}
                 {(!capturedImage5 && !streaming && !selfieAnimationHappening) && (
                   <>
