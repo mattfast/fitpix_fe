@@ -89,7 +89,7 @@ const Profile = () => {
       const newInvalid: number[] = [];
       for (let i = 0; i < 15; i++) {
         const response = await fetch(
-          s3_url(userIdViewing, i)
+          s3_url(userId || "", i)
         );
 
         if (response.status == 403) {
