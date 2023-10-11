@@ -92,7 +92,7 @@ const Profile = () => {
           s3_url(userId || "", i)
         );
 
-        if (response.status == 403) {
+        if (response.status != 200) {
           newInvalid.push(i);
         }
       }
