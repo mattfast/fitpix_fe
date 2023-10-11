@@ -489,7 +489,7 @@ const Signup = () => {
               { page == 3 && "What's your first name?"}
               { page == 4 && "What's your last name?"}
               { page == 5 && "What's your gender?" }
-              { (page == 0 || (page == 1 && !streaming)) && (
+              { (page == 0 || (page == 1 && !streaming && !capturedImage5)) && (
                 <img
                   className="signupInfoButton"
                   src={process.env.PUBLIC_URL + "assets/info.png"}
