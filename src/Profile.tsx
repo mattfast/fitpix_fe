@@ -88,17 +88,23 @@ const Profile = () => {
     async function checkImages() {
       const newInvalid: number[] = [];
       for (let i = 0; i < 15; i++) {
-        const response = await fetch(
-          s3_url(userId || "", i)
-        );
+        try {
+          const response = await fetch(
+            s3_url(userId || "", i)
+          );
+  
+          console.log(`STATUS FOR ${i}`);
+          console.log(response.status);
+  
+          if (response.status != 200) {
+            console.log("PUSHING");
+            newInvalid.push(i);
+          }
 
-        console.log(`STATUS FOR ${i}`);
-        console.log(response.status);
-
-        if (response.status != 200) {
-          console.log("PUSHING");
+        } catch (e) {
           newInvalid.push(i);
         }
+
       }
 
       console.log(newInvalid);
