@@ -92,7 +92,11 @@ const LandingPage = () => {
           const futureDate = new Date();
           futureDate.setFullYear(futureDate.getFullYear() + 10);
           setCookie("user-id", respJson["cookie"], { expires: futureDate });
-          navigate("/vote");
+          //navigate(`/profile/${}`);
+          const user_id = await validateCookie(cookies['user-id']);
+          if (user_id) {
+            navigate(`/profile/${user_id}`);
+          }
         }
       }
 
