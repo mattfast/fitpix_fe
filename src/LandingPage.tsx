@@ -102,7 +102,7 @@ const LandingPage = () => {
   }, [searchParams])
 
   /* 
-        <LoginModal modalOpen={loginModalOpen} setModalOpen={setLoginModalOpen} buttonRef={loginButtonRef} />
+        
 
         <LandingPageImage />
   <div id="loginButton" className="loginButton" onClick={() => setModalOpen(true)} ref={loginButtonRef}>
@@ -130,18 +130,36 @@ const LandingPage = () => {
                 id="signupButton"
                 className="signupButton"
                 onClick={
-                  () => window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup${referralCode ? `?rc=${referralCode}` : ``}`)
+                  () => {
+                    console.log("Info button");
+                    window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup${referralCode ? `?rc=${referralCode}` : ``}`);
+                  }
                 }
               >
                 <div className="buttonText">
                   Create your Dopple
                 </div>
               </div>
+              <div
+                id="loginButton"
+                className="signupButton"
+                onClick={
+                  () => {
+                    console.log("Login button");
+                    setLoginModalOpen(true);
+                  }
+                }
+              >
+                <div className="buttonText">
+                  Log In
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <InfoModal modalOpen={infoModalOpen} setModalOpen={setInfoModalOpen} buttonRef={infoButtonRef}/>
+      { loginModalOpen && <LoginModal modalOpen={loginModalOpen} setModalOpen={setLoginModalOpen} buttonRef={loginButtonRef} /> }
+      { infoModalOpen && <InfoModal modalOpen={infoModalOpen} setModalOpen={setInfoModalOpen} buttonRef={infoButtonRef}/> }
       <Analytics />
     </>
   )
