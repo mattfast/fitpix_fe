@@ -104,6 +104,32 @@
   text-transform: uppercase;
 }
 
+.doppleText2 {
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: Hobeaux;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 115%; /* 27.6px */
+  text-transform: uppercase;
+  margin-top: 20px;
+}
+
+
+.competitionText {
+  color: var(--white, #FFF);
+  text-align: center;
+  font-family: Hobeaux;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 115%; /* 27.6px */
+  text-transform: uppercase;
+  margin-top: 70px;
+}
+
+
 .doppleImage {
   max-width: min(80vw, 400px);
   max-height: min(45vh, 300px);
@@ -123,6 +149,10 @@
   max-width: min(30vw, 200px);
   max-height: min(20vh, 200px);
   cursor: pointer;
+}
+
+.space {
+  margin-top: 50px;
 }
 
 .changeOrSaveButton:active {

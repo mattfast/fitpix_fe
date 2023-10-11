@@ -587,7 +587,7 @@ const Signup = () => {
                 {capturedImage5 && (
                   <img src={capturedImage5} alt="Captured" className="photoFullCircle" />
                 )}
-                <ThemeArea themeList={themeList} setThemeList={setThemeList} isSelecting={true} />
+                <ThemeArea themeList={themeList} setThemeList={setThemeList} isSelecting={true} noText={false} />
               </>
             )}
             { page == 6 && (

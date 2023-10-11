@@ -23,7 +23,7 @@ const themeEmojis = [
    "⚔️",
 ];
 
-const ThemeArea = ({ themeList, setThemeList, isSelecting }) => {
+const ThemeArea = ({ themeList, setThemeList, isSelecting, noText }) => {
 
   useEffect(() => {
     if (isSelecting) {
@@ -59,7 +59,7 @@ const ThemeArea = ({ themeList, setThemeList, isSelecting }) => {
     <div className="themesArea">
       <div className="themesInstructionText">
         { isSelecting && "Choose up to 3 personalities:" }
-        { !isSelecting && "Your personalities:" }
+        { !isSelecting && !noText && "Your personalities:" }
       </div>
         <div className="themes">
           { isSelecting && themeNames.map((t, i) => (

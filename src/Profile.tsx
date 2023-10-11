@@ -150,7 +150,7 @@ const Profile = () => {
               { userId && <img className="doppleImage" src={s3_url(userId, primaryImage)} onClick={() => setShowModal(true)} /> }
               { userId == userIdViewing && (
                 <>
-                  <div className="doppleText">
+                  <div className="doppleText2">
                     Other Options
                   </div>
                   <div className="doppleImageOptions">
@@ -158,13 +158,17 @@ const Profile = () => {
                       n !== primaryImage && <img id={`doppleImage${n}`} className="doppleImageOption" src={s3_url(userId, n)} onClick={() => setNewPrimaryImage(n)} />
                     ))}
                   </div>
-                  <div className="changeOrSaveButton" onClick={setPrimaryImageCallback}>Set Primary Image</div>
+                  <div className="changeOrSaveButton" onClick={setPrimaryImageCallback}>Set New Primary Image</div>
                   { errorMessage && (
                     <div className="themeSuccessText">
                       {errorMessage}
                     </div>
                   )}
-                  <ThemeArea themeList={themes} setThemeList={setThemes} isSelecting={selectingThemes} />
+                  <div className="space" />
+                  <div className="doppleText">
+                    Your Personalities
+                  </div>
+                  <ThemeArea themeList={themes} setThemeList={setThemes} isSelecting={selectingThemes} noText={true} />
                   <div className="changeOrSaveButton" onClick={changeOrSave}>
                     { selectingThemes ? "save" : "select new" }
                   </div>
@@ -172,6 +176,9 @@ const Profile = () => {
                     <div className="themeSuccessText">
                       {successMessage}
                     </div>
+                  )}
+                  { userId == userIdViewing && (
+                    <div className="competitionText">Get ready. The competition begins tomorrow. 🏆</div>
                   )}
                   <div className="logOutButton" onClick={logOut}>
                     Log Out
