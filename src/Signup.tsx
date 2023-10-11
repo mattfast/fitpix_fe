@@ -556,11 +556,12 @@ const Signup = () => {
                 </div>
                 {capturedImage5 && (
                   <div className="retakeButton" onClick={() => {
-                    setCapturedImage1(null);
+                    /*setCapturedImage1(null);
                     setCapturedImage2(null);
                     setCapturedImage3(null);
                     setCapturedImage4(null);
-                    setCapturedImage5(null);
+                    setCapturedImage5(null);*/
+                    beginStream().then(() => selfieAnimation());
                   }}>
                     <div>📸</div>
                     <div>Retake Selfies</div>
