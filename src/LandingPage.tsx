@@ -93,7 +93,7 @@ const LandingPage = () => {
           futureDate.setFullYear(futureDate.getFullYear() + 10);
           setCookie("user-id", respJson["cookie"], { expires: futureDate });
           //navigate(`/profile/${}`);
-          const user_id = await validateCookie(cookies['user-id']);
+          const user_id = await validateCookie(respJson["cookie"]);
           if (user_id) {
             navigate(`/profile/${user_id}`);
           }
