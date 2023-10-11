@@ -30,6 +30,7 @@ const Profile = () => {
   const [newPrimaryImage, setNewPrimaryImage] = useState<number>(0);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
+  const [invalidImages, setInvalidImages] = useState<number[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -82,6 +83,22 @@ const Profile = () => {
       }
     }
   }, [newPrimaryImage])
+
+  useEffect(() => {
+    async function checkImages() {
+      for (let i = 0; i < 15; i++) {
+        const response = await fetch(
+          s3_url(userIdViewing, i)
+        );
+
+        if (response.status == 403) {
+          setInvalidImages([i, ...invalidImages]);
+        }
+      }
+    };
+    
+    checkImages();
+  }, [userIdViewing])
 
   const changeOrSave = () => {
     if (selectingThemes) {
@@ -154,7 +171,7 @@ const Profile = () => {
                     Other Options
                   </div>
                   <div className="doppleImageOptions">
-                    { [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14].map(n => (
+                    { [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14].filter(n => !invalidImages.includes(n)).map(n => (
                       n !== primaryImage && <img id={`doppleImage${n}`} className="doppleImageOption" src={s3_url(userId, n)} onClick={() => setNewPrimaryImage(n)} />
                     ))}
                   </div>
