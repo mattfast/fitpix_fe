@@ -42,7 +42,7 @@ const LandingPage = () => {
   const infoButtonRef = useRef<HTMLImageElement>(null);
   const navigate = useNavigate();
 
-  /*useEffect(() => {
+  useEffect(() => {
     async function validate() {
       const user_id = await validateCookie(cookies['user-id']);
       if (user_id) {
@@ -51,7 +51,7 @@ const LandingPage = () => {
     }
     
     validate();
-  }, [])*/
+  }, [])
 
   useEffect(() => {
     const rc = searchParams.get("rc");

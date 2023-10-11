@@ -71,7 +71,8 @@ const Signup = () => {
       if (respJson["user_id"]) setUserId(respJson["user_id"]);
 
       // set
-      if (respJson["gender"]) setPage(6);
+      if (respJson["images_generated"]) navigate(`/profile/${respJson["user_id"]}`)
+      else if (respJson["gender"]) setPage(6);
       else if (respJson["last_name"]) setPage(5);
       else if (respJson["first_name"]) setPage(4);
       else if (respJson["images_uploaded"]) setPage(3);
