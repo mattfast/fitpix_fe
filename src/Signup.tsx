@@ -75,7 +75,6 @@ const Signup = () => {
       // set user_id
       if (respJson["user_id"]) setUserId(respJson["user_id"]);
 
-      // set
       if (respJson["images_generated"]) navigate(`/profile/${respJson["user_id"]}`);
       else if (respJson["stripe_client_secret"]) setPage(7);
       else if (respJson["gender"]) setPage(6);
