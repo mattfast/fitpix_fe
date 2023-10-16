@@ -26,7 +26,7 @@ const Signup = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [page, setPage] = useState<number>(-1);
+  const [page, setPage] = useState<number>(0);
   const [placeholder, setPlaceholder] = useState<string>("(123) 456-7890");
   const [userId, setUserId] = useState<string>("");
   const [text, setText] = useState<string>("");
