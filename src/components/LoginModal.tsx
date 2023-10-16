@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion"
-//import useWebSocket, { ReadyState } from 'react-use-websocket';
+import { useNavigate } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 import { io } from "socket.io-client";
 
 import "@fontsource/rubik";
@@ -13,11 +14,13 @@ import { formatPhoneNumber } from "../utils";
 import { String } from "aws-sdk/clients/cloudsearch";
 
 const LoginModal = ({ setModalOpen, modalOpen, buttonRef }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [closable, setClosable] = useState<boolean>(false);
   const [inputText, setInputText] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const modal = document.getElementById("modal");
@@ -61,7 +64,37 @@ const LoginModal = ({ setModalOpen, modalOpen, buttonRef }) => {
     setInputText(strippedText);
   }
 
+  const createUser = async () => {
+    const response = await fetch(
+      `${process.env.REACT_APP_BE_URL}/create-user`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "number": inputText
+        })
+      }
+    )
+    
+    if (response.status !== 200) {
+      setErrorMessage(`Our website is experiencing a bit of trouble right now. Try again in a minute!`);
+      return false;
+    }
+
+    const respJson = await response.json();
+    if (respJson["cookie"]) {
+      const futureDate = new Date();
+      futureDate.setFullYear(futureDate.getFullYear() + 10);
+      setCookie("user-id", respJson["cookie"], { expires: futureDate });
+    }
+
+    return true;
+  }
+
   const buttonClick = async () => {
+
     const response = await fetch(
       `${process.env.REACT_APP_BE_URL}/generate-auth`,
       {
@@ -75,11 +108,18 @@ const LoginModal = ({ setModalOpen, modalOpen, buttonRef }) => {
       }
     )
 
+    console.log("HERE");
+
     if (response.status === 401) {
-      setErrorMessage(`We don't have a number associated with that account. To signup, click here: ${process.env.REACT_APP_BASE_URL}/signup.`);
+      console.log("HERE1");
+      const ok = await createUser();
+      if (!ok) return;
+      navigate("/signup");
     } else if (response.status === 500) {
-      setErrorMessage("Our website is experiencing a bit of trouble right now. We're working on it!");
+      console.log("HERE2");
+      setErrorMessage("Our website is experiencing a bit of trouble right now. Try again in a minute!");
     } else if (response.status === 200) {
+      console.log("HERE3");
       setSuccessMessage("We've texted you a link! Click on it and you should be logged in :)");
     }
   }
@@ -104,20 +144,20 @@ const LoginModal = ({ setModalOpen, modalOpen, buttonRef }) => {
               Enter your phone number
             </div>
             <div className="formDescription">
-              We'll text you a link that automatically logs you in
+              If you have an account, we'll text you a link to log in
             </div>
           </div>
           <input type="tel" id="formInput" className="formInput" placeholder="(123) 456-7890" onKeyUp={(e) => enterDetector(e.key)} onChange={e => onTyping(e.currentTarget.value)}/>
           { errorMessage !== null && (
             <div className="errorMessage">{errorMessage}</div>
           )}
-          { errorMessage !== null && (
+          { successMessage !== null && (
             <div className="successMessage">{successMessage}</div>
           )}
         </div>
         <div id="formButton" className="formButton" onClick={buttonClick}>
           <div className="modalButtonText">
-            Get login link
+            Log In / Create Account
           </div>
         </div>
       </div>

@@ -210,9 +210,6 @@ const Profile = () => {
                       {successMessage}
                     </div>
                   )}
-                  { userId == userIdViewing && (
-                    <div className="competitionText">Get ready. The competition begins tomorrow. 🏆</div>
-                  )}
                   <div className="logOutButton" onClick={logOut}>
                     Log Out
                   </div>

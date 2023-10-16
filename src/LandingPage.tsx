@@ -14,23 +14,6 @@ import LandingPageImage from "./components/LandingPageImage";
 import LoginModal from "./components/LoginModal";
 import InfoModal from "./components/InfoModal";
 
-const variants = {
-
-};
-
-
-/*
-
-TODO:
-- Add login button
-- enable sign up button
-- add fade out transition 
-- Fit to different screen sizes
-- Check for valid cookie + redirect to voting if present
-- add circle crop to central image
-- fix touch bug with signup button
-*/
-
 const LandingPage = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -113,7 +96,23 @@ const LandingPage = () => {
                 <div className="loginButtonText">
                   Log in
                 </div>
-              </div>*/
+              </div>
+              
+                            <div
+                id="signupButton"
+                className="signupButton"
+                onClick={
+                  () => {
+                    console.log("Info button");
+                    window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup${referralCode ? `?rc=${referralCode}` : ``}`);
+                  }
+                }
+              >
+                <div className="buttonText">
+                  Create your Dopple
+                </div>
+              </div>
+              */
  
   return (
     <>
@@ -130,20 +129,6 @@ const LandingPage = () => {
               <div className="subtitleRow">See yourself in every <div className="pink">universe. </div><img className="infoButton" src={process.env.PUBLIC_URL + "assets/info.png"} onClick={() => setInfoModalOpen(true)} ref={infoButtonRef} /></div>
             </div>
             <div id="buttonGroup" className="buttonGroup">
-              <div
-                id="signupButton"
-                className="signupButton"
-                onClick={
-                  () => {
-                    console.log("Info button");
-                    window.location.replace(`${process.env.REACT_APP_BASE_URL}/signup${referralCode ? `?rc=${referralCode}` : ``}`);
-                  }
-                }
-              >
-                <div className="buttonText">
-                  Create your Dopple
-                </div>
-              </div>
               <div
                 id="loginButton"
                 className="signupButton"
