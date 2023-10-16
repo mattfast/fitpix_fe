@@ -4,6 +4,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Webcam from 'react-webcam';
 import { useSpring, animated } from 'react-spring';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 import "@fontsource/rubik";
 import "@fontsource/rubik/500.css"; 
@@ -11,17 +13,20 @@ import "@fontsource/rubik/700.css";
 import "@fontsource/figtree/600.css";
 import "./Signup.css";
 import s3 from "./s3";
-import { formatPhoneNumber } from "./utils";
+import { formatPhoneNumber, getStripe } from "./utils";
 import ComeBackTomorrow from "./ComeBackTomorrow";
 import GenderButton from "./components/GenderButton";
 import ThemeArea from "./components/ThemeArea";
 import InfoModal from "./components/InfoModal";
+import CheckoutForm from "./components/CheckoutForm";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || ""); // Use your public key
 
 const Signup = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(-1);
   const [placeholder, setPlaceholder] = useState<string>("(123) 456-7890");
   const [userId, setUserId] = useState<string>("");
   const [text, setText] = useState<string>("");
@@ -71,7 +76,8 @@ const Signup = () => {
       if (respJson["user_id"]) setUserId(respJson["user_id"]);
 
       // set
-      if (respJson["images_generated"]) navigate(`/profile/${respJson["user_id"]}`)
+      if (respJson["images_generated"]) navigate(`/profile/${respJson["user_id"]}`);
+      else if (respJson["stripe_client_secret"]) setPage(7);
       else if (respJson["gender"]) setPage(6);
       else if (respJson["last_name"]) setPage(5);
       else if (respJson["first_name"]) setPage(4);
@@ -437,6 +443,7 @@ const Signup = () => {
         setShow(true);
         return;
       }
+    } else if (page == 6) {
       if (searchParams.get("rc")) {
         fetch(
           `${process.env.REACT_APP_BE_URL}/confirm-referral`,
@@ -452,12 +459,28 @@ const Signup = () => {
         );
       }
     }
-
+ 
     clearTextArea();
     setText("");
     setErrorMessage("");
     setPage(page + 1);
     setShow(true);
+  }
+
+  async function handleCheckout() {
+    const stripe = await getStripe();
+    const { error } = await stripe.redirectToCheckout({
+      lineItems: [
+        {
+          price: process.env.REACT_APP_STRIPE_PRICE_ID,
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      successUrl: `${process.env.REACT_APP_BASE_URL}/signup`,
+      cancelUrl: `${process.env.REACT_APP_BASE_URL}/signup`,
+    });
+    console.warn(error.message);
   }
 
   /*
@@ -591,6 +614,11 @@ const Signup = () => {
               </>
             )}
             { page == 6 && (
+              <Elements stripe={stripePromise}>
+                <CheckoutForm nextClick={nextClick} />
+              </Elements>
+            )}
+            { page == 7 && (
               <ComeBackTomorrow />
             )}
             { errorMessage && (
@@ -599,7 +627,7 @@ const Signup = () => {
               </div>
             )}
           </animated.div>
-          { (page !== 1 || capturedImage5) && page !== 5 && page !== 6 && (
+          { (page !== 1 || capturedImage5) && page !== 5 && page !== 6 && page !== 7 && (
             <div id="nextButton" className="nextButton" onClick={(e) => {
               //e.preventDefault();
               /*if (textInputRef.current) {
