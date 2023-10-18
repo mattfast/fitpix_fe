@@ -76,7 +76,7 @@ const Signup = () => {
       if (respJson["user_id"]) setUserId(respJson["user_id"]);
 
       if (respJson["images_generated"]) navigate(`/profile/${respJson["user_id"]}`);
-      else if (respJson["stripe_client_secret"]) setPage(7);
+      //else if (respJson["stripe_client_secret"]) setPage(7);
       else if (respJson["gender"]) setPage(6);
       else if (respJson["last_name"]) setPage(5);
       else if (respJson["first_name"]) setPage(4);
@@ -613,11 +613,6 @@ const Signup = () => {
               </>
             )}
             { page == 6 && (
-              <Elements stripe={stripePromise}>
-                <CheckoutForm nextClick={nextClick} />
-              </Elements>
-            )}
-            { page == 7 && (
               <ComeBackTomorrow />
             )}
             { errorMessage && (
@@ -626,7 +621,7 @@ const Signup = () => {
               </div>
             )}
           </animated.div>
-          { (page !== 1 || capturedImage5) && page !== 5 && page !== 6 && page !== 7 && (
+          { (page !== 1 || capturedImage5) && page !== 5 && page !== 6 && (
             <div id="nextButton" className="nextButton" onClick={(e) => {
               //e.preventDefault();
               /*if (textInputRef.current) {
