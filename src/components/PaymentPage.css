@@ -1,0 +1,126 @@
+/*.paymentButtonGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  align-self: stretch;
+  margin-top: 30px;
+}*/
+
+.paymentButtonGroup {
+  margin-top: 40px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.paymentOption {
+  display: flex;
+  position: relative;
+  padding: 32px 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+  cursor: pointer;
+  width: min(327px, 75vw);
+
+  border-radius: 12px;
+  border: 2px solid #ACFC85;
+  background: var(--white-16, rgba(255, 255, 255, 0.16));
+}
+
+.paymentTextRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}
+
+.paymentPrimaryText {
+  color: var(--white, #FFF);
+  text-align: center;
+  /* label/label XL */
+  font-family: Figtree;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%; /* 23.4px */
+  letter-spacing: -0.09px;
+}
+
+.paymentSecondaryText {
+  color: var(--white-64, rgba(255, 255, 255, 0.64));
+  text-align: center;
+  /* text/text M */
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%; /* 18.2px */
+  letter-spacing: -0.07px;
+}
+
+.shareArrow {
+  width: 18px;
+}
+
+.popularSign {
+  display: flex;
+  height: 24px;
+  padding: 0px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  position: absolute;
+  left: 16px;
+  top: -11px;
+
+  border-radius: 4px;
+  background: var(--off-black, #2A2826);
+  box-shadow: 0px 0.20609px 0.92742px 0px rgba(0, 0, 0, 0.08), 0px 6px 16px 0px rgba(0, 0, 0, 0.10);
+
+  color: #FFF;
+  text-align: center;
+  font-family: Figtree;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%; /* 14.3px */
+  letter-spacing: 0.55px;
+  text-transform: uppercase;
+}
+
+.saleSign {
+  display: flex;
+  height: 24px;
+  padding: 0px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  position: absolute;
+  right: 8px;
+  top: -11px;
+
+  border-radius: 4px;
+  background: #ACFC85;
+  box-shadow: 0px 0.20609px 0.92742px 0px rgba(0, 0, 0, 0.08), 0px 6px 16px 0px rgba(0, 0, 0, 0.10);  
+
+  color: var(--off-black, #2A2826);
+  text-align: center;
+  font-family: Figtree;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%; /* 14.3px */
+  letter-spacing: 0.55px;
+  text-transform: uppercase;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+

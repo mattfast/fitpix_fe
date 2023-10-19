@@ -18,7 +18,7 @@ import ComeBackTomorrow from "./ComeBackTomorrow";
 import GenderButton from "./components/GenderButton";
 import ThemeArea from "./components/ThemeArea";
 import InfoModal from "./components/InfoModal";
-import CheckoutForm from "./components/CheckoutForm";
+import PaymentPage from "./components/PaymentPage";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || ""); // Use your public key
 
@@ -38,7 +38,7 @@ const Signup = () => {
   const [themeList, setThemeList] = useState<string[]>([]);
   const [show, setShow] = useState<boolean>(true);
   const [showNumber, setShowNumber] = useState<boolean>(false);
-  const [showInstructions, setShowInstructions] = useState<boolean>(false);
+  const [paymentOption, setPaymentOption] = useState<string>("payment");
   const [currentNumber, setCurrentNumber] = useState<number>(4);
   const [currentInstructions, setCurrentInstructions] = useState<string>("");
   const [selfieAnimationHappening, setSelfieAnimationHappening] = useState<boolean>(false);
@@ -60,28 +60,47 @@ const Signup = () => {
   useEffect(() => {
     // fetch user, go to first uncompleted page
     async function getUserProgress() {
-      const response = await fetch(
-        `${process.env.REACT_APP_BE_URL}/get-user`,
-        {
-          method: "GET",
-          headers: {
-            "auth-token": cookies["user-id"],
-          },
-        }
-      );
-      const respJson = await response.json();
-      console.log("USER FETCHED");
-      console.log(respJson);
-      // set user_id
-      if (respJson["user_id"]) setUserId(respJson["user_id"]);
-
-      if (respJson["images_generated"]) navigate(`/profile/${respJson["user_id"]}`);
-      //else if (respJson["stripe_client_secret"]) setPage(7);
-      else if (respJson["gender"]) setPage(6);
-      else if (respJson["last_name"]) setPage(5);
-      else if (respJson["first_name"]) setPage(4);
-      else if (respJson["images_uploaded"]) setPage(3);
-      else if (respJson["number"]) setPage(1);
+      const session_id = searchParams.get("session_id");
+      if (session_id == "invalid") {
+        setPage(6);
+      } else if (session_id) {
+        setPage(7);
+        fetch(
+          `${process.env.REACT_APP_BE_URL}/checkout-success`,
+          {
+            method: "POST",
+            headers: {
+              "auth-token": cookies["user-id"],
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              "session_id": session_id
+            })
+          }
+        );
+      } else {
+        const response = await fetch(
+          `${process.env.REACT_APP_BE_URL}/get-user`,
+          {
+            method: "GET",
+            headers: {
+              "auth-token": cookies["user-id"],
+            },
+          }
+        );
+        const respJson = await response.json();
+        console.log("USER FETCHED");
+        console.log(respJson);
+        // set user_id
+        if (respJson["user_id"]) setUserId(respJson["user_id"]);
+  
+        if (respJson["images_generated"]) navigate(`/profile/${respJson["user_id"]}`);
+        else if (respJson["gender"]) setPage(6);
+        else if (respJson["last_name"]) setPage(5);
+        else if (respJson["first_name"]) setPage(4);
+        else if (respJson["images_uploaded"]) setPage(3);
+        else if (respJson["number"]) setPage(1)
+      }
     }
 
     getUserProgress();
@@ -380,6 +399,32 @@ const Signup = () => {
     if (gender !== "") nextClick();
   }, [gender])
 
+  const paymentClick = async () => {
+    if (paymentOption == "payment") {
+      const stripe = await stripePromise;
+      if (stripe) {
+        const response = await fetch(
+          `${process.env.REACT_APP_BE_URL}/create-checkout-session`,
+          {
+            method: "POST",
+            headers: {
+              "auth-token": cookies["user-id"],
+            },
+          }
+        );
+  
+        const respJson = await response.json();
+        const result = await stripe.redirectToCheckout({ sessionId: respJson["session_id"] });
+
+        if (result.error) {
+          console.error(result.error.message);
+      }
+      }
+    } else {
+      window.open("sms:?&body=Use%20my%20referral%20code%20to%20get%2050%25%20off%20on%20some%20fit%20pics%21%0A%0Ahttps%3A%2F%2Ffitpic.io", "_blank");
+    }
+  }
+
   const nextClick = async () => {
 
     setShow(false);
@@ -521,6 +566,7 @@ const Signup = () => {
               { page == 3 && "What's your first name?"}
               { page == 4 && "What's your last name?"}
               { page == 5 && "What's your gender?" }
+              { page == 6 && "Choose an option" }
               { (page == 0 || (page == 1 && !streaming && !capturedImage5)) && (
                 <img
                   className="signupInfoButton"
@@ -613,6 +659,9 @@ const Signup = () => {
               </>
             )}
             { page == 6 && (
+              <PaymentPage paymentOption={paymentOption} setPaymentOption={setPaymentOption} />
+            )}
+            { page == 7 && (
               <ComeBackTomorrow />
             )}
             { errorMessage && (
@@ -621,7 +670,7 @@ const Signup = () => {
               </div>
             )}
           </animated.div>
-          { (page !== 1 || capturedImage5) && page !== 5 && page !== 6 && (
+          { (page !== 1 || capturedImage5) && page !== 5 && page !== 6 && page !== 7 && (
             <div id="nextButton" className="nextButton" onClick={(e) => {
               //e.preventDefault();
               /*if (textInputRef.current) {
@@ -636,6 +685,16 @@ const Signup = () => {
                   {page > 2 && "Next"}
                 </div>
               <img src={process.env.PUBLIC_URL + "assets/right-arrow.png"} className="nextButtonArrow" />
+            </div>
+          )}
+          { page == 6 && (
+            <div className="redirectButton" onClick={(e) => {
+              paymentClick();
+            }}>
+              <div className="redirectButtonText">
+                { paymentOption == "payment" && "Continue for $0.99" }
+                { paymentOption == "referral" && "Share with friends" }
+              </div>
             </div>
           )}
         </div>

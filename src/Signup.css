@@ -328,9 +328,47 @@
   filter: invert(1);
 }
 
+.redirectButton {
+  display: flex;
+  height: 64px;
+  padding: 0px 40px;
+  /*justify-content: center;
+  align-items: center;
+  align-self: center;
+  gap: 8px;
+  align-self: stretch;*/
+  justify-content: center;
+  align-items: center;
+  border-radius: 1000px;
+  cursor: pointer;
+  width: min(295px, 70vw);
+
+  position: absolute;
+  bottom: 26px;
+
+  background: var(--white, #FFF);
+  box-shadow: 0px 0.20609px 0.92742px 0px rgba(0, 0, 0, 0.08), 0px 6px 16px 0px rgba(0, 0, 0, 0.10);
+}
+
+.redirectButton:active {
+  /*  Making button bigger on hover  */
+  transform: scale(1.05) perspective(1px)
+}
+
+.redirectButtonText {
+  color: var(--off-black, #2A2826);
+  text-align: center;
+  font-family: Figtree;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 115%; /* 20.7px */
+}
+
 @media (hover: hover) and (pointer: fine) {
   .nextButton:hover { transform: scale(1.05) perspective(1px); }
   .retakeButton:hover { transform: scale(1.05) perspective(1px); }
   .photoButton:hover { transform: scale(1.05) perspective(1px); }
+  .redirectButton:hover { transform: scale(1.05) perspective(1px); }
 }
 
