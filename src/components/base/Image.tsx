@@ -3,17 +3,11 @@ import { motion } from "framer-motion"
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 
-import Image from "./base/Image";
+const Image = ({ src, width, height }) => {
 
-import "./AppHeader.css";
-
-const AppHeader = () => {
- 
   return (
-    <div className="header">
-      <Image src="logo-with-text.png" width="118px" height="32px" />
-    </div>
+    <img src={ process.env.PUBLIC_URL + "assets/" + src } style={{ width, height }}/>
   )
 };
 
-export default AppHeader;
+export default Image;

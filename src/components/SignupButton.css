@@ -1,0 +1,22 @@
+.signupButton {
+  display: flex;
+  height: 65px;
+  padding: 0px 40px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  border-radius: 12px;
+  background: var(--off-black, #2A2826);
+  cursor: pointer;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.signupButton:active {
+  /*  Making button bigger on hover  */
+  transform: scale(1.05) perspective(1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .signupButton:hover { transform: scale(1.05) perspective(1px); }
+}

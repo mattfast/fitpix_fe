@@ -1,0 +1,11 @@
+.labelContainer {
+  display: flex;
+  height: 32px;
+  padding: 0px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  border-radius: 1000px;
+  background: var(--gradient, linear-gradient(82deg, #D52D2D 10.01%, #D52D50 49.94%, #D52D7E 83.02%));
+  /*background: #D52D2D;*/
+}

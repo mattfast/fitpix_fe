@@ -1,0 +1,10 @@
+
+.bottomPageContainer {
+  display: flex;
+  padding: 80px 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  align-self: stretch;
+  background: var(--gradient, linear-gradient(82deg, #D52D2D 10.01%, #D52D50 49.94%, #D52D7E 83.02%));
+}

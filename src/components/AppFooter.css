@@ -1,0 +1,25 @@
+.appFooter {
+  display: flex;
+  padding: 40px 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  align-self: stretch;
+  background: var(--off-black, #2A2826);
+}
+
+.appFooterText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.appFooterSocials {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
