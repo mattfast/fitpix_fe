@@ -4,12 +4,13 @@ import { motion } from "framer-motion"
 import Text from "./base/Text";
 import "./SignupButton.css";
 
-const SignupButton = ({ textGradient }: {
-  textGradient?: boolean
+const SignupButton = ({ onClick, textGradient }: {
+  onClick?: () => void;
+  textGradient?: boolean;
 }) => {
  
   return (
-    <div className="signupButton">
+    <div className="signupButton" onClick={onClick}>
       <Text size="large" weight="strong" color={ textGradient ? "gradient" : "white"}>
         Find your fit on Fitpix
       </Text>

@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion"
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useCookies } from 'react-cookie';
 import { Analytics } from '@vercel/analytics/react';
 
 import Title from "./components/base/Title";
@@ -13,14 +11,14 @@ import BottomPage from "./components/BottomPage";
 import AppFooter from "./components/AppFooter";
 import AppHeader from "./components/AppHeader";
 import Spacer from "./components/base/Spacer";
+import Modal from "./components/Modal";
 
 import "@fontsource/rubik/500.css";
 import "@fontsource/figtree/600.css";
 import "./LandingPage.css";
 
 const LandingPage = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
  
   return (
     <>
@@ -34,7 +32,7 @@ const LandingPage = () => {
               See how you look in designer styles without leaving home.
             </Text>
           </Spacer>
-          <SignupButton textGradient={true} />
+          <SignupButton textGradient={true} onClick={() => setModalOpen(true)} />
         </Spacer>
         
       </div>
@@ -61,6 +59,7 @@ const LandingPage = () => {
       <BottomPage />
       <AppFooter />
       <Analytics />
+      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </>
   )
 };
