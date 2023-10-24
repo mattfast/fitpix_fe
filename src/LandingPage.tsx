@@ -39,7 +39,7 @@ const LandingPage = () => {
       <div className="secondaryPagesContainer">
         <Page 
           labelText="AI MAGIC"
-          title="virtual fitting room"
+          title="shop like you’re the model"
           secondaryText="Generate photos of yourself wearing different outfits without moving a muscle."
           imageSrc="Silver.png"
         />

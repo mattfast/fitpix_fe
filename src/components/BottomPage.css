@@ -8,3 +8,21 @@
   align-self: stretch;
   background: var(--gradient, linear-gradient(82deg, #D52D2D 10.01%, #D52D50 49.94%, #D52D7E 83.02%));
 }
+
+.friendImages {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.friendImage {
+  backdrop-filter: blur(3.2px);
+  border-radius: 32px;
+  background-position: center;
+  border: 2px solid white;
+  margin-left: -10px;
+  background-size: cover;
+  width: 32px;
+  height: 32px;
+}

@@ -20,6 +20,11 @@ const BottomPage = () => {
         <SignupButton textGradient={false} />
       </Spacer>
       <Spacer gap={8}>
+        <div className="friendImages">
+          <img src={ process.env.PUBLIC_URL + "assets/" + "friend_icons/1.png" } className="friendImage" style={{ zIndex: 5 }} />
+          <img src={ process.env.PUBLIC_URL + "assets/" + "friend_icons/2.png" } className="friendImage" style={{ zIndex: 4 }} />
+          <img src={ process.env.PUBLIC_URL + "assets/" + "friend_icons/3.png" } className="friendImage" style={{ zIndex: 3 }} />
+        </div>
         <Text size="tiny" weight="normal" color="gray">
           8+ friends already joined
         </Text>
