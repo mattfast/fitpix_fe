@@ -1,0 +1,30 @@
+
+
+.socialMediaContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.linkWidget {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+
+  border-radius: 1000px;
+  background: rgba(255, 255, 255, 0.10);
+
+}
+
+.linkWidget:active {
+  /*  Making button bigger on hover  */
+  transform: scale(1.05) perspective(1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .linkWidget:hover { transform: scale(1.05) perspective(1px); }
+}

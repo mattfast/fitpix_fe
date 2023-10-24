@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 
 import Text from "./base/Text";
 import Image from "./base/Image";
+import SocialMediaLinks from "./SocialMediaLinks";
 
 import "./AppFooter.css";
 
@@ -16,9 +17,7 @@ const AppFooter = () => {
         <Image src="logo-with-text-white.png" width="118px" height="32px" />
         <Text size="small" weight="normal" color="white">Find your new fit.</Text>
       </div>
-      <div className="appFooterSocials">
-
-      </div>
+      <SocialMediaLinks />
     </div>
   )
 };
