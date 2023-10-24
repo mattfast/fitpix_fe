@@ -28,3 +28,13 @@ body {
   gap: 160px;
   align-self: stretch;
 }
+
+.brandsContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  flex-direction: row;
+  margin-left: 20px;
+  overflow-x: scroll;
+}

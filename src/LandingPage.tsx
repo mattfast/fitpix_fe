@@ -4,7 +4,6 @@ import { Analytics } from '@vercel/analytics/react';
 
 import Title from "./components/base/Title";
 import Text from "./components/base/Text";
-import HangerCarousel from "./components/HangerCarousel";
 import SignupButton from "./components/SignupButton";
 import Page from "./components/Page";
 import BottomPage from "./components/BottomPage";
@@ -12,6 +11,7 @@ import AppFooter from "./components/AppFooter";
 import AppHeader from "./components/AppHeader";
 import Spacer from "./components/base/Spacer";
 import Modal from "./components/Modal";
+import Brand from "./components/Brand";
 
 import "@fontsource/rubik/500.css";
 import "@fontsource/figtree/600.css";
@@ -24,7 +24,6 @@ const LandingPage = () => {
     <>
       <AppHeader />
       <div className="topPageContainer">
-        <HangerCarousel />
         <Spacer gap={24}>
           <Spacer gap={16}>
             <Title level="primary">find your new fit</Title>
@@ -34,7 +33,11 @@ const LandingPage = () => {
           </Spacer>
           <SignupButton textGradient={true} onClick={() => setModalOpen(true)} />
         </Spacer>
-        
+      </div>
+      <div className="brandsContainer">
+        <Brand brand="depop" />
+        <Brand brand="pacsun" />
+        <Brand brand="urban" />
       </div>
       <div className="secondaryPagesContainer">
         <Page 
