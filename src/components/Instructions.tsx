@@ -12,7 +12,7 @@ import { logClick } from "../utils";
 
 const Instructions = () => {
   return (
-    <Image src="instructions.png" width="min(80vw, 400px)" height="auto" />
+    <Image src="instructions.gif" width="min(80vw, 400px)" height="auto" />
   )
 };
 

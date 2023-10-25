@@ -80,12 +80,12 @@ const LandingPage = () => {
           labelText="AI MAGIC"
           title="become the model"
           secondaryText="Generate photos of yourself wearing different outfits without moving a muscle."
-          imageSrc="Silver.png"
+          imageSrc="animations/1.gif"
         />
         <Page 
           labelText="1-CLICK CHECKOUT"
-          title="shopping with ease"
-          secondaryText="Check out in one click. Start rocking your new fits instantly."
+          title="cure your shopping indecision"
+          secondaryText="Decide on outfits with a single click."
           imageSrc="Silver.png"
         />
         <Page 
