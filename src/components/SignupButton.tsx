@@ -12,7 +12,7 @@ const SignupButton = ({ onClick, textGradient }: {
   return (
     <div className="signupButton" onClick={onClick}>
       <Text size="large" weight="strong" color={ textGradient ? "gradient" : "white"}>
-        Find your fit
+        Shop for your fit
       </Text>
     </div>
   )
