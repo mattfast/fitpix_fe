@@ -72,7 +72,7 @@ const LandingPage = () => {
         <Page 
           labelText="AI MAGIC"
           title="model the clothes you love"
-          secondaryText={<div>With cutting-edge tech, see how you look in all your dream fits.</div>}
+          secondaryText={<div>With our cutting-edge tech, see how you look in all your dream fits.</div>}
           imageSrc="animations/1.gif"
           largeImage={false}
         />
