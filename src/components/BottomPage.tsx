@@ -10,6 +10,22 @@ import "./BottomPage.css";
 import { logClick } from "../utils";
 
 const BottomPage = ({ setModalOpen, cookie }) => {
+  const [userCount, setUserCount] = useState<number>(8);
+
+  useEffect(() => {
+    async function getUserCount() {
+      const response = await fetch(
+        `${process.env.REACT_APP_BE_URL}/user-count`,
+        {
+          method: "GET"
+        }
+      );
+      const respJson = response.json();
+      if (respJson["user_count"] && respJson["user_count"] > 8) {
+        setUserCount(respJson["user_count"]);
+      }
+    }
+  }, [])
 
   const onClick = () => {
     logClick("bottom", cookie);
@@ -32,7 +48,7 @@ const BottomPage = ({ setModalOpen, cookie }) => {
           <img src={ process.env.PUBLIC_URL + "assets/" + "friend_icons/3.png" } className="friendImage" style={{ zIndex: 3 }} />
         </div>
         <Text size="tiny" weight="normal" color="gray">
-          8+ friends already joined
+          {userCount}+ friends already joined
         </Text>
       </Spacer>
     </div>
