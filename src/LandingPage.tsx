@@ -58,7 +58,7 @@ const LandingPage = () => {
       <div className="topPageContainer">
         <Spacer gap={24}>
           <Spacer gap={16}>
-            <Title level="primary">Shop Confidently</Title>
+            <Title level="primary">Shop For Your Ideal Fit</Title>
             <Text size="large" weight="normal" color="black">
               See how you look in thrift and designer styles from home
             </Text>
