@@ -6,7 +6,8 @@ body {
 
 .topPageContainer {
   display: flex;
-  padding: 100px 24px 80px 24px;
+  /*padding: 100px 24px 80px 24px;*/
+  padding: 100px 24px 24px 24px;
   flex-direction: column;
   align-items: center;
   gap: 64px;
@@ -36,5 +37,6 @@ body {
   align-self: stretch;
   flex-direction: row;
   margin-left: 20px;
+  margin-right: 20px;
   overflow-x: scroll;
 }

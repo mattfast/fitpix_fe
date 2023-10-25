@@ -7,8 +7,14 @@ import SignupButton from "./SignupButton";
 import Spacer from "./base/Spacer";
 
 import "./BottomPage.css";
+import { logClick } from "../utils";
 
-const BottomPage = () => {
+const BottomPage = ({ setModalOpen }) => {
+
+  const onClick = () => {
+    logClick("bottom");
+    setModalOpen(true);
+  }
  
   return (
     <div className="bottomPageContainer">
@@ -17,7 +23,7 @@ const BottomPage = () => {
           <Title level="primary">What are you waiting for?</Title>
           <Text size="large" weight="normal" color="white">Discover your new look.</Text>
         </Spacer>
-        <SignupButton textGradient={false} />
+        <SignupButton textGradient={false} onClick={onClick}/>
       </Spacer>
       <Spacer gap={8}>
         <div className="friendImages">

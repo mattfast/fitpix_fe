@@ -16,23 +16,31 @@ import Brand from "./components/Brand";
 import "@fontsource/rubik/500.css";
 import "@fontsource/figtree/600.css";
 import "./LandingPage.css";
+import { logClick } from "./utils";
+import Instructions from "./components/Instructions";
 
 const LandingPage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  const onTopClick = () => {
+    logClick("top");
+    setModalOpen(true);
+  }
  
   return (
     <>
-      <AppHeader />
+      <AppHeader setModalOpen={setModalOpen} />
       <div className="topPageContainer">
         <Spacer gap={24}>
           <Spacer gap={16}>
-            <Title level="primary">find your new fit</Title>
+            <Title level="primary">Shop Confidently</Title>
             <Text size="large" weight="normal" color="black">
-              See how you look in designer styles without leaving home.
+              See how you look in thrift and designer styles from home
             </Text>
           </Spacer>
-          <SignupButton textGradient={true} onClick={() => setModalOpen(true)} />
+          <SignupButton textGradient={true} onClick={onTopClick} />
         </Spacer>
+        <Instructions />
       </div>
       <div className="brandsContainer">
         <Brand brand="depop" />
@@ -59,7 +67,7 @@ const LandingPage = () => {
           imageSrc="Silver.png"
         />
       </div>
-      <BottomPage />
+      <BottomPage setModalOpen={setModalOpen} />
       <AppFooter />
       <Analytics />
       <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />

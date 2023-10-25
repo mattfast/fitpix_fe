@@ -1,5 +1,20 @@
 import { loadStripe } from '@stripe/stripe-js';
 
+export const logClick = async (position: string) => {
+  fetch(
+    `${process.env.REACT_APP_BE_URL}/log-click`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "position": position
+      })
+    }
+  );
+}
+
 let stripePromise;
 export const getStripe = () => {
   if (!stripePromise) {
