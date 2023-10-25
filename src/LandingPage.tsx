@@ -29,7 +29,7 @@ const LandingPage = () => {
       const cookie = cookies['user-id'];
       if (!cookie) {
         const response = await fetch(
-          `${process.env.REACT_APP_BE_URL}/add-to-waitlist`,
+          `${process.env.REACT_APP_BE_URL}/create-fitpix-user`,
           {
             method: "POST",
             headers: {
