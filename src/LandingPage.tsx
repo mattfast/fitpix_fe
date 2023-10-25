@@ -67,26 +67,29 @@ const LandingPage = () => {
         </Spacer>
         <Instructions />
       </div>
-      <div className="brandsContainer">
-        <Brand brand="depop" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
-        <Brand brand="urban" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
-        <Brand brand="nike" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
-        <Brand brand="pacsun" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
-        <Brand brand="vans" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
-        <Brand brand="lululemon" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
-      </div>
-      <div className="secondaryPagesContainer">
+      <Spacer gap={40}>
         <Page 
           labelText="AI MAGIC"
           title="become the model"
-          secondaryText="Generate photos of yourself wearing different outfits without moving a muscle."
+          secondaryText="Generate photos of yourself in every outfit you wanna buy."
           imageSrc="animations/1.gif"
         />
+        <Title level="primary">Partner Brands</Title>
+        <div className="brandsContainer">
+          <Brand brand="depop" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+          <Brand brand="urban" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+          <Brand brand="nike" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+          <Brand brand="pacsun" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+          <Brand brand="vans" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+          <Brand brand="lululemon" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+        </div>
+      </Spacer>
+      <div className="secondaryPagesContainer">
         <Page 
           labelText="1-CLICK CHECKOUT"
           title="cure your shopping indecision"
           secondaryText="Decide on outfits with a single click."
-          imageSrc="Silver.png"
+          imageSrc="animations/2.gif"
         />
         <Page 
           labelText="MORE FUN"
