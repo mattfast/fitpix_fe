@@ -67,6 +67,7 @@ const LandingPage = () => {
         </Spacer>
         <Instructions />
       </div>
+      <Spacer gap={40}><div /><div /></Spacer>
       <Spacer gap={40}>
         <Page 
           labelText="AI MAGIC"
