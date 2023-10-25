@@ -71,8 +71,9 @@ const LandingPage = () => {
         <Page 
           labelText="AI MAGIC"
           title="become the model"
-          secondaryText="Generate photos of yourself in every outfit you wanna buy."
+          secondaryText="Generate photos of yourself in every outfit you want to buy."
           imageSrc="animations/1.gif"
+          largeImage={false}
         />
         <Title level="primary">Partner Brands</Title>
         <div className="brandsContainer">
@@ -90,12 +91,14 @@ const LandingPage = () => {
           title="cure your shopping indecision"
           secondaryText="Decide on outfits with a single click."
           imageSrc="animations/2.gif"
+          largeImage={false}
         />
         <Page 
           labelText="MORE FUN"
           title="get your friends' takes"
           secondaryText="Share your fits and decide together."
-          imageSrc="Silver.png"
+          imageSrc="animations/3.gif"
+          largeImage={true}
         />
       </div>
       <BottomPage setModalOpen={setModalOpen} cookie={cookies['user-id']} />

@@ -9,7 +9,7 @@ import Spacer from "./base/Spacer";
 
 import "./Page.css";
 
-const Page = ({ labelText, title, secondaryText, imageSrc }) => {
+const Page = ({ labelText, title, secondaryText, imageSrc, largeImage }) => {
  
   return (
     <div className="secondaryPageContainer">
@@ -19,7 +19,7 @@ const Page = ({ labelText, title, secondaryText, imageSrc }) => {
           <Title level="secondary">{title}</Title>
           <Text size="small" weight="normal" color="black">{secondaryText}</Text>
         </Spacer>
-        <Image src={imageSrc}  width="240px" height="484px"/>
+        <Image src={imageSrc}  width={ largeImage ? "380px" : "240px" } height={ largeImage ? "540px" : "484px" }/>
       </Spacer>
     </div>
   )
