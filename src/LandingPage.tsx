@@ -58,9 +58,9 @@ const LandingPage = () => {
       <div className="topPageContainer">
         <Spacer gap={24}>
           <Spacer gap={16}>
-            <Title level="primary">Shop For Your Ideal Fit</Title>
+            <Title level="primary">bring the fitting room home</Title>
             <Text size="large" weight="normal" color="black">
-              See how you look in thrift and designer styles from home
+              See how you look in thrift and designer styles on your phone
             </Text>
           </Spacer>
           <SignupButton textGradient={true} onClick={onTopClick} />
@@ -71,8 +71,8 @@ const LandingPage = () => {
       <Spacer gap={40}>
         <Page 
           labelText="AI MAGIC"
-          title="become the model"
-          secondaryText="Generate photos of yourself in every outfit you want to buy."
+          title="model the clothes you want"
+          secondaryText={<div>See how <b>you</b> look in all your dream fits.</div>}
           imageSrc="animations/1.gif"
           largeImage={false}
         />
@@ -88,18 +88,18 @@ const LandingPage = () => {
       </Spacer>
       <div className="secondaryPagesContainer">
         <Page 
-          labelText="1-CLICK CHECKOUT"
-          title="cure your shopping indecision"
-          secondaryText="Decide on outfits with a single click."
-          imageSrc="animations/2.gif"
-          largeImage={false}
-        />
-        <Page 
           labelText="MORE FUN"
           title="get your friends' takes"
           secondaryText="Share your fits and decide together."
           imageSrc="animations/3.gif"
           largeImage={true}
+        />
+        <Page 
+          labelText="1-CLICK CHECKOUT"
+          title="buy your dream fit"
+          secondaryText="Decide on outfits with a single click."
+          imageSrc="animations/2.gif"
+          largeImage={false}
         />
       </div>
       <BottomPage setModalOpen={setModalOpen} cookie={cookies['user-id']} />
