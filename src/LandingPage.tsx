@@ -78,20 +78,20 @@ const LandingPage = () => {
       <div className="secondaryPagesContainer">
         <Page 
           labelText="AI MAGIC"
-          title="shop like you’re the model"
+          title="become the model"
           secondaryText="Generate photos of yourself wearing different outfits without moving a muscle."
-          imageSrc="Silver.png"
-        />
-        <Page 
-          labelText="MORE FUN"
-          title="shop with friends"
-          secondaryText="Vote on your friends’ best fits and see which of your fits your friends like the best."
           imageSrc="Silver.png"
         />
         <Page 
           labelText="1-CLICK CHECKOUT"
           title="shopping with ease"
-          secondaryText="Purchase your favorite fits with the click of a button, and get them delivered to your door."
+          secondaryText="Check out in one click. Start rocking your new fits instantly."
+          imageSrc="Silver.png"
+        />
+        <Page 
+          labelText="MORE FUN"
+          title="get your friends' takes"
+          secondaryText="Share your fits and decide together."
           imageSrc="Silver.png"
         />
       </div>
