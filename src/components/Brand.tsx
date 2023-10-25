@@ -14,7 +14,7 @@ const Brand = ({ brand }) => {
     <div className="brandContainer">
       <img className="brandModel" src={ process.env.PUBLIC_URL + "assets/" + "brands/" + brand + "/model.png"} />
       <div className="brandButton">
-        <Image src={"brands/" + brand + "/logo.png"} width="auto" height="36.8px" />
+        <Image src={"brands/" + brand + "/logo.png"} width="80px" height="auto" />
       </div>
     </div>
   )

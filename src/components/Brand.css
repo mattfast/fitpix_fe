@@ -20,7 +20,8 @@
   background-color: #ccc;  /* Just to visualize the model, can be removed */
 }
 .brandButton {
-  width: 100px;
+  width: 124px;
+  height: 52px;
   display: inline-flex;
   padding: 8.8px 8.8px;
   flex-direction: column;
