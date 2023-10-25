@@ -9,10 +9,10 @@ import Spacer from "./base/Spacer";
 import "./BottomPage.css";
 import { logClick } from "../utils";
 
-const BottomPage = ({ setModalOpen }) => {
+const BottomPage = ({ setModalOpen, cookie }) => {
 
   const onClick = () => {
-    logClick("bottom");
+    logClick("bottom", cookie);
     setModalOpen(true);
   }
  

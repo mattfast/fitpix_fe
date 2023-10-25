@@ -9,10 +9,10 @@ import Image from "./base/Image";
 import "./Brand.css";
 import { logClick } from "../utils";
 
-const Brand = ({ brand, setModalOpen }) => {
+const Brand = ({ brand, setModalOpen, cookie }) => {
 
   const onClick = () => {
-    logClick(brand);
+    logClick(brand, cookie);
     setModalOpen(true);
   }
  

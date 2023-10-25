@@ -1,11 +1,12 @@
 import { loadStripe } from '@stripe/stripe-js';
 
-export const logClick = async (position: string) => {
+export const logClick = async (position: string, cookie: string) => {
   fetch(
     `${process.env.REACT_APP_BE_URL}/log-click`,
     {
       method: "POST",
       headers: {
+        "auth-token": cookie,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({

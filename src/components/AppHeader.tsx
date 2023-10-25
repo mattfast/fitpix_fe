@@ -9,10 +9,10 @@ import Text from "./base/Text";
 import "./AppHeader.css";
 import { logClick } from "../utils";
 
-const AppHeader = ({ setModalOpen }) => {
+const AppHeader = ({ setModalOpen, cookie }) => {
 
   const onClick = () => {
-    logClick("header");
+    logClick("header", cookie);
     setModalOpen(true);
   }
  

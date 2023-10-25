@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion"
+import { useCookies } from 'react-cookie';
 import { Analytics } from '@vercel/analytics/react';
 
 import Title from "./components/base/Title";
@@ -21,15 +22,27 @@ import Instructions from "./components/Instructions";
 
 const LandingPage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
+
+  useEffect(() => {
+    async function getOrSetCookie() {
+      const cookie = cookies['user-id'];
+      if (!cookie) {
+
+      }
+    }
+    
+    getOrSetCookie();
+  }, [cookies])
 
   const onTopClick = () => {
-    logClick("top");
+    logClick("top", cookies["user-id"]);
     setModalOpen(true);
   }
  
   return (
     <>
-      <AppHeader setModalOpen={setModalOpen} />
+      <AppHeader setModalOpen={setModalOpen} cookie={cookies['user-id']} />
       <div className="topPageContainer">
         <Spacer gap={24}>
           <Spacer gap={16}>
@@ -43,12 +56,12 @@ const LandingPage = () => {
         <Instructions />
       </div>
       <div className="brandsContainer">
-        <Brand brand="depop" setModalOpen={setModalOpen} />
-        <Brand brand="urban" setModalOpen={setModalOpen} />
-        <Brand brand="nike" setModalOpen={setModalOpen} />
-        <Brand brand="pacsun" setModalOpen={setModalOpen} />
-        <Brand brand="vans" setModalOpen={setModalOpen} />
-        <Brand brand="lululemon" setModalOpen={setModalOpen} />
+        <Brand brand="depop" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+        <Brand brand="urban" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+        <Brand brand="nike" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+        <Brand brand="pacsun" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+        <Brand brand="vans" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+        <Brand brand="lululemon" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
       </div>
       <div className="secondaryPagesContainer">
         <Page 
@@ -70,7 +83,7 @@ const LandingPage = () => {
           imageSrc="Silver.png"
         />
       </div>
-      <BottomPage setModalOpen={setModalOpen} />
+      <BottomPage setModalOpen={setModalOpen} cookie={cookies['user-id']} />
       <AppFooter />
       <Analytics />
       <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />
