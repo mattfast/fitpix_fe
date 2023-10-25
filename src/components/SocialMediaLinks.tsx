@@ -10,9 +10,6 @@ const SocialMediaLinks = () => {
       <div className="linkWidget" onClick={() => window.open("https://www.tiktok.com/@fitpix_io/", "_blank")}>
         <Image src="social_media/tiktok.png" width="24px" height="24px" />
       </div>
-      <div className="linkWidget" onClick={() => window.open("https://discord.gg/mgWxBhAk", "_blank")}>
-        <Image src="social_media/discord.png" width="24px" height="20px" />
-      </div>
       <div className="linkWidget" onClick={() => window.open("https://www.instagram.com/fitpix_io/", "_blank")}>
         <Image src="social_media/instagram.png" width="24px" height="24px" />
       </div>
