@@ -43,9 +43,12 @@ const LandingPage = () => {
         <Instructions />
       </div>
       <div className="brandsContainer">
-        <Brand brand="depop" />
-        <Brand brand="pacsun" />
-        <Brand brand="urban" />
+        <Brand brand="depop" setModalOpen={setModalOpen} />
+        <Brand brand="urban" setModalOpen={setModalOpen} />
+        <Brand brand="nike" setModalOpen={setModalOpen} />
+        <Brand brand="pacsun" setModalOpen={setModalOpen} />
+        <Brand brand="vans" setModalOpen={setModalOpen} />
+        <Brand brand="lululemon" setModalOpen={setModalOpen} />
       </div>
       <div className="secondaryPagesContainer">
         <Page 

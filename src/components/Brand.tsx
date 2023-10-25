@@ -7,13 +7,19 @@ import Spacer from "./base/Spacer";
 import Image from "./base/Image";
 
 import "./Brand.css";
+import { logClick } from "../utils";
 
-const Brand = ({ brand }) => {
+const Brand = ({ brand, setModalOpen }) => {
+
+  const onClick = () => {
+    logClick(brand);
+    setModalOpen(true);
+  }
  
   return (
     <div className="brandContainer">
-      <img className="brandModel" src={ process.env.PUBLIC_URL + "assets/" + "brands/" + brand + "/model.png"} />
-      <div className="brandButton">
+      <img className="brandModel" src={ process.env.PUBLIC_URL + "assets/" + "brands/" + brand + "/model.jpg"} />
+      <div className="brandButton" onClick={onClick}>
         <Image src={"brands/" + brand + "/logo.png"} width="80px" height="auto" />
       </div>
     </div>
