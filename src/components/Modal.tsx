@@ -16,7 +16,6 @@ const LoginModal = ({ setModalOpen, modalOpen, cookie }) => {
   const [page, setPage] = useState<number>(0);
   const [inputText, setInputText] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -66,7 +65,6 @@ const LoginModal = ({ setModalOpen, modalOpen, cookie }) => {
       if (response.status != 200) {
         setErrorMessage("Our website is experiencing a bit of trouble right now. Try again in a minute!");
       } else if (response.status == 200) {
-        setSuccessMessage("We've texted you a blink! Click on it and you should be logged in :)");
         setPage(1);
       }
     } else {
@@ -121,12 +119,9 @@ const LoginModal = ({ setModalOpen, modalOpen, cookie }) => {
               { page == 1 && "If you wanna get extra-early access, fill out some extra information about why you're interested in our product:" }
             </div>
           </div>
-          <input type="tel" id="formInput" className="formInput" placeholder="(123) 456-7890" onKeyUp={(e) => enterDetector(e.key)} onChange={e => onTyping(e.currentTarget.value)}/>
+          { page == 0 && <input type="tel" id="formInput" className="formInput" placeholder="(123) 456-7890" onKeyUp={(e) => enterDetector(e.key)} onChange={e => onTyping(e.currentTarget.value)}/> }
           { errorMessage !== null && (
             <div className="errorMessage">{errorMessage}</div>
-          )}
-          { successMessage !== null && (
-            <div className="successMessage">{successMessage}</div>
           )}
         </div>
         <div id="formButton" className="formButton" onClick={buttonClick}>
