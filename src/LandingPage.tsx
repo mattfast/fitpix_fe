@@ -28,7 +28,19 @@ const LandingPage = () => {
     async function getOrSetCookie() {
       const cookie = cookies['user-id'];
       if (!cookie) {
+        const response = await fetch(
+          `${process.env.REACT_APP_BE_URL}/add-to-waitlist`,
+          {
+            method: "POST",
+            headers: {
+              "auth-token": cookie,
+              "Content-Type": "application/json"
+            },
+          }
+        );
 
+        const respJson = await response.json();
+        setCookie("user-id", respJson["cookie"]);
       }
     }
     
@@ -86,7 +98,7 @@ const LandingPage = () => {
       <BottomPage setModalOpen={setModalOpen} cookie={cookies['user-id']} />
       <AppFooter />
       <Analytics />
-      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} cookie={cookies['user-id']} />
     </>
   )
 };

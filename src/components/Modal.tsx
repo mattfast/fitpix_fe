@@ -12,7 +12,7 @@ import "./Modal.css";
 import { formatPhoneNumber } from "../utils";
 import { String } from "aws-sdk/clients/cloudsearch";
 
-const LoginModal = ({ setModalOpen, modalOpen }) => {
+const LoginModal = ({ setModalOpen, modalOpen, cookie }) => {
   const [page, setPage] = useState<number>(0);
   const [inputText, setInputText] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -55,6 +55,7 @@ const LoginModal = ({ setModalOpen, modalOpen }) => {
         {
           method: "POST",
           headers: {
+            "auth-token": cookie,
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
@@ -74,11 +75,9 @@ const LoginModal = ({ setModalOpen, modalOpen }) => {
         {
           method: "POST",
           headers: {
+            "auth-token": cookie,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            "number": inputText
-          })
         }
       )
       // TODO: CREATE TYPEFORM
