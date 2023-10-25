@@ -60,7 +60,7 @@ const LandingPage = () => {
           <Spacer gap={16}>
             <Title level="primary">bring the fitting room home</Title>
             <Text size="large" weight="normal" color="black">
-              See how you look in thrift and designer styles on your phone
+              See how you look in thrift and designer styles instantly
             </Text>
           </Spacer>
           <SignupButton textGradient={true} onClick={onTopClick} />
@@ -72,7 +72,7 @@ const LandingPage = () => {
         <Page 
           labelText="AI MAGIC"
           title="model the clothes you love"
-          secondaryText={<div>See how <b>you</b> look in all your dream fits.</div>}
+          secondaryText={<div>With cutting-edge tech, see how you look in all your dream fits.</div>}
           imageSrc="animations/1.gif"
           largeImage={false}
         />
