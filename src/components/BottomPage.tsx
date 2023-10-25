@@ -20,11 +20,15 @@ const BottomPage = ({ setModalOpen, cookie }) => {
           method: "GET"
         }
       );
-      const respJson = response.json();
+      const respJson = await response.json();
+      console.log(respJson);
+
       if (respJson["user_count"] && respJson["user_count"] > 8) {
         setUserCount(respJson["user_count"]);
       }
     }
+
+    getUserCount();
   }, [])
 
   const onClick = () => {
