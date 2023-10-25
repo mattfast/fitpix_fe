@@ -116,7 +116,7 @@ const LoginModal = ({ setModalOpen, modalOpen, cookie }) => {
             </div>
             <div className="formDescription">
               { page == 0 && "Sign up for our waitlist by entering your number below" }
-              { page == 1 && "If you wanna get extra-early access, fill out some extra information about why you're interested in our product:" }
+              { page == 1 && "If you wanna be the first in line, fill out some extra info below:" }
             </div>
           </div>
           { page == 0 && <input type="tel" id="formInput" className="formInput" placeholder="(123) 456-7890" onKeyUp={(e) => enterDetector(e.key)} onChange={e => onTyping(e.currentTarget.value)}/> }
