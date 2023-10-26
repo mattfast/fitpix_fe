@@ -22,6 +22,7 @@ import Instructions from "./components/Instructions";
 
 const LandingPage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [userCount, setUserCount] = useState<number>(8);
   const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
 
   useEffect(() => {
@@ -47,6 +48,23 @@ const LandingPage = () => {
     getOrSetCookie();
   }, [cookies])
 
+  useEffect(() => {
+    async function getUserCount() {
+      const response = await fetch(
+        `${process.env.REACT_APP_BE_URL}/user-count`,
+        {
+          method: "GET"
+        }
+      );
+      const respJson = await response.json();
+      if (respJson["user_count"] && respJson["user_count"] > 8) {
+        setUserCount(respJson["user_count"]);
+      }
+    }
+
+    getUserCount();
+  }, [])
+
   const onTopClick = () => {
     logClick("top", cookies["user-id"]);
     setModalOpen(true);
@@ -64,7 +82,13 @@ const LandingPage = () => {
             </Text>
           </Spacer>
           <SignupButton textGradient={true} onClick={onTopClick} />
+          <div style={{ marginTop: "-10px" }}>
+            <Text size="tiny" weight="normal" color="black">
+              52+ friends already joined
+            </Text>
+          </div>
         </Spacer>
+
         <Instructions />
       </div>
       <Spacer gap={40}><div /><div /></Spacer>
@@ -102,7 +126,7 @@ const LandingPage = () => {
           largeImage={false}
         />
       </div>
-      <BottomPage setModalOpen={setModalOpen} cookie={cookies['user-id']} />
+      <BottomPage setModalOpen={setModalOpen} cookie={cookies['user-id']} userCount={userCount} />
       <AppFooter />
       <Analytics />
       <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} cookie={cookies['user-id']} />
