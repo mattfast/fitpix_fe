@@ -84,7 +84,7 @@ const LandingPage = () => {
           <SignupButton textGradient={true} onClick={onTopClick} />
           <div style={{ marginTop: "-10px" }}>
             <Text size="tiny" weight="normal" color="black">
-              52+ friends already joined
+              {userCount}+ friends already joined
             </Text>
           </div>
         </Spacer>
