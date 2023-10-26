@@ -78,7 +78,7 @@ const LandingPage = () => {
           <Spacer gap={16}>
             <Title level="primary">Upgrade your online shopping experience</Title>
             <Text size="large" weight="normal" color="black">
-              See how you look in clothes before clicking order.
+              See how clothes will look on you before clicking order.
             </Text>
           </Spacer>
           <SignupButton textGradient={true} onClick={onTopClick} />
@@ -95,8 +95,8 @@ const LandingPage = () => {
       <Spacer gap={40}>
         <Page 
           labelText="AI MAGIC"
-          title="Try on clothes virtually"
-          secondaryText={<div>Our cutting-edge tech shows exactly how you would look in person.</div>}
+          title="Bring the fitting room to your room"
+          secondaryText={<div>Our cutting-edge tech shows exactly how you will look in your new fit.</div>}
           imageSrc="animations/1.gif"
           largeImage={false}
         />
@@ -120,8 +120,8 @@ const LandingPage = () => {
         />
         <Page 
           labelText="1-CLICK CHECKOUT"
-          title="buy your dream fit"
-          secondaryText="Decide on outfits with a single click."
+          title="buy your dream look"
+          secondaryText="Create your outfits with a single click."
           imageSrc="animations/2.gif"
           largeImage={false}
         />

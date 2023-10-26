@@ -21,7 +21,7 @@ const BottomPage = ({ setModalOpen, cookie, userCount }) => {
       <Spacer gap={24}>
         <Spacer gap={16}>
           <Title level="primary">What are you waiting for?</Title>
-          <Text size="large" weight="normal" color="white">Discover your new look.</Text>
+          <Text size="large" weight="normal" color="white">Discover your new you.</Text>
         </Spacer>
         <SignupButton textGradient={false} onClick={onClick}/>
       </Spacer>
