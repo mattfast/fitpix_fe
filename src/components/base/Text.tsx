@@ -12,6 +12,8 @@ const Text = ({ size, weight, color, children }: {
   color: "gradient" | "black" | "white" | "gray",
   children: ReactNode
 }) => {
+
+  /*linear-gradient(82deg, #FF7B7B 10.01%, #FF7995 49.94%, #FF72B5 83.02%)"*/
  
   return (
     <div style={{
@@ -23,7 +25,7 @@ const Text = ({ size, weight, color, children }: {
       lineHeight: "130%", /* 23.4px */
       letterSpacing: "-0.09px",
       color: color == "black" ? "#2A2826" : color == "white" ? "#F4F2EE" : color == "gray" ? "rgba(255, 255, 255, 0.64)" : color == "gradient" ? "transparent" : undefined,
-      background: color == "gradient" ? "linear-gradient(82deg, #FF7B7B 10.01%, #FF7995 49.94%, #FF72B5 83.02%)" : undefined,
+      background: color == "gradient" ? "#4993de" : undefined,
       backgroundClip: color == "gradient" ? "text" : undefined,
       WebkitBackgroundClip: color == "gradient" ? "text" : undefined,
     }}>

@@ -76,9 +76,9 @@ const LandingPage = () => {
       <div className="topPageContainer">
         <Spacer gap={24}>
           <Spacer gap={16}>
-            <Title level="primary">bring the fitting room home</Title>
+            <Title level="primary">Your virtual fitting room</Title>
             <Text size="large" weight="normal" color="black">
-              See how you look in thrift and designer styles instantly
+              Generate fit pics in your favorite thrift and designer brands
             </Text>
           </Spacer>
           <SignupButton textGradient={true} onClick={onTopClick} />
