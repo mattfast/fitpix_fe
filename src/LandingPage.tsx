@@ -95,8 +95,8 @@ const LandingPage = () => {
       <Spacer gap={40}>
         <Page 
           labelText="AI MAGIC"
-          title="Bring the fitting room to your room"
-          secondaryText={<div>Our cutting-edge tech shows exactly how you will look in your new fit.</div>}
+          title="Try on clothes Head-to-toe"
+          secondaryText={<div>Our cutting-edge tech shows exactly how you will look in the clothes you want.</div>}
           imageSrc="animations/1.gif"
           largeImage={false}
         />
