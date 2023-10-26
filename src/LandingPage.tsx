@@ -76,9 +76,9 @@ const LandingPage = () => {
       <div className="topPageContainer">
         <Spacer gap={24}>
           <Spacer gap={16}>
-            <Title level="primary">Your virtual fitting room</Title>
+            <Title level="primary">Upgrade your online shopping experience</Title>
             <Text size="large" weight="normal" color="black">
-              Generate fit pics in your favorite thrift and designer brands
+              See how you look in clothes before clicking order.
             </Text>
           </Spacer>
           <SignupButton textGradient={true} onClick={onTopClick} />
@@ -95,12 +95,12 @@ const LandingPage = () => {
       <Spacer gap={40}>
         <Page 
           labelText="AI MAGIC"
-          title="model the clothes you love"
-          secondaryText={<div>With our cutting-edge tech, see how you look in all your dream fits.</div>}
+          title="become the model"
+          secondaryText={<div>With our cutting-edge tech, generate images of you in all your dream fits.</div>}
           imageSrc="animations/1.gif"
           largeImage={false}
         />
-        <Title level="primary">Partner Brands</Title>
+        <Title level="primary">Brands We Offer</Title>
         <div className="brandsContainer">
           <Brand brand="depop" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
           <Brand brand="urban" setModalOpen={setModalOpen} cookie={cookies['user-id']} />
