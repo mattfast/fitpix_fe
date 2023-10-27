@@ -78,7 +78,7 @@ const LoginModal = ({ setModalOpen, modalOpen, cookie }) => {
           },
         }
       )
-      window.open("https://6zjeyd89s7o.typeform.com/to/CbU29n4i", "_blank");
+      window.open("https://6zjeyd89s7o.typeform.com/to/CbU29n4i", "_self");
     }
   }
 
